@@ -38,7 +38,7 @@ in near-linear time}{Hunter, {El Alaoui} and Bayen}
 % \newcommand\eqref[1]{(\ref{#1})}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
-% \include{amsmath}
+\include{amsmath}
 
 % \makeatother
 
@@ -179,14 +179,30 @@ one component that has a bounded condition number. Our solution is
 to use a \emph{spectral sparsifier} introduced by Spielman in \cite{Spielman2008}.
 
 The problem of estimating determinants has important applications
-in spatial data analysis, statistical physics and statistics. For
-example, a number of quantum system properties can be inferred by
-computing determinants of large graphs (determinant quantum Monte
-Carlo). This is why computing estimates of the log-determinant has
+in spatial data analysis, statistical physics and statistics. In spatial
+statistics, it is often convenient to interpolate measurements in
+a 2-, 3- or 4-dimensional volume using a sparse Gaussian process,
+a technique known as \emph{kriging }(CITE)\emph{. }Computing the optimal
+parameters of this Gaussian process involves repeated evaluations
+of the partition function, which is a log-determinant. In this context,
+a diagonally dominant matrix for the Gram matrix of the process corresponds
+to somewhat weak interactions between measurements (which is verified
+in some contexts, see for example CITEBARRY). Determinants also play
+a crucial role in quantum physics, and especially in quantum chromatography
+(QC) and lattice theory. The interaction between particles can be
+approximated as a lattice, and the energy level of particles is the
+determinant of some functional operators over this lattice (Slatter
+Determinant, CITE). It is itself a very complex problem because of
+the size of the matrices involved for any non-trivial problem. In
+this respect, the restriction to diagonally dominant matrices can
+be interpreted as an interaction between relatively massive particles
+(CITE). 
+
+For these reasons, computing estimates of the log-determinant has
 been an active problem in physics and statistics. In particular, the
 Martin expansion presented in Equation \ref{eq:martin-expansion}
-can be combined with sampling method to estimate the trace of a matrix
-series (\cite{Zhang2008},\cite{McCourt2008},\cite{Zhang2007}).
+is extensively used in quantum physics (CITE) can be combined with
+sampling method to estimate the trace of a matrix series (\cite{Zhang2008},\cite{McCourt2008},\cite{Zhang2007}).
 Another different line of research has worked on bounds on the values
 of the determinant itself. This is deeply connected to simplifying
 statistical models using variational methods. Such a relaxation using
@@ -194,10 +210,30 @@ a message-passing technique is presented in \cite{Wainwright2006}.
 Our method is close in spirit to Reuksen's work \cite{Reusken2002}
 by the use of a preconditioner. However, Reuksen considers preconditioners
 based on a clever approximation of the Cholesky decomposition, and
-its interaction with the eigenvalues of the complete matrix. Using
-simpler methods based on sampling, we are able to carefully control
-the spectrum of the reminder, which in turn leads to strong convergence
-guarantees. 
+its interaction with the eigenvalues of the complete matrix is not
+well understood. Using simpler methods based on sampling, we are able
+to carefully control the spectrum of the reminder, which in turn leads
+to strong convergence guarantees. 
+
+\textbf{A note on scaling.} Unlike other characteristics of linear
+operators, the determinant and the log-determinant are very sensitive
+to dimensionality. We will follow the approach of Reuksen \cite{Reusken2002}
+and consider the \emph{regularized log-determinant} $f\left(A\right)=n^{-1}\log\left|A\right|$
+instead of the log-determinant. The regularized determinant has appealing
+properties with respect to dimensionality. In particular, its sensitivity
+to perturbations does not increase with the dimensionality, but only
+depends on spectral properties of the operator $A$. For example,
+calling $\lambda_{\min}$and $\lambda_{\max}$the minimun and maximum
+eigenvalues of $A$, respectively:
+\[
+\log\lambda_{\min}\leq f\left(A\right)\leq\log\lambda_{\max}
+\]
+\[
+\left|f\left(A+\epsilon I\right)-f\left(A\right)\right|\leq\epsilon\left\Vert A^{-1}\right\Vert _{2}+O\left(\epsilon^{2}\right)
+\]
+The last inequality in particular shows that any perturbation to $\log\left|A\right|$
+will be in the order $O\left(n\right)$, and so why all the interesting
+log-determinants in practice will be dominated by some $O\left(n\right)$.
 
 The rest of the article is structured as follows. In the next section,
 we present some results about estimating the log-determinant from
@@ -304,6 +340,51 @@ for $i=1\cdots p$. Then for all $\nu>0$:
 \begin{proof}
 This is a simple adaptation from \cite{Bai1996}.
 \end{proof}
+We use the following Bernstein inequality:
+\begin{lemma}
+\label{lem:bernstein}$X_{1}\cdots X_{U}$ are independant random
+variables with $\mathbb{E}\left[X_{u}\right]=0$, $\left|X_{u}\right|<c$.
+Call $\sigma^{2}=\frac{1}{U}\sum_{u}\text{Var}\left(X_{u}\right)$,
+then for all $\epsilon>0$:
+\[
+\mathbb{P}\left[\frac{1}{U}\sum_{u}X_{u}\geq\epsilon\right]\leq\exp\left(-\frac{U\epsilon^{2}}{2\sigma^{2}+2c\epsilon/3}\right)
+\]
+
+\end{lemma}
+The proof of this result can be found in a lecture note from Peter
+Bartlett's class (stat241B/spring 2003). We can adapt some results
+from \cite{Barry1999} to prove this bound on the deviation from the
+trace.
+\begin{lemma}
+\label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$, and call
+$\lambda_{i}$ the eigenvalues of $H$. Consider $p$ vectors sampled
+from the standard Normal distribution: $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
+for $i=1\cdots p$. Then for all $\epsilon>0$:
+\[
+\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon}\right)
+\]
+with $\lambda_{\text{max}}=\max\lambda_{i}$ and $\lambda_{\min}=\min\lambda_{i}$.\end{lemma}
+\begin{proof}
+The distribution of $\mathbf{u}_{i}$ is invariant through a rotation,
+so we can consider $H$ diagonal. We assume without loss of generality
+that $H=\text{diag}\left(\lambda_{1}...\lambda_{n}\right)$. Again
+without loss of generality, we assume that $\lambda'_{\max}=\lambda_{\max}-\lambda_{\min}$
+and $\lambda'_{\min}=0$ (by considering $H'=H-\lambda_{\min}I$).
+Call $V_{i}=\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-n^{-1}\text{Tr}\left(H\right)$.
+Using results from \cite{Barry1999}, we have: $\left|V_{i}\right|\leq\lambda_{\max}-\lambda_{\min}$,
+$\mathbb{E}\left[V_{i}\right]=0$ and: 
+\[
+\text{Var}\left(V_{i}\right)=\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}
+\]
+
+
+Each of the variables $V_{i}$ is independent, so invoking Lemma \ref{lem:bernstein}
+gives:
+\[
+\mathbb{P}\left[\frac{1}{p}\sum_{i=1}^{p}V_{i}\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
+\]
+with $\sigma^{2}=\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}$
+\end{proof}
 The previous lemma shows that if the eigenspectrum of a matrix is
 bounded, we can obtain a Hoeffding bound on the error done by sampling
 the trace. Furthermore, the convergence of the series \ref{eq:martin}
@@ -326,13 +407,13 @@ for $i=1\cdots p$. Call $\hat{y}_{p,l}$ an estimator of the truncated
 series of $l$ elements computed by sampling the trace using $p$
 samples:
 \[
-\hat{y}_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}
+\hat{y}_{p,l}=\frac{n}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
 \]
-By choosing $p\geq4\epsilon^{-2}\left(\log\delta\right)^{2}\log n$
+By choosing $p\geq4\log\left(\eta^{-1}\right)\epsilon^{-2}\left(2n^{-1}\log^{2}\left(\delta^{-1}\right)+\epsilon\log\left(\delta^{-1}\right)\right)$
 and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$,
 the error probability is small:
 \[
-\mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon\right]\leq\frac{1}{n}
+\mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq n\epsilon\right]\leq\eta
 \]
 \end{theorem}
 \begin{proof}
@@ -360,23 +441,28 @@ to the expected value:
 \end{eqnarray*}
 
 
-Hence, for a choice of $l\geq\delta^{-1}\left(\log\delta^{-1}+\log\epsilon^{-1}+\log n+\log2\right)$,
+Hence, for a choice of $l\geq\delta^{-1}\log\left(\frac{2n}{\epsilon\delta}\right)$,
 the latter part is less than $\epsilon/2$. We now bound the first
-part using Lemma \ref{lem:hoeffding-trace}. Call $H$ the truncated
+part using Lemma \ref{lem:bernstein-trace}. Call $H$ the truncated
 series:
 \[
 H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}
 \]
-The lowest eigenvalue of the truncated series can be lower-bounded
-in terms of $\delta$:
+This truncated series is upper-bounded by $0$. The lowest eigenvalue
+of the truncated series can be lower-bounded in terms of $\delta$:
 \[
 H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}\succeq-\sum_{i=1}^{m}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I=\left(\log\delta\right)I
 \]
-We can now invoke Lemma \ref{lem:hoeffding-trace} to conclude. Indeed,
-call $\nu=2^{-1}\epsilon p$, then $\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\mathbf{u}_{i}^{T}H\mathbf{u}_{i}^{T}-\mbox{Tr}\left(H\right)\right|\geq\frac{\epsilon}{2}\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{2\left(\log\delta\right)^{2}}\right)$
-and $2\exp\left(-\frac{p\epsilon^{2}}{2\left(\log\delta\right)^{2}}\right)\leq n^{-1}$
-is equivalent to $-\frac{p\epsilon^{2}}{2\left(\log\delta\right)^{2}}\leq-\log2-\log n\leq-2\log n$,
-and this latter inequality is verified for any $p\geq4\epsilon^{-2}\left(\log\delta\right)^{2}\log n$.
+We can now invoke Lemma \ref{lem:bernstein-trace} to conclude: 
+\[
+\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\left(\mathbf{u}_{i}^{T}\mathbf{u}_{i}\right)^{-1}\mathbf{u}_{i}^{T}H\mathbf{u}_{i}-n^{-1}\mbox{Tr}\left(H\right)\right|\geq\frac{\epsilon}{2}\right]\leq\exp\left(-\frac{p\epsilon^{2}}{8n^{-1}\left(\log\delta\right)^{2}+4\log\left(1/\delta\right)\epsilon}\right)
+\]
+ and $\exp\left(-\frac{p\epsilon^{2}}{8n^{-1}\left(\log\delta\right)^{2}+4\log\left(1/\delta\right)\epsilon}\right)\leq\eta$.
+This latter inequality is verified for any 
+\[
+p\geq4\log\left(\eta^{-1}\right)\epsilon^{-2}\left(2n^{-1}\log^{2}\left(\delta^{-1}\right)+\epsilon\log\left(\delta^{-1}\right)\right)
+\]
+
 \end{proof}
 We immediately get the following result that justifies the notion
 of preconditioners for determinants. The corresponding algorithm,
@@ -389,9 +475,9 @@ matrices so that $B$ is a $\kappa-$approximation of $A$:
 A\preceq B\preceq\kappa A\label{eq:A-B-bounds}
 \end{equation}
 then the algorithm \texttt{PreconditionedLogDetMonteCarlo} computes
-an $\epsilon$-approximation of $\log\left|B^{-1}A\right|$ with high
-probability, by performing $O\left(\kappa\epsilon^{-2}\left(\log\kappa\right)^{2}\log n\left(\log n+\log\kappa+\log\left(\epsilon^{-1}\right)\right)\right)$
-vector inversions from $B$ and vector multiplies from $A$.\end{corollary}
+an $\epsilon$-approximation of $\frac{1}{n}\log\left|B^{-1}A\right|$
+with high probability, by performing $O\left(\kappa\epsilon^{-2}\left(\log\kappa\right)^{2}\log\left(\frac{n^{2}\kappa}{\epsilon}\right)\right)$
+vector inversions from $B$ and vector multiplies from $A$.
 \begin{proof}
 We introduce some notations that will prove useful for the rest of
 the article:
@@ -415,7 +501,9 @@ or also:
 \left(1-\kappa^{-1}\right)I\succeq S\succeq0
 \]
 
-
+\end{proof}
+\end{corollary}
+\begin{proof}
 The matrix $S$ is a contraction, and its spectral radius is determined
 by $\kappa$. Furthermore, computing the determinant of $B^{-1}A$
 is equivalent to computing the determinant of $I-S$: 
@@ -466,6 +554,23 @@ has good spectral properties ($\kappa$ is small). We are going to
 present some algorithms for a class of matrices (symmetric, diagonally
 dominant matrices) that enjoy such good properties.
 
+The results above are valid within a scaling of $n^{-1}$, which makes
+it fall short of our original goal. However, we can get a relative
+error result
+\begin{corollary}
+If $A$ and $B$ are positive definite matrices so that $B$ is a
+$\kappa-$approximation of $A$:
+\[
+A\preceq B\preceq\kappa A
+\]
+then the algorithm \texttt{PreconditionedLogDetMonteCarlo} computes
+a scalar $\hat{y}$ so that
+\[
+\mathbb{P}\left[\left|\right|\right]
+\]
+, by performing $O\left(\kappa\epsilon^{-2}\left(\log\kappa\right)^{2}\log\left(\frac{n^{2}\kappa}{\epsilon}\right)\right)$
+vector inversions from $B$ and vector multiplies from $A$.
+\end{corollary}
 
 \section{Making the problem laplacian\label{sec:Making-the-problem}}
 
@@ -476,14 +581,12 @@ always singular, since its nullspace is spanned by $\mathbf{1}$.
 We generalize the definition of the determinant to handle this technicality.
 \begin{definition}
 \emph{Pseudo-log-determinant (PLD):} Let $A\in\mathcal{S}^{n+}$ be
-a positive semi-definite matrix of which the nullspace is of rank
-at most $1$ (i.e., it has at most one zero eigenvalue). The pseudo-log-determinant
+a non-null positive semi-definite matrix. The pseudo-log-determinant
 is defined by the sum over all the eigenvalues except the last one:
 \[
-\text{ld}\left(A\right)=\sum_{i=2}^{n}\log\left(\lambda_{i}\right)
+\text{ld}\left(A\right)=\sum_{\lambda_{i}>0}\log\left(\lambda_{i}\right)
 \]
-where $\lambda_{i}$ are the eigenvalues of $A$ sorted in increasing
-order.
+where $\lambda_{i}$ are the eigenvalues of $A$.
 \end{definition}
 The matrix logarithm does not converge for matrices that are not invertible,
 so we need to extend its definition. 
@@ -492,9 +595,9 @@ so we need to extend its definition.
 that $0\preceq A\prec2$. The pseudo-logarithm of a matrix is defined
 by the projection of the matrix logarithm onto the span of $A$:
 \[
-\log^{+}A=\sum_{k}\frac{1}{k}P\left(I-A\right)^{k}P^{T}
+\log_{P}^{+}\left(A\right)=\sum_{k}\frac{1}{k}P\left(I-A\right)^{k}P^{T}
 \]
-with $P$ an orthogonal projector onto $\text{span}\left(A\right)$.
+with $P$ an orthonormal projector onto $\text{span}\left(A\right)$.
 \end{definition}
 The interest of the PLD lies in the connection between SDD matrices
 and their Laplacian. Recall that a Laplacian matrix can be constructed
@@ -530,10 +633,14 @@ $x$, it is also an eigenvalue of $PL_{A}P^{T}$ with the same eigenvector
 \item $\text{ld}\left(L_{A}\right)=\log\left|A\right|$
 \item Let $A,B\in SDD_{n}$. $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(L_{A}\right)+\text{ld}\left(L_{B}\right)$
 and $\text{ld}\left(L_{B}^{+}L_{A}\right)=\text{ld}\left(L_{A}\right)-\text{ld}\left(L_{B}\right)=-\text{ld}\left(L_{A}^{+}L_{B}\right)$
-with $A^{+}$the pseudo inverse of $A$.
-\item Let $A\in SDD_{n}$ with $\left\Vert I-A\right\Vert <1$ then $\mbox{ld}\left(L_{A}\right)=-\mbox{Tr}\left(\log^{+}L_{A}\right)$
-with $\log^{+}L_{A}$ the pseudo-logarithm of $L_{A}$
-\end{itemize}
+with $L_{A}^{+}$the pseudo inverse of $L_{A}$.
+\item Let $A,B\in SDD_{n}$, then $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(\sqrt{L_{A}}L_{B}\sqrt{L_{A}}\right)$
+and $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(\left(\sqrt{L_{A}}\right)^{+}L_{B}\left(\sqrt{L_{A}}\right)^{+}\right)=\text{ld}\left(\sqrt{L_{A}^{+}}L_{B}\sqrt{L_{A}^{+}}\right)$
+\item Let $A\in SDD_{n}$ with $\left\Vert I-A\right\Vert <1$ then $\mbox{ld}\left(L_{A}\right)=-\mbox{Tr}\left(\log_{P}^{+}\left(L_{A}\right)\right)=-\mbox{Tr}\left(\log\left(A\right)\right)$.\end{itemize}
+\begin{proof}
+The proofs of this proposition are technical and are contained in
+Appendix A.
+\end{proof}
 Note in particular that the PLD is well defined over connected graphs.
 From now on, we will consider connected graphs only. If graphs have
 several unconnected components, the log-determinant of the corresponding
@@ -555,7 +662,7 @@ of $G$, for which it is easier to compute the determinant, and that
 closely approximates $G$ in the spectral sense. From Proposition
 \ref{pro:pld-properties}:
 \[
-\text{ld}\left(G\right)=\text{ld}\left(H\right)+\text{ld}\left(H^{+}G\right)
+\log\left|G\right|=\text{ld}\left(L_{G}\right)=\text{ld}\left(L_{H}\right)+\text{ld}\left(L_{H}^{+}L_{G}\right)=\log\left|H\right|+\text{ld}\left(L_{H}^{+}L_{G}\right)
 \]
 
 
@@ -595,7 +702,7 @@ and furthermore this factorization has a linear number of non-zero
 elements \cite{Spielman2009a}. This factorization can be expressed
 as:
 \[
-T=PLDL^{T}P^{T}
+L_{T}=PLDL^{T}P^{T}
 \]
  where $P$ is a permutation matrix, $L$ is a lower-triangular matrix
 with the diagonal being all ones, and $D$ a diagonal matrix in which
@@ -604,11 +711,11 @@ $0$. These well-known facts about trees are presented in \cite{Spielman2009a}.
 Once the Cholesky factorization of the tree is performed, the log-determinant
 of the original graph is an immediate by-product:
 \[
-\mbox{ld}\left(T\right)=\sum_{i=1}^{n-1}\log D_{ii}
+\log\left|T\right|=\sum_{i=1}^{n-1}\log D_{ii}
 \]
- Furthermore, computing $T^{+}x$ also takes $O\left(n\right)$ computations
-by forward-backward substitution. Applying Corollary \ref{cor:preconditioning}
-gives immediately:
+ Furthermore, computing $L_{T}^{+}x$ also takes $O\left(n\right)$
+computations by forward-backward substitution. Applying Corollary
+\ref{cor:preconditioning} gives immediately:
 \begin{theorem}
 \label{thm:PLD-tree}Let $G$ be a graph with $n$ vertices and $m$
 edges. Its PLD can be computed up to a precision of $\epsilon$ and
@@ -640,10 +747,12 @@ stretch of the graph is the sum of the stretches of each edge:
 The stretch can be obtained as a by-product of the computation of
 low-stretch spanning trees, of which the construction can be done
 in $O\left(m\log n+n\log^{2}n\right)$ \cite{Abraham2008}. Knowing
-the stretch gives upper and lower bounds on the value of the log-determinant:
-
+the stretch gives upper and lower bounds on the value of the log-determinant.
+\begin{proposition}
+Stretch bounds on the tree PLD:
+\end{proposition}
 \begin{equation}
-\text{ld}\left(T\right)+\left(n-1\right)\log\left(\frac{\text{st}_{G}\left(T\right)}{n-1}\right)\geq\text{ld}\left(G\right)\geq\text{ld}\left(T\right)+\log\left(\text{st}_{T}\left(G\right)-n+2\right)\label{eq:encadrement}
+\log\left|T\right|+\left(n-1\right)\log\left(\frac{\text{st}_{G}\left(T\right)}{n-1}\right)\geq\log\left|G\right|\geq\log\left|T\right|+\log\left(\text{st}_{T}\left(G\right)-n+2\right)\label{eq:encadrement}
 \end{equation}
 
 \begin{proof}
@@ -779,31 +888,32 @@ with high probability. The complete algorithm is presented in Algorithm
 
 We have three sources of errors introduced in our estimate:
 \begin{itemize}
-\item The truncation of the series of $\log\left(B^{+}A\right)$
+\item The truncation of the series of $\text{ld}\left(B^{+}A\right)$
 \item The sampling error induced by having a finite number of samples when
-approximating the trace of $\log\left(B^{+}A\right)$
+approximating the trace of $\text{ld}\left(B^{+}A\right)$
 \item The approximate inversion by $B$
 \end{itemize}
 The following lemmas show that we can reasonably control the inversion
 error by running the ST-solver at a higher precision $O\left(\kappa\left(n_{1}\right)^{-3}\kappa\left(A_{1}\right)^{-1}\epsilon\right)$.
-In particular, the dependency on the condition number of $A_{1}$
-stems from the fact that the convergence guarantees offered by the
-ST-solver are relative to the matrix norm $\left\Vert \right\Vert _{A}$.
-The ST-solvers present some convergence guarantees using the matrix
-norm induced by $A$ instead of the regular Euclidian norm. The following
+The ST-solvers have some convergence guarantees using the matrix norm
+induced by $A$ instead of the regular Euclidian norm. The following
 lemmas deal with this technicality. 
-
+\begin{lemma}
+Consider $M\in\mathcal{S}_{n}^{+}$ with $\text{Tr}\left(M\right)=n$
+for all $i$. Then $\log\left|M\right|\leq0$\end{lemma}
+\begin{proof}
+This is a simple consequence of the concavity of the logarithm. Call
+$\lambda_{i}$ the eigenvalues of $M$, then $\log\left|M\right|=\sum_{i}\log\lambda_{i}$,
+and by concavity we have$n^{-1}\sum_{i}\log\lambda_{i}\leq\log\left(n^{-1}\sum_{i}\lambda_{i}\right)=\log\left(n^{-1}\text{Tr}\left(M\right)\right)=0$.
+\end{proof}
 
 \subsubsection*{Proofs of convergence}
 
 We need to prove that the error introduced by approximating the solution
 of the preconditioner does not have too great an impact on the accuracy
 of the solution. We use the same notations as above with $B$ a $\kappa-$approximation
-of $A$, and we call:
+of $A$ ($A\preceq B\preceq\kappa A$), and we call:
 
-\[
-A\preceq B\preceq\kappa A
-\]
 \[
 S=I-B^{-1/2}AB^{-1/2}
 \]
@@ -819,7 +929,7 @@ R=I-B^{-1}A
 \]
 
 \begin{lemma}
-The matrix norm of the elements is bounded and less than $1$:
+$S$ and $R$ are contractions for the Euclidian and $B-$norms:
 \begin{eqnarray*}
 \left\Vert S\right\Vert  & \leq & 1-\varphi\\
 \left\Vert R\right\Vert  & \leq & 1-\varphi\\
@@ -986,7 +1096,7 @@ estimates for the error bounds on the trace series.
 \label{thm:main}Consider $A$ a symmetric, diagonally dominant matrix
 of size $n\times n$ with $m$ non-zero entries, and $0<\epsilon<\log^{-5}n$.
 One can compute $y\in\mathbb{R}$ so that $\mathbb{P}\left(\left|y-\log\left|A\right|\right|>\epsilon\right)\leq\frac{1}{n}$
-in expected time $\tilde{O}\left(m\epsilon^{-2}\log^{7}n\left(\log\epsilon^{-1}+\log n+\log\kappa\left(A\right)\right)\right)$. \end{theorem}
+in expected time $\tilde{O}\left(m\epsilon^{-2}\log^{7}n\left(\log\left(\frac{n\kappa\left(A\right)}{\epsilon}\right)\right)\right)$. \end{theorem}
 \begin{proof}
 Consider a $\tilde{O}\left(\log^{4}n\right)$-chain \ref{lem:good-chain}
 for the Laplacian of $A$. The cost of constructing such a chain is
@@ -1032,6 +1142,94 @@ article.
 
 
 \section*{Appendix}
+
+
+\subsection{Pseudo-log-determinant and pseudo-matrix-logarithm}
+
+This section provides the proofs related to the PLD. These proofs
+are elementary and do not provide much insight. In this section, we
+call$\mathcal{D}_{n}^{+}$the set of all non-zero diagonalizable matrices
+in $\mathbb{R}^{n\times n}$ with non-negative eigenvalues.
+\begin{lemma}
+Given two non-empty orthornormal families $P$ and $Q$ that span
+the same space, $P^{T}Q$ is invertible and we have:
+\[
+\left(P^{T}Q\right)^{-1}=Q^{T}P
+\]
+\end{lemma}
+\begin{proof}
+Move the proof here.\end{proof}
+\begin{lemma}
+Given $A\in\mathcal{D}_{n}^{+}$ and $P$ an orthonormal basis for
+$\text{span}\left(A\right)$, we have the relation:
+\[
+\text{ld\ensuremath{\left(A\right)}}=\log\left|P^{T}AP\right|
+\]
+\end{lemma}
+\begin{proof}
+Since $A$ is diagonalizable, consider its decomposition $A=Q\Delta Q^{T}$
+with $\Delta$ a diagonal matrix with positive entries on the diagonal.
+Note that $\Delta$ exists since $A\neq0$. By definition of the PLD,
+$\text{ld}\left(A\right)=\sum_{i}\log\Delta_{i}$. Since $\mathbb{R}^{n}=\text{span}\left(Q\right)\oplus\text{Ker}\left(A\right)=\text{span}\left(P\right)\oplus\text{Ker}\left(A\right)$,
+there exists an invertible matrix $B$ such that $Q=PB$. Using the
+fact that $P$ is an orthonormal family, we get 
+\[
+P^{T}Q=P^{T}PB=B
+\]
+ Furthermore, $B$ is invertible, so $QB^{-1}=P$. Using the fact
+that the eigenvalues make an orthonormal family, we get: $B^{-1}=Q^{T}P$,
+hence:
+\[
+\left(P^{T}Q\right)^{-1}=Q^{T}P
+\]
+
+
+Now we wan conclude:
+\[
+\left|P^{T}AP\right|=\left|P^{T}Q\Delta Q^{T}P\right|=\left|P^{T}Q\right|\left|\Delta\right|\left|Q^{T}P\right|=\left|\Delta\right|
+\]
+Hence $\log\left|P^{T}AP\right|=\sum_{i}\log\Delta_{i}=\text{ld}\left(A\right)$.\end{proof}
+\begin{lemma}
+Given $A\succ0,\, B\succ0$, then $AB$ is diagonalizable and $AB\succ0$.
+Same thing for $A\succeq0$ and $B\succeq0$.\end{lemma}
+\begin{proof}
+The proof of this lemma is in {[}cite Spielman{]}.\end{proof}
+\begin{lemma}
+Given $A,B\in\mathcal{D}_{n}^{+}$ so that $\text{Ker}\left(A\right)=\text{Ker}\left(B\right)$,
+then $C=AB\in\mathcal{D}_{n}^{+}$ and $\text{Ker}\left(C\right)=\text{Ker}\left(A\right)$.\end{lemma}
+\begin{proof}
+Consider the diagonalization of $A$ and $B$: $A=Q_{A}\Delta_{A}Q_{A}^{T}$
+and $B=Q_{B}\Delta_{B}Q_{B}^{T}$, and call $D=Q_{A}^{T}Q_{B}$. Since
+$\Delta_{A}D\Delta_{B}$ is invertible, $\text{Ker}\left(C\right)=\text{Ker}\left(A\right)$.
+Furthermore, consider a non-null eigenvalue $u=Q_{A}s$. Then $s$
+verifies the equation:
+\[
+\Delta_{A}D\Delta_{B}D^{-1}s=\lambda s
+\]
+So all the eigenvalues of $AB$ are that of $\Delta_{A}D\Delta_{B}D^{-1}$,
+and they are positive from the lemma above.\end{proof}
+\begin{lemma}
+\label{lem:pld-sum}Consider $A,B\in\mathcal{D}_{n}^{+}$with $\text{Ker}\left(A\right)=\text{Ker}\left(B\right)$,
+then:
+\[
+\text{ld}\left(AB\right)=\text{ld}\left(A\right)+\text{ld}\left(B\right)
+\]
+\end{lemma}
+\begin{proof}
+From the lemma above, the product $AB$ is in $\mathcal{D}_{n}^{+}$and
+the term $\text{ld}\left(AB\right)$ is well defined. Consider the
+diagonalization of $A$ and $B$: $A=Q_{A}\Delta_{A}Q_{A}^{T}$ and
+$B=Q_{B}\Delta_{B}Q_{B}^{T}$. Then 
+\begin{eqnarray*}
+\text{ld}\left(AB\right) & = & \log\left|Q_{A}^{T}ABQ_{A}\right|\\
+ & = & \log\left|\Delta_{A}Q_{A}^{T}Q_{B}\Delta_{B}\left(Q_{A}^{T}Q_{B}\right)^{-1}\right|\\
+ & = & \log\left|\Delta_{A}\right|+\log\left|\Delta_{B}\right|\\
+ & = & \text{ld}\left(A\right)+\text{ld}\left(B\right)
+\end{eqnarray*}
+
+\end{proof}
+
+\subsection{Other inequalities}
 \begin{lemma}
 \label{lem:Jensen-inequality-matrix-logarithm}Jensen inequality for
 the matrix logarithm. Given $A\in\mathcal{S}_{n}^{+},$ $0\prec A\prec2$,
@@ -1110,8 +1308,10 @@ From a practical perspective, the graph stretch can be computed in
 $\tilde{O}\left(m\log n/\epsilon^{2}\right)$
 \begin{proposition}
 There exists an algorithm that computes \textup{an $\epsilon$-approximation
-of $\text{st}_{H}\left(G\right)$ in} $\tilde{O}\left(m\log n/\epsilon^{2}\right)$
-\end{proposition}
+of $\text{st}_{H}\left(G\right)$ in} $\tilde{O}\left(m\log n/\epsilon^{2}\right)$\end{proposition}
+\begin{proof}
+This is the second main result from Spielman and Srivastana (XXX cite).
+\end{proof}
 
 
 % \bibliographystyle{plain}

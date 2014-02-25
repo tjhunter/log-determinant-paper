@@ -1,11 +1,11 @@
 
-all: siam.pdf
+all: det_sdd.pdf
 
 clean:
-	rm -f *.aux *.log *.bbl *.blg siam.pdf
+	rm -f *.aux *.log *.bbl *.blg det_sdd.pdf
 
-siam.pdf: siam.tex 2012_sparse_info.bib
-	pdflatex siam.tex
-	bibtex siam
-	pdflatex siam.tex
-	pdflatex siam.tex
+det_sdd.pdf: det_sdd.tex 2012_sparse_info.bib
+	pdflatex det_sdd.tex
+	bibtex det_sdd
+	pdflatex det_sdd.tex
+	pdflatex det_sdd.tex
