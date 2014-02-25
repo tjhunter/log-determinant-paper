@@ -1,34 +1,52 @@
 %% LyX 2.0.5.1 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[oneside,english]{siamltex}
-\usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
-\usepackage{float}
+\documentclass[oneside]{article}
+% \usepackage[T1]{fontenc}
+% \usepackage[latin9]{inputenc}
+% \usepackage{float}
+% \usepackage{amstext}
+% \usepackage{amssymb}
+
+
+\usepackage{jmlr2e}
+
+% Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
+
+\jmlrheading{1}{2000}{1-48}{4/00}{10/00}{Marina Meil\u{a} and Michael I. Jordan}
+
+% Short headings should be running head and authors last names
+
+\ShortHeadings{Learning with Mixtures of Trees}{Meil\u{a} and Jordan}
+\firstpageno{1}
+
+
+\usepackage[]{algorithm2e}
+% \usepackage{float}
 \usepackage{amstext}
 \usepackage{amssymb}
 
-\makeatletter
+% \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
-\floatstyle{ruled}
-\newfloat{algorithm}{tbp}{loa}
-\providecommand{\algorithmname}{Algorithm}
-\floatname{algorithm}{\protect\algorithmname}
+% \floatstyle{ruled}
+% \newfloat{algorithm}{tbp}{loa}
+% \providecommand{\algorithmname}{Algorithm}
+% \floatname{algorithm}{\protect\algorithmname}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
-\newcommand\eqref[1]{(\ref{#1})}
+% \newcommand\eqref[1]{(\ref{#1})}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
-\include{amsmath}
+% \include{amsmath}
 
-\makeatother
+% \makeatother
 
-\usepackage{babel}
-  \providecommand{\corollaryname}{Corollary}
-  \providecommand{\definitionname}{Definition}
-  \providecommand{\lemmaname}{Lemma}
-  \providecommand{\propositionname}{Proposition}
-\providecommand{\theoremname}{Theorem}
+% \usepackage{babel}
+%   \providecommand{\corollaryname}{Corollary}
+%   \providecommand{\definitionname}{Definition}
+%   \providecommand{\lemmaname}{Lemma}
+%   \providecommand{\propositionname}{Proposition}
+% \providecommand{\theoremname}{Theorem}
 
 \begin{document}
 
@@ -36,8 +54,20 @@
 in near-linear time\\
 WORKING DRAFT}
 
+\author{\name Timothy Hunter \email tjhunterp@eecs.berkeley.edu \\
+       \addr Department of Computer Sciences\\
+       University of Washington\\
+       Seattle, WA 98195-4322, USA
+       \AND
+       \name Alexandre M. Bayen \email jordan@cs.berkeley.edu \\
+       \addr Division of Computer Science and Department of Statistics\\
+       University of California\\
+       Berkeley, CA 94720-1776, USA}
 
-\author{Timothy Hunter, Alexandre Bayen}
+
+% \author{Timothy Hunter, Alexandre Bayen}
+
+\editor{Editor}
 
 \maketitle
 
@@ -1087,6 +1117,7 @@ of $\text{st}_{H}\left(G\right)$ in} $\tilde{O}\left(m\log n/\epsilon^{2}\right)
 
 
 \bibliographystyle{plain}
-\bibliography{2012_sparse_info,siam}
+\bibliography{2012_sparse_info}
+% \bibliography{2012_sparse_info,siam}
 
 \end{document}
