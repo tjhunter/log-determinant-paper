@@ -851,7 +851,9 @@ easy to compute some partial Cholesky factorization), yet it is close
 to the original $A$ is the spectral sense ($A\preceq B\preceq\kappa A$),
 thanks to the additional edges. The partial Cholesky factorization
 is computed using the \texttt{GreedyElimination} algorithm presented
-in \cite{Koutis2010}. This section is based on Section 4 of \cite{Spielman2009a}. 
+in \cite{Koutis2010}. 
+In order for this section to be self-contained, we repeat the main results
+of Section 4 in \cite{Spielman2009a}. 
 
 Consider a Laplacian matrix $G$. There exists an algorithm that computes
 the partial Cholesky factorization:
@@ -883,12 +885,13 @@ Furthermore, $A_{1}$ is itself Laplacian and:
 \]
 
 \end{itemize}
-Thus, the PLD of the original Laplacian $A$ is:
+The exact algorithm is detailled that achieves this factorization is presented in \cite{Koutis2010}.
+Using this factorization, the PLD of the original Laplacian $A$ is:
 \begin{eqnarray*}
 \text{ld}\left(A\right) & = & \text{ld}\left(B\right)+\text{ld}\left(B^{+}A\right)\\
  & = & \sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(A_{1}\right)+\text{ld}\left(B^{+}A\right)
 \end{eqnarray*}
-We are left with solving a smaller problem $A_{1}$, and approximate
+Thus, we are left with solving a smaller problem $A_{1}$, and approximate
 the value of $\text{ld}\left(B^{+}A\right)$ using the algorithm \texttt{SampleLogDet}.
 ST preconditioners are appealing for this task: they guarantee that
 $A_{1}$ is substantially smaller than $A$, so the recursion completes
@@ -911,7 +914,8 @@ constant $c_{r}$.
 \end{enumerate}
 Good chains exist (Lemma 7.3 from \cite{Koutis2010}):
 \begin{lemma}
-\label{lem:good-chain}Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$
+\label{lem:good-chain}
+(Lemma 7.3 from \cite{Koutis2010}) Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$
 from \cite{Koutis2010} produces a $\tilde{O}\left(\log^{4}n\right)$-good
 chain for $A$ with probability $1-p$. The algorithm runs in time
 \[
@@ -923,6 +927,7 @@ These chains furthermore can be used a good preconditioners for conjugate
 gradient and lead to near-linear algorithms for approximate inversion
 (Lemma 7.2 from \cite{Koutis2010})
 \begin{lemma}
+(Lemma 7.2 from \cite{Koutis2010}) 
 Given a $\kappa\left(n\right)$-good chain for $A$, a vector $x$
 such that $\left\Vert x-L_{A}^{+}b\right\Vert _{A}<\epsilon\left\Vert L_{A}^{+}b\right\Vert _{A}$
 can be computed in $O\left(m_{d}^{3}m_{1}\sqrt{\kappa\left(n_{1}\right)}\log\left(1/\epsilon\right)\right)$
