@@ -182,21 +182,27 @@ The problem of estimating determinants has important applications
 in spatial data analysis, statistical physics and statistics. In spatial
 statistics, it is often convenient to interpolate measurements in
 a 2-, 3- or 4-dimensional volume using a sparse Gaussian process,
-a technique known as \emph{kriging }(CITE)\emph{. }Computing the optimal
-parameters of this Gaussian process involves repeated evaluations
-of the partition function, which is a log-determinant. In this context,
-a diagonally dominant matrix for the Gram matrix of the process corresponds
-to somewhat weak interactions between measurements (which is verified
-in some contexts, see for example CITEBARRY). Determinants also play
-a crucial role in quantum physics, and especially in quantum chromatography
-(QC) and lattice theory. The interaction between particles can be
-approximated as a lattice, and the energy level of particles is the
-determinant of some functional operators over this lattice (Slatter
-Determinant, CITE). It is itself a very complex problem because of
-the size of the matrices involved for any non-trivial problem. In
-this respect, the restriction to diagonally dominant matrices can
-be interpreted as an interaction between relatively massive particles
-(CITE). 
+a technique known in the geospatial community as \emph{kriging }\cite{zhang2010kriging,li2005analysis}\emph{.
+}Computing the optimal parameters of this Gaussian process involves
+repeated evaluations of the partition function, which is a log-determinant.
+In this context, a diagonally dominant matrix for the Gram matrix
+of the process corresponds to weak interactions between points of
+measure (which is verified in some contexts \cite{KelleyPace1997291}).
+Determinants also play a crucial role in quantum physics and in theoretical
+physics. The wave function of a system of multiple fermion particles
+is an antisymmetric function which can be described as a determinant
+(Slatter determinant, \cite{atkins2011molecular,lowdin1955quantum}).
+In the theory of quantum chromodynamics (QCD), the interaction between
+fundamental particles can be discretized as a lattice, and the energy
+level of particles is the determinant of some functional operators
+over this lattice \cite{duncan1998efficient}. It is itself a very
+complex problem because of the size of the matrices involved for any
+non-trivial problem, for which the number of variables is typically
+in the millions \cite{bernardson1994monte}. In this respect, the
+restriction to diagonally dominant matrices can be interpreted as
+an interaction between relatively massive particles \cite{deForcrand1989516},
+or as a bound on the propagation of interactions between sites in
+the lattice \cite{bernardson1994monte}.
 
 For these reasons, computing estimates of the log-determinant has
 been an active problem in physics and statistics. In particular, the
