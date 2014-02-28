@@ -1,0 +1,899 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\include{amsmath}
+
+% \makeatother
+
+% \usepackage{babel}
+%   \providecommand{\corollaryname}{Corollary}
+%   \providecommand{\definitionname}{Definition}
+%   \providecommand{\lemmaname}{Lemma}
+%   \providecommand{\propositionname}{Proposition}
+% \providecommand{\theoremname}{Theorem}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 0
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Making the problem laplacian
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Making-the-problem"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From now on, we consider all matrices to be in 
+\begin_inset Formula $SDD_{n}$
+\end_inset
+
+.
+ Most techniques we will be using work on Laplacian matrices instead of
+ SDD matrices.
+ An SDD matrix is positive semi-definite while a Laplacian matrix is always
+ singular, since its nullspace is spanned by 
+\begin_inset Formula $\mathbf{1}$
+\end_inset
+
+.
+ We generalize the definition of the determinant to handle this technicality.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{definition}
+\end_layout
+
+\end_inset
+
+ 
+\emph on
+Pseudo-log-determinant (PLD):
+\emph default
+ Let 
+\begin_inset Formula $A\in\mathcal{S}^{n+}$
+\end_inset
+
+ be a non-null positive semi-definite matrix.
+ The pseudo-log-determinant is defined by the sum of the logarithms of all
+ the positive eigenvalues: 
+\begin_inset Formula 
+\[
+\text{ld}\left(A\right)=\sum_{\lambda_{i}>0}\log\left(\lambda_{i}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ are the eigenvalues of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{definition}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The interest of the PLD lies in the connection between SDD matrices and
+ their associated Laplacian.
+ Recall that an SDD matrix can be transformed into a Laplacian (which has
+ all off-diagonal terms non-positive, and for which the sum of each row
+ and each column is zero).
+ As underlined in GREMBAN, solving an equation involving an SDD can be turned
+ into solving an equation with an SDD in which all the off-diagonal terms
+ are non-positive of twice the same size.
+ This transform is also useful for computing determinants.
+ The following lemma shows that computing the log-determinant of an SDD
+ with positive off-diagonal entries can be turned into computing the log-determi
+nants of two SDD matrices with non-positive off-diagonal entries.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lemma}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "non-negative-conversion"
+
+\end_inset
+
+Consider the decomposition of a SDD matrix into a positive and a negative
+ sum:
+\begin_inset Formula 
+\[
+A=P-N
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $P_{ij}\geq0$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{ij}\geq0$
+\end_inset
+
+.
+ Then the matrices 
+\begin_inset Formula $\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\in SDD_{2n}$
+\end_inset
+
+ and 
+\begin_inset Formula $P+N\in SDD_{n}$
+\end_inset
+
+ and we have the relation:
+\begin_inset Formula 
+\[
+\log\left|\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\right|=\log\left|P+N\right|+\log\left|P-N\right|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lemma}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ Call 
+\begin_inset Formula $C=\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Consider 
+\begin_inset Formula $\mu$
+\end_inset
+
+ an eigenvalue of 
+\begin_inset Formula $A$
+\end_inset
+
+, and 
+\begin_inset Formula $x$
+\end_inset
+
+ an associated eigenvector: 
+\begin_inset Formula $Ax=\mu x$
+\end_inset
+
+.
+ Then:
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)=\left(\begin{array}{c}
+Ax\\
+-Ax
+\end{array}\right)=\mu\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)
+\]
+
+\end_inset
+
+which shows that the vector 
+\begin_inset Formula $\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)$
+\end_inset
+
+ is an eigenvector of 
+\begin_inset Formula $C$
+\end_inset
+
+ with associated eigenvalue 
+\begin_inset Formula $\mu$
+\end_inset
+
+ .
+ Similarly, if 
+\begin_inset Formula $\eta$
+\end_inset
+
+ is an eigenvector of 
+\begin_inset Formula $B$
+\end_inset
+
+ with associated eigenvalue 
+\begin_inset Formula $y$
+\end_inset
+
+, then 
+\begin_inset Formula $\eta$
+\end_inset
+
+ is also an eigenvector of 
+\begin_inset Formula $C$
+\end_inset
+
+ with associated eigenvalue 
+\begin_inset Formula $\left(\begin{array}{c}
+y\\
+y
+\end{array}\right)$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $C$
+\end_inset
+
+ is exactly of size 
+\begin_inset Formula $2n$
+\end_inset
+
+, the set of eigenvalues of 
+\begin_inset Formula $C$
+\end_inset
+
+ is exactly the union of sets of eigenvalues of 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+.
+ Thus 
+\begin_inset Formula $\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\eta_{i}=\log\left|A\right|+\log\left|B\right|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Recall that a Laplacian matrix can be constructed from any SDD with non-positive
+ off-diagonal entries matrix by adding a 
+\begin_inset Quotes eld
+\end_inset
+
+ground
+\begin_inset Quotes erd
+\end_inset
+
+ node (see Gremban's thesis 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gremban1996"
+
+\end_inset
+
+, Chapter 4).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{definition}
+\end_layout
+
+\end_inset
+
+ 
+\emph on
+Augmented Laplacian of an SDD matrix (Definition XXX in GREMBAN):
+\emph default
+ Let 
+\begin_inset Formula $A\in SDD_{n}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $L,D$
+\end_inset
+
+ be the decomposition of 
+\begin_inset Formula $A$
+\end_inset
+
+ into 
+\begin_inset Formula $L$
+\end_inset
+
+ a Laplacian matrix and 
+\begin_inset Formula $D$
+\end_inset
+
+ a (non-negative) diagonal matrix such that 
+\begin_inset Formula $A=L+D$
+\end_inset
+
+.
+ The augmented matrix of 
+\begin_inset Formula $A$
+\end_inset
+
+ is: 
+\begin_inset Formula 
+\[
+L_{A}=\left(\begin{array}{cc}
+A & -\mathbf{d}\\
+-\mathbf{d}^{T} & h
+\end{array}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\mathbf{d}\in\mathbb{R}^{n}$
+\end_inset
+
+: 
+\begin_inset Formula $\mathbf{d}_{i}=D_{ii}$
+\end_inset
+
+ and 
+\begin_inset Formula $h=\sum_{i}D_{ii}$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{definition}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From now on, given any 
+\begin_inset Formula $A\in SDD_{n}$
+\end_inset
+
+, we will implicitly define a Laplacian 
+\begin_inset Formula $L_{A}$
+\end_inset
+
+ associated to it, using the augmented Laplacian.
+ This process is also reversible and can be used to define a matrix 
+\begin_inset Formula $\tilde{A}\in SDD_{n}$
+\end_inset
+
+ from 
+\begin_inset Formula $L_{A}$
+\end_inset
+
+ with appealing properties in a very simple way.
+ We call this process 
+\begin_inset Quotes eld
+\end_inset
+
+floating
+\begin_inset Quotes erd
+\end_inset
+
+ of the Laplacian, by opposition to 
+\begin_inset Quotes eld
+\end_inset
+
+grounding
+\begin_inset Quotes erd
+\end_inset
+
+ the SDD matrix as a Laplacian.
+ 
+\end_layout
+
+\begin_layout Standard
+The PLD enjoys some of the usual properties of the log-determinant.
+ The following proposition shows the interest of the PLD in the study of
+ the Laplacian of a graph.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{proposition}
+\end_layout
+
+\end_inset
+
+ 
+\shape up
+
+\begin_inset CommandInset label
+LatexCommand label
+name "pro:pld-properties"
+
+\end_inset
+
+Let 
+\begin_inset Formula $A\in SDD_{n}$
+\end_inset
+
+, and 
+\begin_inset Formula $L_{A}$
+\end_inset
+
+ its augmented Laplacian.
+ Let 
+\begin_inset Formula $P=\left(I_{n}\,\mathbf{0}\right)$
+\end_inset
+
+ be a projection matrix over the first 
+\begin_inset Formula $n$
+\end_inset
+
+ columns of 
+\begin_inset Formula $L_{A}$
+\end_inset
+
+.
+ Then:
+\shape default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{proposition}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is an eigenvalue of 
+\begin_inset Formula $A$
+\end_inset
+
+ with associated eigenvector 
+\begin_inset Formula $x$
+\end_inset
+
+, it is also an eigenvalue of 
+\begin_inset Formula $PL_{A}P^{T}$
+\end_inset
+
+ with the same eigenvector 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\text{ld}\left(L_{A}\right)=\log\left|A\right|$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $A,B\in SDD_{n}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(L_{A}\right)+\text{ld}\left(L_{B}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{ld}\left(L_{B}^{+}L_{A}\right)=\text{ld}\left(L_{A}\right)-\text{ld}\left(L_{B}\right)=-\text{ld}\left(L_{A}^{+}L_{B}\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $L_{A}^{+}$
+\end_inset
+
+the pseudo inverse of 
+\begin_inset Formula $L_{A}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $A,B\in SDD_{n}$
+\end_inset
+
+, then 
+\begin_inset Formula $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(\sqrt{L_{A}}L_{B}\sqrt{L_{A}}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(\left(\sqrt{L_{A}}\right)^{+}L_{B}\left(\sqrt{L_{A}}\right)^{+}\right)=\text{ld}\left(\sqrt{L_{A}^{+}}L_{B}\sqrt{L_{A}^{+}}\right)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $A\in SDD_{n}$
+\end_inset
+
+ with 
+\begin_inset Formula $\left\Vert I-A\right\Vert <1$
+\end_inset
+
+ then 
+\begin_inset Formula $\mbox{ld}\left(L_{A}\right)=-\mbox{Tr}\left(\log_{P}^{+}\left(L_{A}\right)\right)=-\mbox{Tr}\left(\log\left(A\right)\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The proofs of this proposition are technical and are contained in Appendix
+ A.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+ Note in particular that the PLD is well defined over connected graphs.
+ From now on, we will consider connected graphs only.
+ If graphs have several unconnected components, the log-determinant of the
+ corresponding SDD is the sum of the PLDs of the Laplacians of each component.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lemma}
+\end_layout
+
+\end_inset
+
+ The pseudo-log-determinant of a connected graph is well-defined.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lemma}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ A connected graph 
+\begin_inset Formula $G$
+\end_inset
+
+ has non-zero conductance 
+\begin_inset Formula $\Phi_{G}$
+\end_inset
+
+ and using Cheeger's inequality (see Theorem 4.1 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Spielman2010a"
+
+\end_inset
+
+) 
+\begin_inset Formula $\lambda_{2}\geq\Phi_{G}^{2}>0$
+\end_inset
+
+.
+ Hence 
+\begin_inset Formula $\lambda_{i}\geq\lambda_{2}>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i\geq2$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{ld}\left(G\right)\in\mathbb{R}$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+ From now on, we will focus on computing the PLD of Laplacians.
+ Note that the kernel of all Laplacian matrices of connected graphs is precisely
+ 
+\begin_inset Formula $\mathbb{R}\mathbf{1}_{n}$
+\end_inset
+
+, so we can use the PLD with pseudo inverses as if we were using the log
+ determinant with SDD matrices: Consider a graph 
+\begin_inset Formula $G=\left(V,E,w\right)$
+\end_inset
+
+, identified with its Laplacian matrix 
+\begin_inset Formula $L_{G}$
+\end_inset
+
+.
+ Consider a weighted subgraph 
+\begin_inset Formula $H=\left(V,\tilde{E},\tilde{w}\right)$
+\end_inset
+
+ of 
+\begin_inset Formula $G$
+\end_inset
+
+, for which it is easier to compute the determinant, and that closely approximat
+es 
+\begin_inset Formula $G$
+\end_inset
+
+ in the spectral sense.
+ From Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "pro:pld-properties"
+
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+\log\left|G\right|=\text{ld}\left(L_{G}\right)=\text{ld}\left(L_{H}\right)+\text{ld}\left(L_{H}^{+}L_{G}\right)=\log\left|H\right|+\text{ld}\left(L_{H}^{+}L_{G}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We will see how to adapt Spielman and Teng's remarkable work on 
+\emph on
+ultra-sparsifiers
+\emph default
+ to produce good preconditioners 
+\begin_inset Formula $H$
+\end_inset
+
+ for the determinant.
+ In particular, once a good preconditioners is available for 
+\begin_inset Formula $G$
+\end_inset
+
+, we present an algorithm that computes an upper bound and a lower bound
+ of the PLD 
+\emph on
+for free
+\emph default
+.
+ We will improve this results to produce an algorithm that computes an 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-approximation with high probability.
+\end_layout
+
+\end_body
+\end_document
