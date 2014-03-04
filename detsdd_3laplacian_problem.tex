@@ -1,0 +1,176 @@
+
+\section{Making the problem laplacian}
+
+\label{sec:Making-the-problem}
+
+From now on, we consider all matrices to be in $SDD_{n}$. Most techniques
+we will be using work on Laplacian matrices instead of SDD matrices.
+An SDD matrix is positive semi-definite while a Laplacian matrix is
+always singular, since its nullspace is spanned by $\mathbf{1}$.
+We generalize the definition of the determinant to handle this technicality. 
+
+\begin{definition} \emph{Pseudo-log-determinant (PLD):} Let $A\in\mathcal{S}^{n+}$
+be a non-null positive semi-definite matrix. The pseudo-log-determinant
+is defined by the sum of the logarithms of all the positive eigenvalues:
+\[
+\text{ld}\left(A\right)=\sum_{\lambda_{i}>0}\log\left(\lambda_{i}\right)
+\]
+where $\lambda_{i}$ are the eigenvalues of $A$. \end{definition}
+
+The interest of the PLD lies in the connection between SDD matrices
+and their associated Laplacian. Recall that an SDD matrix can be transformed
+into a Laplacian (which has all off-diagonal terms non-positive, and
+for which the sum of each row and each column is zero). As underlined
+in GREMBAN, solving an equation involving an SDD can be turned into
+solving an equation with an SDD in which all the off-diagonal terms
+are non-positive of twice the same size. This transform is also useful
+for computing determinants. The following lemma shows that computing
+the log-determinant of an SDD with positive off-diagonal entries can
+be turned into computing the log-determinants of two SDD matrices
+with non-positive off-diagonal entries.
+
+\begin{lemma}\label{non-negative-conversion}Consider the decomposition
+of a SDD matrix into a positive and a negative sum:
+\[
+A=P-N
+\]
+with $P_{ij}\leq0$ for $i\neq j$ and $N_{ij}\leq0$ for all $i,j$
+so that $\left|A_{ij}\right|=\left|P_{ij}\right|+\left|N_{ij}\right|$.
+Then the matrices $\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\in SDD_{2n}$ and $P+N\in SDD_{n}$ with all the off-diagonal coefficients being
+negative, and we have the relation:
+\[
+\log\left|\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\right|=\log\left|P+N\right|+\log\left|P-N\right|
+\]
+
+
+\end{lemma}
+
+\begin{proof} Call $C=\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)$
+
+Consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
+$Ax=\mu x$. Then:
+\[
+\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)=\left(\begin{array}{c}
+Ax\\
+-Ax
+\end{array}\right)=\mu\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)
+\]
+which shows that the vector $\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)$ is an eigenvector of $C$ with associated eigenvalue $\mu$ . Similarly,
+if $\eta$ is an eigenvector of $B$ with associated eigenvalue $y$,
+then $\eta$ is also an eigenvector of $C$ with associated eigenvalue
+$\left(\begin{array}{c}
+y\\
+y
+\end{array}\right)$. Since $C$ is exactly of size $2n$, the set of eigenvalues of $C$
+is exactly the union of sets of eigenvalues of $A$ and $B$. Thus
+$\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\eta_{i}=\log\left|A\right|+\log\left|B\right|$
+
+\end{proof}
+
+Recall that a Laplacian matrix can be constructed from any SDD with
+non-positive off-diagonal entries matrix by adding a ``ground''
+node (see Gremban's thesis \cite{Gremban1996}, Chapter 4).
+
+\begin{definition} \emph{Augmented Laplacian of an SDD matrix (Definition
+XXX in GREMBAN):} Let $A\in SDD_{n}$. Let $L,D$ be the decomposition
+of $A$ into $L$ a Laplacian matrix and $D$ a (non-negative) diagonal
+matrix such that $A=L+D$. The augmented matrix of $A$ is: 
+\[
+L_{A}=\left(\begin{array}{cc}
+A & -\mathbf{d}\\
+-\mathbf{d}^{T} & h
+\end{array}\right)
+\]
+with $\mathbf{d}\in\mathbb{R}^{n}$: $\mathbf{d}_{i}=D_{ii}$ and
+$h=\sum_{i}D_{ii}$. \end{definition}
+
+From now on, given any $A\in SDD_{n}$, we will implicitly define
+a Laplacian $L_{A}$ associated to it, using the augmented Laplacian.
+This process is also reversible and can be used to define a matrix
+$\tilde{A}\in SDD_{n}$ from $L_{A}$ with appealing properties in
+a very simple way. We call this process ``floating'' of the Laplacian,
+by opposition to ``grounding'' the SDD matrix as a Laplacian. 
+
+\begin{definition}\emph{Floating a Laplacian}. Consider $L$ a Laplacian
+matrix. Call $F_{L}$ the matrix formed by removing the last row and
+the last column from $L$.
+
+\end{definition}
+
+The followin lemma shows that the Laplacian matrix overdetermines
+a system, and that no information is lost by ``floating'' it.
+
+\begin{lemma}Consider $Z$ a (weigted) Laplacian matrix, then:
+\begin{itemize}
+\item $L_{F_{Z}}=Z$
+\item The eigenvalues of $F_{Z}$ are the positive eigenvalues of of $Z$,
+and the corresponding eigenvectors for $F_{Z}$ are the same eigenvectors,
+truncated by the last coefficient.
+\item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$
+\end{itemize}
+\end{lemma}
+
+The PLD enjoys some of the usual properties of the log-determinant.
+The following proposition shows the interest of the PLD in the study
+of the Laplacian of a graph. 
+
+\begin{proposition} \label{pro:pld-properties}Let $A\in SDD_{n}$,
+and $L_{A}$ its augmented Laplacian. Let $P=\left(I_{n}\,\mathbf{0}\right)$
+be a projection matrix over the first $n$ columns of $L_{A}$. Then:\end{proposition} 
+\begin{itemize}
+\item If $\lambda$ is an eigenvalue of $A$ with associated eigenvector
+$x$, it is also an eigenvalue of $PL_{A}P^{T}$ with the same eigenvector 
+\item $\text{ld}\left(L_{A}\right)=\log\left|A\right|$ 
+\item Let $A,B\in SDD_{n}$. $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(L_{A}\right)+\text{ld}\left(L_{B}\right)$
+and $\text{ld}\left(L_{B}^{+}L_{A}\right)=\log\left|B^{-1}A\right|$
+with $L_{A}^{+}$the pseudo inverse of $L_{A}$. 
+\end{itemize}
+\begin{proof}XXX The proofs of this proposition are technical and
+are contained in Appendix B. \end{proof} 
+
+Note in particular that the PLD is well defined over connected graphs.
+From now on, we will consider connected graphs only. If graphs have
+several unconnected components, the log-determinant of the corresponding
+SDD is the sum of the PLDs of the Laplacians of each component. 
+
+From now on, we will focus on computing the PLD of Laplacians. Note
+that the kernel of all Laplacian matrices of connected graphs is precisely
+$\mathbb{R}\mathbf{1}_{n}$, so we can use the PLD with pseudo inverses
+as if we were using the log determinant with SDD matrices: Consider
+a graph $G=\left(V,E,w\right)$, identified with its Laplacian matrix
+$L_{G}$. Consider a weighted subgraph $H=\left(V,\tilde{E},\tilde{w}\right)$
+of $G$, for which it is easier to compute the determinant, and that
+closely approximates $G$ in the spectral sense. From Proposition
+\ref{pro:pld-properties}: 
+\[
+\log\left|G\right|=\text{ld}\left(L_{G}\right)=\text{ld}\left(L_{H}\right)+\text{ld}\left(L_{H}^{+}L_{G}\right)=\log\left|H\right|+\text{ld}\left(L_{H}^{+}L_{G}\right)
+\]
+
+
+We will see how to adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
+to produce good preconditioners $H$ for the determinant. In particular,
+once a good preconditioners is available for $G$, we present an algorithm
+that computes an upper bound and a lower bound of the PLD \emph{for
+free}. We will improve this results to produce an algorithm that computes
+an $\epsilon$-approximation with high probability.
