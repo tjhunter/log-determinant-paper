@@ -93,9 +93,9 @@ non-positive off-diagonal entries matrix by adding a ``ground''
 node (see Gremban's thesis \cite{Gremban1996}, Chapter 4).
 
 \begin{definition} \emph{Augmented Laplacian of an SDD matrix (Definition
-XXX in GREMBAN):} Let $A\in SDD_{n}$. Let $L,D$ be the decomposition
-of $A$ into $L$ a Laplacian matrix and $D$ a (non-negative) diagonal
-matrix such that $A=L+D$. The augmented matrix of $A$ is: 
+XXX in \cite{Gremban1996}):} Let $A\in SDD_{n}$. Let $L,D$ be the
+decomposition of $A$ into $L$ a Laplacian matrix and $D$ a (non-negative)
+diagonal matrix such that $A=L+D$. The augmented matrix of $A$ is:
 \[
 L_{A}=\left(\begin{array}{cc}
 A & -\mathbf{d}\\
@@ -107,10 +107,11 @@ $h=\sum_{i}D_{ii}$. \end{definition}
 
 From now on, given any $A\in SDD_{n}$, we will implicitly define
 a Laplacian $L_{A}$ associated to it, using the augmented Laplacian.
-This process is also reversible and can be used to define a matrix
-$\tilde{A}\in SDD_{n}$ from $L_{A}$ with appealing properties in
-a very simple way. We call this process ``floating'' of the Laplacian,
-by opposition to ``grounding'' the SDD matrix as a Laplacian. 
+This process is also reversible: to any Laplacian $L$ we can associate
+a unique positive definite matrix $F_{L}$ (up to a permutation),
+and this transform preserves eigenvalues and matrix inequalities.
+We call this process ``floating'' of the Laplacian, by opposition
+to ``grounding'' the SDD matrix as a Laplacian. 
 
 \begin{definition}\emph{Floating a Laplacian}. Consider $L$ a Laplacian
 matrix. Call $F_{L}$ the matrix formed by removing the last row and
@@ -128,6 +129,7 @@ a system, and that no information is lost by ``floating'' it.
 and the corresponding eigenvectors for $F_{Z}$ are the same eigenvectors,
 truncated by the last coefficient.
 \item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$
+\item Given $Z_{1},Z_{2}$Laplacian matrices, we have $Z_{1}\succeq Z_{2}\Rightarrow F_{Z_{1}}\succeq F_{Z_{2}}$
 \end{itemize}
 \end{lemma}
 
@@ -149,28 +151,20 @@ with $L_{A}^{+}$the pseudo inverse of $L_{A}$.
 \begin{proof}XXX The proofs of this proposition are technical and
 are contained in Appendix B. \end{proof} 
 
-Note in particular that the PLD is well defined over connected graphs.
-From now on, we will consider connected graphs only. If graphs have
-several unconnected components, the log-determinant of the corresponding
-SDD is the sum of the PLDs of the Laplacians of each component. 
-
-From now on, we will focus on computing the PLD of Laplacians. Note
-that the kernel of all Laplacian matrices of connected graphs is precisely
-$\mathbb{R}\mathbf{1}_{n}$, so we can use the PLD with pseudo inverses
-as if we were using the log determinant with SDD matrices: Consider
-a graph $G=\left(V,E,w\right)$, identified with its Laplacian matrix
-$L_{G}$. Consider a weighted subgraph $H=\left(V,\tilde{E},\tilde{w}\right)$
-of $G$, for which it is easier to compute the determinant, and that
-closely approximates $G$ in the spectral sense. From Proposition
-\ref{pro:pld-properties}: 
-\[
-\log\left|G\right|=\text{ld}\left(L_{G}\right)=\text{ld}\left(L_{H}\right)+\text{ld}\left(L_{H}^{+}L_{G}\right)=\log\left|H\right|+\text{ld}\left(L_{H}^{+}L_{G}\right)
-\]
+Here is the general technique: given $G\in SDD_{n}$, we consider
+the graph associated to its Laplacian $L_{G}$. Using graphical properties
+of $L_{G}$, we can construct a weighted subgraph $L_{H}\subseteq L_{G}$
+for which the PLD is easier to compute and which is a good approximation
+of $L_{G}$in the spectral sense. Then the results of section \ref{sec:Preconditioned-log-determinants}
+can be applied:
+\begin{align*}
+\log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|G\right|\\
+ & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}G\right|
+\end{align*}
 
 
+Preconditioner graphs $L_{H}$ are typically efficient to factorize
+using Cholesky factorization, and close enough to $G$ that the sampling
+procedure from the previous section can be applied to compute $\log\left|F_{L_{H}}^{-1}G\right|$.
 We will see how to adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
-to produce good preconditioners $H$ for the determinant. In particular,
-once a good preconditioners is available for $G$, we present an algorithm
-that computes an upper bound and a lower bound of the PLD \emph{for
-free}. We will improve this results to produce an algorithm that computes
-an $\epsilon$-approximation with high probability.
+to produce good preconditioners $H$ for the determinant. 
