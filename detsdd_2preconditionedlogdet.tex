@@ -154,84 +154,20 @@ p\geq4\log\left(\eta^{-1}\right)\epsilon^{-2}\left(2n^{-1}\log^{2}\left(\delta^{
 \end{proof} We immediately get the following result that justifies
 the notion of preconditioners for determinants. The corresponding
 algorithm, which we call \texttt{PreconditionedLogDetMonteCarlo},
-is presented in Algorithm \ref{alg:SampleLogDet}. \begin{corollary}
-\label{cor:preconditioning}If $A$ and $B$ are positive definite
-matrices so that $B$ is a $\kappa-$approximation of $A$: 
+is presented in Algorithm \ref{alg:SampleLogDet}.
+
+\begin{corollary} \label{cor:preconditioning}If $A$ and $B$ are
+positive definite matrices so that $B$ is a $\kappa-$approximation
+of $A$: 
 \begin{equation}
 A\preceq B\preceq\kappa A\label{eq:A-B-bounds}
 \end{equation}
 then the algorithm \texttt{PreconditionedLogDetMonteCarlo} computes
 an $\epsilon$-approximation of $\frac{1}{n}\log\left|B^{-1}A\right|$
 with high probability, by performing $O\left(\kappa\epsilon^{-2}\left(\log\kappa\right)^{2}\log\left(\frac{n^{2}\kappa}{\epsilon}\right)\right)$
-vector inversions from $B$ and vector multiplies from $A$. \begin{proof}
-We introduce some notations that will prove useful for the rest of
-the article: 
-\[
-H=I-B^{-1}A
-\]
-\[
-S=I-B^{-1/2}AB^{-1/2}
-\]
-with $B^{-1/2}$ the inverse of the square root of the positive-definite
-matrix $B$%
-\footnote{Given a real PSD matrix $X$, which can be diagonalized: $X=Q\Delta Q^{T}$
-with $\Delta$ diagonal, and $\Delta_{ii}\geq0$. Call $Y=Q\sqrt{\Delta}Q^{T}$
-the square root of $X$, then $Y^{2}=X$.%
-}. The inequality \ref{eq:A-B-bounds} is equivalent to $\kappa^{-1}B\preceq A\preceq B$,
-or also: 
-\[
-\left(1-\kappa^{-1}\right)I\succeq I-B^{-1/2}AB^{-1/2}\succeq0
-\]
-\[
-\left(1-\kappa^{-1}\right)I\succeq S\succeq0
-\]
+vector inversions from $B$ and vector multiplies from $A$.
 
-
-\end{proof} \end{corollary} \begin{proof} The matrix $S$ is a
-contraction, and its spectral radius is determined by $\kappa$. Furthermore,
-computing the determinant of $B^{-1}A$ is equivalent to computing
-the determinant of $I-S$: 
-\begin{eqnarray*}
-\log\left|I-S\right| & = & \log\left|B^{-1/2}AB^{-1/2}\right|\\
- & = & \log\left|A\right|-\log\left|B\right|\\
- & = & \log\left|B^{-1}A\right|\\
- & = & \log\left|I-H\right|
-\end{eqnarray*}
-
-
-and invoking Theorem \ref{thm:det-sampling-theorem} gives us bounds
-on the number of calls to matrix-vector multiplies with respect to
-$S$. It would seem at this point that computing the inverse square
-root of $B$ is required, undermining our effort. However, we can
-reorganize the terms in the series expansion to yield only full inverses
-of $B$. Indeed, given $l\in\mathbb{N}^{*}$, consider the truncated
-series: 
-\begin{eqnarray*}
-y_{l} & = & -\mbox{Tr}\left(\sum_{i=1}^{l}\frac{1}{i}S^{i}\right)\\
- & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(S^{i}\right)\\
- & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(\sum_{j}\left(\begin{array}{c}
-j\\
-i-j
-\end{array}\right)\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
- & = & -\sum_{i=1}^{l}\frac{1}{i}\sum_{j}\left(\begin{array}{c}
-j\\
-i-j
-\end{array}\right)\mbox{Tr}\left(\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
- & = & -\sum_{i=1}^{l}\frac{1}{i}\sum_{j}\left(\begin{array}{c}
-j\\
-i-j
-\end{array}\right)\mbox{Tr}\left(\left(B^{-1}A\right)^{j}\right)\\
- & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(\sum_{j}\left(\begin{array}{c}
-j\\
-i-j
-\end{array}\right)\left(B^{-1}A\right)^{j}\right)\\
- & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(H^{i}\right)
-\end{eqnarray*}
-Hence, the practical computation of the latter sum can be done on
-$A^{-1}B$. To conclude, if we compute $p=4\epsilon^{-2}\left(\log\kappa\right)^{2}\log n$
-truncated chains of length $l=\kappa\left(2\log n+\log\kappa+\log\left(\epsilon^{-1}\right)\right)$,
-we get our result. This requires $lp$ multiplies by $A$ and inversions
-by $B$. \end{proof} 
+\end{corollary}
 
 Usually, computing the exact inverse by an SDD matrix is too expensive.
 We can instead extend the previous result to consider a black bock
@@ -244,7 +180,7 @@ with $B$ a $\kappa-$approximation of $A$. Furthermore, assume there
 exists a function $C$ so that for all $y\in\mathbb{R}^{n}$, $C$
 returns an $\epsilon-$approximation of $B^{-1}y$:
 \[
-\left\Vert BC\left(y\right)-y\right\Vert _{B}\leq\left\Vert B^{-1}y\right\Vert _{B}\epsilon
+\left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\left\Vert B^{-1}y\right\Vert _{B}\epsilon
 \]
 Given $\eta>0$ and$\mu>0$, if $\epsilon\leq XXXX$, then the algorithm
 \texttt{PreconditionedLogDetMonteCarlo} returns a scalar $z$ so that:

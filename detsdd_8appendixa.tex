@@ -1,5 +1,79 @@
 
-\section*{Appendix A: Proof of Theorem \ref{thm:preconditioning-approx}}
+\section*{Appendix A: Proofs of Section 2}
+
+
+\subsection{Proof of Corollary\ref{cor:preconditioning}}
+
+\begin{proof} We introduce some notations that will prove useful
+for the rest of the article: 
+\[
+H=I-B^{-1}A
+\]
+\[
+S=I-B^{-1/2}AB^{-1/2}
+\]
+with $B^{-1/2}$ the inverse of the square root of the positive-definite
+matrix $B$%
+\footnote{Given a real PSD matrix $X$, which can be diagonalized: $X=Q\Delta Q^{T}$
+with $\Delta$ diagonal, and $\Delta_{ii}\geq0$. Call $Y=Q\sqrt{\Delta}Q^{T}$
+the square root of $X$, then $Y^{2}=X$.%
+}. The inequality \ref{eq:A-B-bounds} is equivalent to $\kappa^{-1}B\preceq A\preceq B$,
+or also: 
+\[
+\left(1-\kappa^{-1}\right)I\succeq I-B^{-1/2}AB^{-1/2}\succeq0
+\]
+\[
+\left(1-\kappa^{-1}\right)I\succeq S\succeq0
+\]
+
+
+The matrix $S$ is a contraction, and its spectral radius is determined
+by $\kappa$. Furthermore, computing the determinant of $B^{-1}A$
+is equivalent to computing the determinant of $I-S$: 
+\begin{eqnarray*}
+\log\left|I-S\right| & = & \log\left|B^{-1/2}AB^{-1/2}\right|\\
+ & = & \log\left|A\right|-\log\left|B\right|\\
+ & = & \log\left|B^{-1}A\right|\\
+ & = & \log\left|I-H\right|
+\end{eqnarray*}
+
+
+and invoking Theorem \ref{thm:det-sampling-theorem} gives us bounds
+on the number of calls to matrix-vector multiplies with respect to
+$S$. It would seem at this point that computing the inverse square
+root of $B$ is required, undermining our effort. However, we can
+reorganize the terms in the series expansion to yield only full inverses
+of $B$. Indeed, given $l\in\mathbb{N}^{*}$, consider the truncated
+series: 
+\begin{eqnarray*}
+y_{l} & = & -\mbox{Tr}\left(\sum_{i=1}^{l}\frac{1}{i}S^{i}\right)\\
+ & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(S^{i}\right)\\
+ & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(\sum_{j}\left(\begin{array}{c}
+j\\
+i-j
+\end{array}\right)\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
+ & = & -\sum_{i=1}^{l}\frac{1}{i}\sum_{j}\left(\begin{array}{c}
+j\\
+i-j
+\end{array}\right)\mbox{Tr}\left(\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
+ & = & -\sum_{i=1}^{l}\frac{1}{i}\sum_{j}\left(\begin{array}{c}
+j\\
+i-j
+\end{array}\right)\mbox{Tr}\left(\left(B^{-1}A\right)^{j}\right)\\
+ & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(\sum_{j}\left(\begin{array}{c}
+j\\
+i-j
+\end{array}\right)\left(B^{-1}A\right)^{j}\right)\\
+ & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(H^{i}\right)
+\end{eqnarray*}
+Hence, the practical computation of the latter sum can be done on
+$A^{-1}B$. To conclude, if we compute $p=4\epsilon^{-2}\left(\log\kappa\right)^{2}\log n$
+truncated chains of length $l=\kappa\left(2\log n+\log\kappa+\log\left(\epsilon^{-1}\right)\right)$,
+we get our result. This requires $lp$ multiplies by $A$ and inversions
+by $B$. \end{proof} 
+
+
+\subsection{Proof of Theorem \ref{thm:preconditioning-approx}}
 
 We prove here the main result of Section \ref{sec:Preconditioned-log-determinants}.
 In the following, $A$ and $B$ are positive-definite matrices in
@@ -15,11 +89,6 @@ S=I-B^{-1/2}AB^{-1/2}\label{eq:S-def}
 \begin{equation}
 R=I-B^{-1}A\label{eq:R-def}
 \end{equation}
-
-
-\[
-\tilde{R}\left(x\right)=x-C\left(Ax\right)
-\]
 
 
 \[
