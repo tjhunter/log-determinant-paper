@@ -182,8 +182,9 @@ returns an $\epsilon-$approximation of $B^{-1}y$:
 \[
 \left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\left\Vert B^{-1}y\right\Vert _{B}\epsilon
 \]
-Given $\eta>0$ and$\mu>0$, if $\epsilon\leq XXXX$, then the algorithm
-\texttt{PreconditionedLogDetMonteCarlo} returns a scalar $z$ so that:
+Given $\eta>0$ and$\mu>0$, if $\epsilon\leq\frac{\mu}{4n\kappa^{3}\kappa\left(B\right)}$,
+then the algorithm \texttt{PreconditionedLogDetMonteCarlo} returns
+a scalar $z$ so that:
 \[
 \mathbb{P}\left[n^{-1}\left|z-\log\left|B^{-1}A\right|\right|\geq\mu\right]\leq\eta
 \]

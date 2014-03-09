@@ -146,47 +146,47 @@ noise element $x_{0}\sim\mathcal{N}\left(0,\mathbf{I}\right)$. We
 formalize the notion of an approximate chain. 
 
 \begin{definition} \emph{Approximate power sequence. }Given a linear
-operator $R$, a start point $x^{\left(0\right)}\in\mathbb{R}^{n}$,
-and a positive-definite matrix $B$, we define an $\epsilon-$approximate
+operator $H$, a start point $x^{\left(0\right)}\in\mathbb{R}^{n}$,
+and a positive-definite matrix $D$, we define an $\epsilon-$approximate
 power sequence as a sequence that does not deviate too much from the
 power sequence: 
 \[
-\left\Vert x^{\left(k+1\right)}-Rx^{\left(k\right)}\right\Vert _{B}\leq\epsilon\left\Vert Rx^{\left(k\right)}\right\Vert _{B}
+\left\Vert x^{\left(k+1\right)}-Hx^{\left(k\right)}\right\Vert _{D}\leq\epsilon\left\Vert Hx^{\left(k\right)}\right\Vert _{D}
 \]
 
 
 \end{definition}
 
 We now prove the following result that is quite intuitive: if the
-operator $R$ is a contraction and if the relative error $\epsilon$
+operator $H$ is a contraction and if the relative error $\epsilon$
 is not too great, the sum of all the errors on the chain is bounded. 
 
 \begin{lemma} Given the previous hypothesis, and assuming furthermore
-that $\left\Vert R\right\Vert _{B}\leq1-\eta$ and that $2\epsilon\leq\eta\leq1/2$,
+that $\left\Vert H\right\Vert _{D}\leq1-\eta$ and that $2\epsilon\leq\eta\leq1/2$,
 the total error is bounded by $\mathcal{O}\left(\eta^{-3}\epsilon\right)$:
 \[
-\sum_{k=0}^{\infty}\left\Vert x^{\left(k\right)}-R^{k}x^{\left(0\right)}\right\Vert _{B}\leq4\epsilon\eta^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{B}
+\sum_{k=0}^{\infty}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}\leq4\epsilon\eta^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 \end{lemma}
 
-\begin{proof} Call $\omega_{k}=\left\Vert x^{\left(k\right)}-R^{k}x^{\left(0\right)}\right\Vert _{B}$
-and $\theta_{k}=\left\Vert Rx^{\left(k\right)}\right\Vert _{B}$.
+\begin{proof} Call $\omega_{k}=\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}$
+and $\theta_{k}=\left\Vert Hx^{\left(k\right)}\right\Vert _{D}$.
 We are going to bound the rate of convergence of these two series.
-We have first using triangular inequality on the $B$ norm and then
+We have first using triangular inequality on the $D$ norm and then
 the definition of the induced matrix norm. 
 \begin{eqnarray*}
-\theta_{k} & \leq & \left\Vert Rx^{\left(k\right)}-R^{k}x^{\left(0\right)}\right\Vert _{B}+\left\Vert R^{k}x^{\left(0\right)}\right\Vert _{B}\\
- & = & \omega_{k}+\left\Vert R^{k}x^{\left(0\right)}\right\Vert _{B}\\
- & \leq & \omega_{k}+\left\Vert R\right\Vert _{B}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{B}
+\theta_{k} & \leq & \left\Vert Hx^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}+\left\Vert H^{k}x^{\left(0\right)}\right\Vert _{D}\\
+ & = & \omega_{k}+\left\Vert H^{k}x^{\left(0\right)}\right\Vert _{D}\\
+ & \leq & \omega_{k}+\left\Vert H\right\Vert _{D}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \end{eqnarray*}
 We now bound the error on the $\omega_{k}$ sequence: 
 \begin{eqnarray*}
-\omega_{k+1} & = & \left\Vert x^{\left(k+1\right)}-Rx^{\left(k\right)}+Rx^{\left(k\right)}-R^{k+1}x^{\left(0\right)}\right\Vert _{B}\\
- & \leq & \left\Vert Rx^{\left(k\right)}-R^{k+1}x^{\left(0\right)}\right\Vert _{B}+\left\Vert x^{\left(k+1\right)}-Rx^{\left(k\right)}\right\Vert _{B}\\
- & \leq & \left\Vert R\right\Vert _{B}\left\Vert x^{\left(k\right)}-R^{k}x^{\left(0\right)}\right\Vert _{B}+\epsilon\left\Vert Rx^{\left(k\right)}\right\Vert _{B}\\
- & = & \left\Vert R\right\Vert _{B}\omega_{k}+\epsilon\theta_{k}\\
- & \leq & \left\Vert R\right\Vert _{B}\omega_{k}+\epsilon\left(\omega_{k}+\left\Vert R\right\Vert _{B}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{B}\right)\\
- & \leq & \left[\left(1-\eta\right)^{2}+\epsilon\right]\omega_{k}+\epsilon\left(1-\eta\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{B}
+\omega_{k+1} & = & \left\Vert x^{\left(k+1\right)}-Hx^{\left(k\right)}+Hx^{\left(k\right)}-H^{k+1}x^{\left(0\right)}\right\Vert _{D}\\
+ & \leq & \left\Vert Hx^{\left(k\right)}-H^{k+1}x^{\left(0\right)}\right\Vert _{D}+\left\Vert x^{\left(k+1\right)}-Hx^{\left(k\right)}\right\Vert _{D}\\
+ & \leq & \left\Vert H\right\Vert _{D}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}+\epsilon\left\Vert Hx^{\left(k\right)}\right\Vert _{D}\\
+ & = & \left\Vert H\right\Vert _{D}\omega_{k}+\epsilon\theta_{k}\\
+ & \leq & \left\Vert H\right\Vert _{D}\omega_{k}+\epsilon\left(\omega_{k}+\left\Vert H\right\Vert _{D}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\right)\\
+ & \leq & \left[\left(1-\eta\right)^{2}+\epsilon\right]\omega_{k}+\epsilon\left(1-\eta\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \end{eqnarray*}
 
 
@@ -197,31 +197,31 @@ $\eta/2\leq\eta-\eta^{2}$. So the condition $2\epsilon\leq\eta$
 implies $\left(1-\eta\right)^{2}+\epsilon\leq1-\eta$ which leads
 to: 
 \[
-\omega_{k+1}\leq\left(1-\eta\right)\omega_{k}+\epsilon\left(1-\eta\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{B}
+\omega_{k+1}\leq\left(1-\eta\right)\omega_{k}+\epsilon\left(1-\eta\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 
 
 By induction, one obtains: 
 \[
-\omega_{k}\leq\omega_{1}\left(1-\eta\right)^{k}+\frac{\epsilon\left\Vert x^{\left(0\right)}\right\Vert _{B}}{\eta}\left(1-\eta\right)^{2k-1}
+\omega_{k}\leq\omega_{1}\left(1-\eta\right)^{k}+\frac{\epsilon\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\eta}\left(1-\eta\right)^{2k-1}
 \]
-and since $\omega_{1}=\left\Vert x^{\left(1\right)}-Rx^{\left(0\right)}\right\Vert _{B}\leq\epsilon\left\Vert Rx^{\left(0\right)}\right\Vert _{B}\leq\epsilon\left\Vert R\right\Vert _{B}\left\Vert x^{\left(0\right)}\right\Vert _{B}\leq\epsilon\left(1-\eta\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{B}$,
+and since $\omega_{1}=\left\Vert x^{\left(1\right)}-Hx^{\left(0\right)}\right\Vert _{D}\leq\epsilon\left\Vert Hx^{\left(0\right)}\right\Vert _{D}\leq\epsilon\left\Vert H\right\Vert _{D}\left\Vert x^{\left(0\right)}\right\Vert _{D}\leq\epsilon\left(1-\eta\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}$,
 we have a final bound that depends on $\epsilon$: 
 \[
-\omega_{k}\leq\epsilon\left(1-\eta\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{B}\left(1-\eta\right)^{k}+\frac{\epsilon\left\Vert x^{\left(0\right)}\right\Vert _{B}}{\eta}\left(1-\eta\right)^{2k-1}
+\omega_{k}\leq\epsilon\left(1-\eta\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}\left(1-\eta\right)^{k}+\frac{\epsilon\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\eta}\left(1-\eta\right)^{2k-1}
 \]
 
 
 This is the sum of two geometric series, which give the bound: 
 \[
-\sum_{k}\omega_{k}\leq\epsilon\eta^{-1}\left[1+\frac{1}{\eta^{2}\left(1-\eta\right)^{2}}\right]\left\Vert x^{\left(0\right)}\right\Vert _{B}
+\sum_{k}\omega_{k}\leq\epsilon\eta^{-1}\left[1+\frac{1}{\eta^{2}\left(1-\eta\right)^{2}}\right]\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 
 
 Since $\eta\leq1/2$, it implies $\left(1-\eta\right)^{-2}\leq4$
 and $1\leq\eta^{-2}$, so we can further simplify: 
 \[
-\sum_{k}\omega_{k}\leq4\epsilon\eta^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{B}
+\sum_{k}\omega_{k}\leq4\epsilon\eta^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 
 
@@ -230,37 +230,89 @@ and $1\leq\eta^{-2}$, so we can further simplify:
 We can use the bound on the norm of $A$ to compute bound the error
 with a preconditioner:
 
-\begin{proposition} \label{prop:estimate-truncated-series}Given
-a $\kappa\left(n\right)$-good chain for $A$, a start vector $x$,
-one can compute an $\epsilon-$estimate of the truncated series: 
+\begin{lemma}\label{lem:partial-sequence-approximate}Consider $A,B$
+with the same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, $\epsilon\in\left(0,\varphi/2\right)$
+and $\left(x_{u}\right)_{u}$ an $\epsilon-$approximate power sequence
+for the operator $R$ with start vector $x_{0}$. Then:
 \[
-\mbox{Tr}\left(\sum_{i=1}^{l}\frac{1}{i}\left(I-B_{1}^{-1}A\right)^{i}xx^{T}\right)
+\left|\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}-\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}\right|\leq4\epsilon\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
 \]
-in time $\mathcal{O}\left(lm\sqrt{\kappa\left(n_{1}\right)}\left(\log\epsilon^{-1}+\log\kappa\left(n_{1}\right)+\log\kappa\left(B\right)\right)\right)$.\end{proposition} 
+ where $\kappa\left(B\right)$ is the condition number of $B$.
 
-\begin{proof} Consider an $\epsilon-$approximate power sequence
-$\left(x^{\left(k\right)}\right)_{k}$ with respect to the operator
-$I-B^{-1}A$, and $\hat{z}$ the truncated sequence: 
+\end{lemma}
+
+\begin{proof}
+
+Call $\hat{z}$ the truncated sequence: 
 \[
-\hat{z}=\sum_{k=1}^{l}\frac{1}{k}\left(x^{\left(0\right)}\right)^{T}x^{\left(k\right)}
+\hat{z}=\sum_{i=1}^{l}\frac{1}{i}\left(x_{0}\right)^{T}x_{i}
 \]
 This sequence is an approximation of the exact sequence $z$: 
 \[
-z=\mbox{Tr}\left(\sum_{i=1}^{l}\frac{1}{i}\left(I-B^{-1}A\right)^{i}x^{\left(0\right)}\left(x^{\left(0\right)}\right)^{T}\right)
+z=\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}
 \]
 We now bound the error between the two sequences: 
 \[
-\left|\hat{z}-z\right|\leq\sum_{k=1}^{l}\frac{1}{i}\left|x_{0}^{T}\left(R^{k}x_{0}-x_{k}\right)\right|\leq\sum_{k=1}^{l}\left|x_{0}^{T}\left(R^{k}x_{0}-x_{k}\right)\right|\leq\sum_{k=1}^{l}\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{k}x_{0}-x_{k}\right)\right|
+\left|\hat{z}-z\right|\leq\sum_{i=1}^{l}\frac{1}{i}\left|x_{0}^{T}\left(R^{i}x_{0}-x_{i}\right)\right|\leq\sum_{i=1}^{l}\left|x_{0}^{T}\left(R^{i}x_{0}-x_{i}\right)\right|\leq\sum_{i=1}^{l}\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|
 \]
 Using the Cauchy-Schwartz inequality, we obtain: 
 \[
-\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{k}x_{0}-x_{k}\right)\right|=\left|\left\langle B^{-1}x_{0},R^{k}x_{0}-x_{k}\right\rangle _{B}\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert R^{k}x_{0}-x_{k}\right\Vert _{B}
+\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|=\left|\left\langle B^{-1}x_{0},R^{i}x_{0}-x_{i}\right\rangle _{B}\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}
 \]
 so that we can bound the deviation: 
 \[
-\left|\hat{z}-z\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\sum_{k=1}^{l}\left\Vert R^{k}x_{0}-x_{k}\right\Vert _{B}\leq4\epsilon\kappa^{3}\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert x_{0}\right\Vert _{B}\leq4\epsilon\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
+\left|\hat{z}-z\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\sum_{i=1}^{l}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq4\epsilon\kappa^{3}\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert x_{0}\right\Vert _{B}\leq4\epsilon\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
 \]
-where $\kappa\left(B\right)$ is the condition number of $B$. Now,
-we can call the ST-solver routine with $\tilde{\epsilon}=\kappa^{-3}\kappa\left(B\right)^{-1}\epsilon$,
-the cost of each call to the operator $R$ being then $\mathcal{O}\left(m\sqrt{\kappa}\left(\log\epsilon^{-1}+\log\kappa+\log\kappa\left(B\right)\right)\right)$.
+where $\kappa\left(B\right)$ is the condition number of $B$. \end{proof}
+
+We now have all the elements required for the proof of Theorem \ref{thm:preconditioning-approx}.
+
+\begin{proof}
+
+Consider $\mathbf{u}_{j}\sim\mathcal{N}\left(0,I_{n}\right)$ for
+$j=1\cdots p$, and $x_{i,j}=\begin{cases}
+\mathbf{u}_{j} & i=0\\
+x_{i-1,j}-C\left(Ax_{i-1,j}\right) & i>0
+\end{cases}$
+
+Call 
+\[
+z_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{i=1}^{l}\frac{1}{i}\frac{\left(x_{0,j}\right)^{T}x_{i,j}}{x_{0,j}^{T}x_{0,j}}
+\]
+\[
+\hat{y}_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
+\]
+
+
+By construction, $\left(x_{i,j}\right)_{i}$ is an $\epsilon-$approximate
+chain for the operator $R$. Applying Lemma \ref{lem:partial-sequence-approximate},
+we get:
+\begin{eqnarray*}
+\left|z_{p,l}-\hat{y}_{p,l}\right| & \leq & 4\epsilon\kappa^{3}\kappa\left(B\right)\left[\frac{1}{p}\sum_{j=1}^{p}\left\Vert \mathbf{u}_{j}\right\Vert ^{2}\right]
+\end{eqnarray*}
+
+
+Call $\beta=4p^{-1}\kappa^{3}\kappa\left(B\right)$While this bound
+depends on the (random) value of the squared norms of the start vectors,
+it is enough to bound this term with high probability using a Chebyshev
+bound. Call $Z=\sum_{j=1}^{p}\left\Vert \mathbf{u}_{j}\right\Vert ^{2}$
+and $Y=\epsilon\beta Z$. The random variable $Z$ is a sum of square
+norms of $np$ independent scaled, centered Gaussian distributions,
+hence it follows a Chi-square distribution with $np$ degrees of freedom.
+We have $\mathbb{E}\left[Z\right]=np$ and $\text{Cov}\left[Z\right]=2np$,
+so $\mathbb{P}\left[\left|Z-np\right|\geq\mu\right]\leq2\frac{np}{\mu^{2}}$.
+
+Assume $\epsilon\leq\min\left(\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n},\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n\sqrt{p}}\eta\right)$.
+Then $\mathbb{E}\left[Y\right]=4p^{-1}\epsilon\kappa^{3}\kappa\left(B\right)np\leq\mu$,
+which means that 
+\begin{eqnarray*}
+\mathbb{P}\left[Y\geq\mu\right] & \leq & \mathbb{P}\left[\left|Y-\mathbb{E}\left[Y\right]\right|\geq\mu\right]\\
+ & \leq & \frac{\text{Var}\left(Y\right)}{\mu^{2}}\\
+ & = & \epsilon^{2}\frac{\beta^{2}np}{\mu^{2}}
+\end{eqnarray*}
+and our choice of $\epsilon$ ensures that $\epsilon^{2}\frac{\beta^{2}np}{\mu^{2}}\leq\eta$.
+Finally, we can simplify the bound on $\epsilon$ since $\frac{\eta}{\sqrt{p}}\le1$.
+
+Then 
+
 \end{proof}
