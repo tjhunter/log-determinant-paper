@@ -182,14 +182,14 @@ returns an $\epsilon-$approximation of $B^{-1}y$:
 \[
 \left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\left\Vert B^{-1}y\right\Vert _{B}\epsilon
 \]
-Given $\eta>0$ and$\mu>0$, if $\epsilon\leq\frac{\mu}{4n\kappa^{3}\kappa\left(B\right)}$,
+Given $\eta>0$ and$\mu>0$, if $\epsilon\leq\frac{\mu^{3}\eta}{16\kappa^{3}\kappa\left(B\right)\left(1+n\epsilon\right)\log\left(\eta^{-1}\right)\log^{2}\kappa}$,
 then the algorithm \texttt{PreconditionedLogDetMonteCarlo} returns
 a scalar $z$ so that:
 \[
-\mathbb{P}\left[n^{-1}\left|z-\log\left|B^{-1}A\right|\right|\geq\mu\right]\leq\eta
+\mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\mu\right]\leq\eta
 \]
-by performing $O\left(YYYY\right)$ vector calls to the operator $C$
-and vector multiplies from $A$. 
+by performing $O\left(\kappa\mu^{-2}\log\left(\frac{n\kappa}{\mu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)$
+vector calls to the operator $C$ and vector multiplies from $A$. 
 
 \end{theorem}
 

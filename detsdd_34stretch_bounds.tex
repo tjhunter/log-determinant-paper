@@ -1,0 +1,195 @@
+
+\subsection{Stretch bounds on preconditioners}
+
+How good is the estimate provided by the preconditioner? Intuitively,
+this depends on how well the preconditioner $L_{H}$ approximates
+the graph $L_{G}$. This notion of quality of approximation can be
+formalized by the notion of \emph{stretch}. This section presents
+a deterministic bound on the PLD of $L_{G}$ based on the PLD of $L_{H}$
+and the stretch of $G$ relative to $H$. This may be useful in practice
+as it gives a (tight) interval for the PLD before performing any Monte-Carlo
+estimation of the residual.
+
+The stretch of a graph is usually defined with respect to a (spanning)
+tree. In our analysis, it is convenient and straightforward to generalize
+this definition to arbitrary graphs. To our knowledge, this straightforward
+extension is not considered in the litterature, so we feel compelled
+to properly introduce it.
+
+\begin{definition}\emph{Generalized stretch}.\label{Generalized-stretch}
+Consider $\mathcal{V}$ a set of vertices, $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
+connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
+their respective Laplacians. The stretch of $G$ with respect to $H$
+is the sum of the effective resistances of each edge of graph $G$
+with repect to graph $H$, 
+\[
+\text{st}_{H}\left(G\right)=\sum_{\left(u,v\right)\in\mathcal{E}_{G}}L_{G}\left(u,v\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)
+\]
+with $\mathcal{X}_{u}\in\mathbb{R}^{n}$ the unit vector that is $1$
+at position $u$, and zero otherwise.
+
+\end{definition}
+
+If the graph $H$ is a tree, this is a standard definition of stretch,
+because the effective resistance $\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)$
+between vertices $u$ and $v$ is the sum of all resistances over
+the unique path between $u$ and $v$ (see Lemma 2.4 in \cite{Spielman2009b}).
+Furthermore, the arguments to prove Theorem 2.1 in \cite{Spielman2009b}
+carry over to our definition of stretch. For the sake of completeness,
+we include this result:
+
+\begin{lemma}\label{lem:stretch-trace}(Straightforward generalization
+of Theorem 2.1 in \cite{Spielman2009b})Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
+be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
+their respective Laplacians. Then:
+\[
+\text{st}_{H}\left(G\right)=\text{Tr}\left(L_{H}^{+}L_{G}\right)
+\]
+with $L_{H}^{+}$the pseudo-inverse of $L_{H}$.
+
+\end{lemma}
+
+\begin{proof}
+
+We denote $E\left(u,v\right)$ the unit matrix that is $1$ in position
+$u,v$. This is the same arguments as the original proof:
+\begin{eqnarray*}
+\text{Tr}\left(L_{H}^{+}L_{G}\right) & = & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}L_{G}\left(u,v\right)\text{Tr}\left(E\left(u,v\right)L_{H}^{+}\right)\\
+ & = & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}L_{G}\left(u,v\right)\text{Tr}\left(\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\right)\\
+ & = & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}L_{G}\left(u,v\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\\
+ & = & \text{st}_{H}\left(G\right)
+\end{eqnarray*}
+
+
+\end{proof}
+
+A number of properties of the stretch extend to general graphs using
+this definition. In particular, the stretch inequality (Lemma 8.2
+in \cite{Spielman2009a}) can be generalized to arbitrary graphs (instead
+of spanning trees).
+
+\begin{lemma}\label{lem:stretch-inequality}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
+be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
+their respective Laplacians. Then:
+\[
+L_{G}\preceq\text{st}_{H}\left(G\right)L_{H}
+\]
+
+
+\end{lemma}
+
+\begin{proof}The proof is very similar to that of Lemma 8.2 in \cite{Spielman2009b},
+except that the invocation of Lemma 8.1 is replaced by invoking Lemma
+\ref{lem:simple-inequality} in Appendix B. The Laplacian $G$ can
+be written as a linear combination of edge Laplacian matrices:
+\[
+L_{G}=\sum_{e\in\mathcal{E}_{G}}\omega_{e}L\left(e\right)=\sum_{\left(u,v\right)\in\mathcal{E}_{G}}\omega_{\left(u,v\right)}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}
+\]
+and using Lemma \ref{lem:simple-inequality} gives:
+\[
+\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}\preceq\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)L_{H}
+\]
+By summing all the edge inequalities, we get:
+\begin{eqnarray*}
+L_{G} & \preceq & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}\omega_{\left(u,v\right)}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)L_{H}\\
+ & \preceq & \text{st}_{H}\left(G\right)L_{H}
+\end{eqnarray*}
+
+
+\end{proof}
+
+This bound is remarkable as it relates any pair of (connected) graphs,
+as opposed to spanning trees or subgraphs. An approximation of the
+generalized stretch can be quickly computed using a construct detailled
+in \cite{Spielman2009}. We now introduce the main result of this
+section: a bound on the PLD of $L_{G}$ using the PLD of $L_{H}$
+and the stretch.
+
+\begin{theorem}\label{thm:stretch-pld-bounds}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
+be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
+their respective Laplacians. Assuming $L_{H}\preceq L_{G}$, then:
+\begin{equation}
+\text{ld}\left(L_{H}\right)+\left(n-1\right)\log\left(\frac{\text{st}_{H}\left(G\right)}{n-1}\right)\geq\text{ld}\left(L_{G}\right)\geq\text{ld}\left(L_{H}\right)+\log\left(\text{st}_{H}\left(G\right)-n+2\right)\label{eq:encadrement-1}
+\end{equation}
+
+
+This inequality is an equality for $G=H$.
+
+\end{theorem}
+
+\begin{proof} This is an application of Jensen's inequality on $\text{ld}\left(L_{H}^{+}L_{G}\right)$.
+We have $\text{ld}L_{G}=\text{ld}L_{H}+\text{ld}\left(L_{H}^{+}G\right)$
+and $\text{ld}\left(L_{H}^{+}G\right)=\text{ld}\left(\sqrt{L_{H}}^{+}L_{G}\sqrt{L_{H}}^{+}\right)$
+with $\sqrt{T}$ the matrix square root of $T$. From Lemma \ref{lem:Jensen-inequality-matrix-logarithm-1},
+we have the following inequality: 
+\begin{eqnarray*}
+\text{ld}\left(\sqrt{L_{H}}^{+}L_{G}\sqrt{L_{H}}^{+}\right) & \leq & \left(n-1\right)\log\left(\frac{\text{Tr}\left(\sqrt{L_{H}}^{+}L_{G}\sqrt{L_{H}}^{+}\right)}{n-1}\right)\\
+ & = & \left(n-1\right)\log\left(\frac{\text{Tr}\left(L_{H}^{+}L_{G}\right)}{n-1}\right)\\
+ & = & \left(n-1\right)\log\left(\frac{\text{st}_{H}\left(G\right)}{n-1}\right)
+\end{eqnarray*}
+
+
+The latter equality is an application of Lemma \ref{lem:stretch-trace}. 
+
+The lower bound is slightly more involved. Call $\lambda_{i}$ the
+positive eigenvalues of $\sqrt{L_{H}}^{+}L_{G}\sqrt{L_{H}}^{+}$ and
+$\sigma=\text{st}_{H}\left(G\right)$. We have $1\leq\lambda_{i}$
+from the asumption $L_{H}\preceq L_{G}$. By definition: $\text{ld}\left(L_{H}^{+}L_{G}\right)=\sum_{i}\log\lambda_{i}$.
+Furthermore, we know from Lemma \ref{lem:stretch-trace} that $\sum_{i}\lambda_{i}=\sigma$.
+The upper and lower bounds on $\lambda_{i}$ give:
+\[
+\begin{array}{cc}
+\text{ld}\left(L_{H}^{+}L_{G}\right)\geq & \min\,\sum_{i}\log\lambda_{i}\\
+ & 1\leq\lambda_{i}\\
+ & \sum_{i}\lambda_{i}=\sigma
+\end{array}
+\]
+Since there are precisely $n-1$ positive eigenvalues $\lambda_{i}$,
+one can show that the minimization problem above has a unique minimum
+which is $\log\left(\sigma-n+2\right)$.
+
+To see that, consider the equivalent problem of minimizing $\sum_{i}\log\left(1+u_{i}\right)$
+under the constraints $\sum_{i}u_{i}=\sigma-\left(n-1\right)$ and
+$u_{i}\geq0$. Note that:
+\[
+\sum_{i}\log\left(1+u_{i}\right)=\log\left(\prod_{i}\left[1+u_{i}\right]\right)=\log\left(1+\sum_{i}u_{i}+\text{Poly}\left(u\right)\right)
+\]
+with $\text{Poly}\left(u\right)\geq0$ for all $u_{i}\geq0$, so we
+get: $\sum_{i}\log\left(1+u_{i}\right)\geq\log\left(1+\sum_{i}u_{i}\right)$
+and this inequality is tight for $u_{1}=\sigma-\left(n-1\right)$
+and $u_{i\geq2}=0$. Thus the vector $\lambda^{*}=\left(\sigma-n+2,\,1\cdots1\right)^{T}$
+is (a) a solution to the minimization problem above, and (b) the objective
+value of any feasible vector $\lambda$ is higher or equal. Thus,
+this is the solution (unique up to a permutation). Hence we have $\text{ld}\left(L_{H}^{+}L_{G}\right)\geq\sum_{i}\log\lambda_{i}^{*}=\log\left(\sigma-n+2\right)$.\end{proof}
+
+Note that this inequality is a stronger result than the bound $L_{H}\preceq L_{G}\Rightarrow\text{st}_{H}\left(G\right)\geq n-1$
+presented in \cite{Spielman2009b} (a direct consequence of Lemma
+\ref{lem:stretch-trace}). Interestingly, it does not make assumption
+on the topology of the graphs (such as $L_{H}$ being a subset of
+$L_{G}$). Research on conditioners has focused so far on low-stretch
+approximations that are subgraphs of the original graph. It remains
+to be seen if some better preconditioners can be found with stretches
+in $\mathcal{O}\left(n\right)$ by considering more general graphs.
+In this case, the machinery developped in Section 3 would not be necessary.
+
+From a practical perspective, the stretch can be calculated also linearly
+with respect to the number of non-zero entries.
+
+\begin{lemma}\label{lem:stretch-approx}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
+be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
+their respective Laplacians. Call $r=\max_{e}L_{H}\left(e\right)/\min_{e}L_{H}\left(e\right)$.
+Given $\epsilon>0$, there exists an algorithm that returns a scalar
+$y$ so that:
+\[
+\left(1-\epsilon\right)\text{st}_{H}\left(G\right)\leq y\leq\left(1+\epsilon\right)\text{st}_{H}\left(G\right)
+\]
+with high probability and in expected time $\tilde{\mathcal{O}}\left(m\epsilon^{-2}\log\left(rn\right)\right)$.
+
+\end{lemma}
+
+\begin{proof}This is a straightforward consequence of Theorem $2$
+in \cite{Spielman2009}. Once the effective resistance of an edge
+can be approximated in time $O\left(\log n/\epsilon^{2}\right)$,
+we can sum it and weight it by the conductance in $G$ for each edge.
+
+\end{proof}

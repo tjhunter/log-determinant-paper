@@ -302,7 +302,7 @@ hence it follows a Chi-square distribution with $np$ degrees of freedom.
 We have $\mathbb{E}\left[Z\right]=np$ and $\text{Cov}\left[Z\right]=2np$,
 so $\mathbb{P}\left[\left|Z-np\right|\geq\mu\right]\leq2\frac{np}{\mu^{2}}$.
 
-Assume $\epsilon\leq\min\left(\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n},\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n\sqrt{p}}\eta\right)$.
+Assume $\epsilon\leq\min\left(\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n},\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n\sqrt{p}}\eta,\frac{1}{2\kappa}\right)$.
 Then $\mathbb{E}\left[Y\right]=4p^{-1}\epsilon\kappa^{3}\kappa\left(B\right)np\leq\mu$,
 which means that 
 \begin{eqnarray*}
@@ -313,6 +313,6 @@ which means that
 and our choice of $\epsilon$ ensures that $\epsilon^{2}\frac{\beta^{2}np}{\mu^{2}}\leq\eta$.
 Finally, we can simplify the bound on $\epsilon$ since $\frac{\eta}{\sqrt{p}}\le1$.
 
-Then 
+Thus, we have $\mathbb{P}\left[\left|z_{p,l}-\hat{y}_{p,l}\right|\geq\mu\right]\leq\mathbb{P}\left[Y\geq\mu\right]\leq\eta$
 
 \end{proof}

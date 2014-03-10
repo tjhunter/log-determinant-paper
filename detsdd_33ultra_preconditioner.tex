@@ -1,0 +1,105 @@
+
+\subsection{Incremental sparsifiers\label{sec:Incremental-sparsifiers}}
+
+We can do better and achieve near-linear time by using ultra-sparsifiers.
+The main insight of our result is that the class preconditioners presented
+by Spielman and Teng are based on incomplete Cholesky factorization,
+and hence have a determinant that is relatively easy to compute, and
+that furthermore they are excellent spectral preconditioners, so the
+procedure \texttt{PreconditionedLogDetMonteCarlo} is efficient to
+apply. We reintroduce some concepts presented in \cite{Koutis2010}
+to present a self-contained result.
+
+The central idea is to sample $O\left(n\right)$ edges from the graph
+$A$, to form a subgraph $B$ that is close to a tree (hence it is
+easy to compute some partial Cholesky factorization), yet it is close
+to the original $A$ is the spectral sense ($A\preceq B\preceq\kappa A$),
+thanks to the additional edges. The partial Cholesky factorization
+is computed using the \texttt{GreedyElimination} algorithm presented
+in \cite{Koutis2010}. In order for this section to be self-contained,
+we repeat the main results of Section 4 in \cite{Spielman2009a}.
+
+Consider a Laplacian matrix $G$. There exists an algorithm that computes
+the partial Cholesky factorization: 
+\[
+B=PLCL^{T}P^{T}
+\]
+where: 
+\begin{itemize}
+\item $P$ is a permutation matrix 
+\item $L$ is a non-singular, low triangular matrix of the form 
+\[
+L=\left(\begin{array}{cc}
+L_{1,1} & 0\\
+L_{2,1} & I_{n_{1}}
+\end{array}\right)
+\]
+with the diagonal of $L_{1,1}$ being all ones. 
+\item $C$ has the form 
+\[
+C=\left(\begin{array}{cc}
+D_{n-n_{1}} & 0\\
+0 & A_{1}
+\end{array}\right)
+\]
+and every row and column of $A_{1}$ has at least 3 non-zero coefficients.
+Furthermore, $A_{1}$ is itself Laplacian and: 
+\[
+\text{ld}\left(B\right)=\sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(A_{1}\right)
+\]
+
+\end{itemize}
+The exact algorithm is detailled that achieves this factorization
+is presented in \cite{Koutis2010}. Using this factorization, the
+PLD of the original Laplacian $A$ is: 
+\begin{eqnarray*}
+\text{ld}\left(A\right) & = & \text{ld}\left(B\right)+\text{ld}\left(B^{+}A\right)\\
+ & = & \sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(A_{1}\right)+\text{ld}\left(B^{+}A\right)
+\end{eqnarray*}
+Thus, we are left with solving a smaller problem $A_{1}$, and approximate
+the value of $\text{ld}\left(B^{+}A\right)$ using the algorithm \texttt{SampleLogDet}.
+ST preconditioners are appealing for this task: they guarantee that
+$A_{1}$ is substantially smaller than $A$, so the recursion completes
+in $O\left(\log\log n\right)$ steps. Furthermore, computing the vector
+product $B^{+}Ax$ is itself efficient (in can be done in near-linear
+time), so the sampling algorithm can be run is reasonable time. We
+formalize the notion of chain of preconditioners by reintroducing
+some material from \cite{Koutis2010}. \begin{definition} Definition
+7.1 from \cite{Koutis2010}. $\kappa\left(n\right)$-good chain. $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
+a chain of graphs with $n_{i}$ and $m_{i}$ the number of vertices
+and edges of $A_{i}$. $\mathcal{C}$ is $\kappa\left(n\right)$-good
+for $A$ if:\end{definition} 
+\begin{enumerate}
+\item $A_{i}\preceq B_{i}\preceq\kappa\left(n_{i}\right)A_{i}$ 
+\item $A_{i+1}$= GreedyElimination$\left(B_{i}\right)$ 
+\item $m_{i}/m_{i+1}\geq c_{r}\sqrt{\kappa\left(n_{i}\right)}$ for some
+constant $c_{r}$. 
+\end{enumerate}
+Good chains exist, as found by Koutis, Miller and Peng:
+
+\begin{lemma} \label{lem:good-chain} (Lemma 7.3 from \cite{Koutis2010})
+Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2010}
+produces a $\tilde{O}\left(\log^{4}n\right)$-good chain for $A$
+with probability $1-p$. The algorithm runs in time 
+\[
+\tilde{O}\left(\left(m\log n+n\log^{2}n\right)\log\left(1/p\right)\right)
+\]
+
+
+\end{lemma} These chains furthermore can be used a good preconditioners
+for conjugate gradient and lead to near-linear algorithms for approximate
+inversion (Lemma 7.2 from \cite{Koutis2010}) 
+
+\begin{lemma} (Lemma 7.2 from \cite{Koutis2010}) Given a $\kappa\left(n\right)$-good
+chain for $A$, a vector $x$ such that $\left\Vert x-L_{A}^{+}b\right\Vert _{A}<\epsilon\left\Vert L_{A}^{+}b\right\Vert _{A}$
+can be computed in $O\left(m_{d}^{3}m_{1}\sqrt{\kappa\left(n_{1}\right)}\log\left(1/\epsilon\right)\right)$
+\end{lemma}
+
+It should now become clear how we can combine a $\kappa\left(n\right)$-good
+chain with the Algorithm \texttt{PreconditionedLogDetMonteCarlo}.
+We start by building a chain. The partial Cholesky factorizations
+provide an upper bound to $\mbox{ld}\left(A\right)$. We then refine
+this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
+at each state of the chain to approximate $\mbox{ld}\left(B_{i}^{+}A_{i}\right)$
+with high probability. The complete algorithm is presented in Algorithm
+\ref{alg:The-main-algorithm}. Using 

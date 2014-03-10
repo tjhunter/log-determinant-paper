@@ -1,0 +1,29 @@
+
+\section*{Comments}
+
+A first approximation upper-bound of the log-determinant follows immediately
+from the computation of the $\kappa-$good chain. We presented in
+Section \ref{sec:A-first-preconditioner} a first analysis to bound
+the value of the residue PLD. This analysis was done using trees as
+preconditioners, it can be carried on on more general preconditioners
+by introducing a generalization of the stretch over a subgraph (see
+the Appendix, section \ref{sub:Stretch-graph}). Since the bulk of
+the computations are performed in estimating the residue PLD, it would
+be interesting to see if this could be bypassed using better bounds
+based on the stretch.
+
+When looking at each step of the analysis, one can see that the $\epsilon^{-2}$
+factor comes from the approximation of the trace of a matrix by sampling.
+This seems to be a fundamental limitation of this method and it is
+shared with other algorithms that rely on random projections. This
+result is absolute. It would be interesting to see if the analysis
+could be tightened to present a relative bound that does not depend
+on the condition number of $A$. Also, even if this algorithm presents
+a linear bound, it requires a fairly advanced machinery (ST solvers)
+that may limit its practicality. Some heuristic implementation, for
+example based on algebraic multi-grid methods, could be a first step
+in this direction.
+
+The authors are much indebted to Satish Rao and Jim Demmel for suggesting
+the original idea and their helpful comments on the draft of this
+article.

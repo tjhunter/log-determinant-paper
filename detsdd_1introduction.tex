@@ -175,8 +175,9 @@ the lattice \cite{bernardson1994monte}.
 For these reasons, computing estimates of the log-determinant has
 been an active problem in physics and statistics. In particular, the
 Martin expansion presented in Equation \ref{eq:martin-expansion}
-is extensively used in quantum physics (CITE) can be combined with
-sampling method to estimate the trace of a matrix series (\cite{Zhang2008},\cite{McCourt2008},\cite{Zhang2007}).
+is extensively used in quantum physics \cite{Ipsen2006}, and it can
+be combined with sampling method to estimate the trace of a matrix
+series (\cite{Zhang2008},\cite{McCourt2008},\cite{Zhang2007}).
 Another different line of research has worked on bounds on the values
 of the determinant itself. This is deeply connected to simplifying
 statistical models using variational methods. Such a relaxation using
@@ -188,6 +189,38 @@ its interaction with the eigenvalues of the complete matrix is not
 well understood. Using simpler methods based on sampling, we are able
 to carefully control the spectrum of the reminder, which in turn leads
 to strong convergence guarantees.
+
+\textbf{Main results.} We first present some general results about
+the preconditioning of determinants. Consider $A\succ0$, and some
+other matrix $B\succ0$ that is close to $A$ in the spectral sense.
+All the results of this article stem from observing that:
+\begin{eqnarray*}
+\log\left|A\right| & = & \log\left|B\right|+\log\left|B^{-1}A\right|\\
+ &  & \log\left|B\right|+\text{Tr}\left(\log\left(B^{-1}A\right)\right)
+\end{eqnarray*}
+The first section is concerned with estimating the reminder term using
+the Martin expansion. The exact inverse $B^{-1}$ is usually not available,
+but we are given instead a linear operator $C$ that is an $\epsilon-$approximation
+of $B^{-1}$. We show in this section that if the precision of this
+approximation is high enough, we can estimate the reminder with high
+probability and with a reasonable number of calls to the operator
+$C$ (these terms will be made precise in the rather technical Theorem
+\ref{thm:preconditioning-approx}). Using this general framework,
+the subsequent section shows that spectral sparsifiers make excellent
+preconditioners that are close enough to $A$ so that computing the
+Martin expansion is not too expansive. In particular, we build upon
+the recursive structure of Spielman-Teng ultra-sparsifiers to obtain
+our main result:
+
+\begin{theorem}\label{thm:ultra_main}On input $A\in SDD_{n}$ with
+$m$ non-zeros, $\epsilon>0$, $\eta>0$, the algorithm XXX returns
+a scalar $z$ so that:
+\[
+\mathbb{P}\left[\left|z-n^{-1}\log\left|A\right|\right|>\epsilon\right]\leq\eta
+\]
+and this algorithm completes in expected time $\tilde{\mathcal{O}}\left(m\left(\log n\right)^{7}\epsilon^{-2}\log\left(\frac{n\kappa_{A}}{\epsilon}\right)\right)$.
+
+\end{theorem}
 
 \textbf{A note on scaling.} Unlike other characteristics of linear
 operators, the determinant and the log-determinant are very sensitive

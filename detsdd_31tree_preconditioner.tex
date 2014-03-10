@@ -1,0 +1,61 @@
+
+\subsection{A first preconditioner\label{sec:A-first-preconditioner}}
+
+While the results in this section are not the main claims of this
+paper, we hope they will provide some intuition, and an easier path
+towards an implementation.
+
+We present a first preconditioner that is not optimal, but that will
+motivate our results for stronger preconditioners: a tree that spans
+the graph $G$. Every graph has a low-stretch spanning tree, as discovered
+by Alon et al. \cite{Alon1995}. The bound of Alon et al. was then
+improved by Abraham et al. \cite{Abraham2008}. We restate their main
+result. \begin{lemma} Consider $L_{G}$ a weighted graph. There exists
+a tree $L_{T}$ that is a subgraph of $L_{G}$ so that: 
+\[
+L_{G}\preceq L_{T}\preceq\kappa L_{G}
+\]
+with $\kappa=Cm\log n\log\log n\left(\log\log\log n\right)^{3}$ for
+some constant $C>0$.\end{lemma} 
+
+\begin{proof} This follows directly from \cite{Abraham2008}. $L_{T}$
+is a subgraph of $L_{G}$ (with the same weights on the edges), so
+$L_{T}\preceq L_{G}$. Furthermore, we have $L_{T}\preceq\text{st}_{G}\left(T\right)L_{G}$
+following a result of Boman and Hendrickson \cite{Boman2004} cited
+by Spielman et al. in \cite{Spielman2010}. \end{proof}
+
+Trees enjoy a lot of convenient properties for Gaussian elimination.
+The Cholesky factorization of a tree can be computed in linear time,
+and furthermore this factorization has a linear number of non-zero
+elements \cite{Spielman2009a}. This factorization can be expressed
+as: 
+\[
+L_{T}=PLDL^{T}P^{T}
+\]
+where $P$ is a permutation matrix, $L$ is a lower-triangular matrix
+with the diagonal being all ones, and $D$ a diagonal matrix in which
+all the elements but the last one are positive, the last element being
+$0$. These well-known facts about trees are presented in \cite{Spielman2009a}.
+Once the Cholesky factorization of the tree is performed, the log-determinant
+of the original graph is an immediate by-product: 
+\[
+\log\left|L_{T}\right|=\sum_{i=1}^{n-1}\log D_{ii}
+\]
+Furthermore, computing $L_{T}^{+}x$ also takes $O\left(n\right)$
+computations by forward-backward substitution. Applying Corollary
+\ref{cor:preconditioning} gives immediately: 
+
+\begin{theorem} \label{thm:PLD-tree}Let $G$ be a graph with $n$
+vertices and $m$ edges. Its PLD can be computed up to a precision
+of $\epsilon$ and with high probability in time $\tilde{O}\left(mn\left(\log m\right)^{3}\left(\log n\right)^{2}\frac{\log\epsilon^{-1}}{\epsilon^{2}}\right)$.\end{theorem}
+
+\begin{proof} We assume $G$ is connected, hence $m\geq n$ and $\log\kappa=\tilde{\mathcal{O}}\left(\log m\right)$.
+\end{proof}
+
+This bound may be of independent interest since it requires relatively
+little machinery to compute, and it is an improvement already for
+graphs with small vertex degree ($m=\mathcal{O}\left(n^{1+o\left(1\right)}\right)$)
+over the Cholesky factorization of $G$. Also, note that the PLD of
+the tree constructed above provides an upper bound to the log-determinant
+of $G$ since $L_{G}\preceq L_{T}$. We will see in Subsection XXX
+that we can also compute a non-trivial lower bound as well.

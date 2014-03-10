@@ -1,10 +1,13 @@
 
-\section{Making the problem laplacian}
+\section{Ultra-sparsifiers as determinant preconditioners}
+
+
+\subsection{Making the problem laplacian}
 
 \label{sec:Making-the-problem}
 
-From now on, we consider all matrices to be in $SDD_{n}$. Most techniques
-we will be using work on Laplacian matrices instead of SDD matrices.
+From now on, we consider all matrices to be in $SDD_{n}$. The techniques
+we will develop work on Laplacian matrices instead of SDD matrices.
 An SDD matrix is positive semi-definite while a Laplacian matrix is
 always singular, since its nullspace is spanned by $\mathbf{1}$.
 We generalize the definition of the determinant to handle this technicality. 
@@ -21,13 +24,13 @@ The interest of the PLD lies in the connection between SDD matrices
 and their associated Laplacian. Recall that an SDD matrix can be transformed
 into a Laplacian (which has all off-diagonal terms non-positive, and
 for which the sum of each row and each column is zero). As underlined
-in GREMBAN, solving an equation involving an SDD can be turned into
-solving an equation with an SDD in which all the off-diagonal terms
-are non-positive of twice the same size. This transform is also useful
-for computing determinants. The following lemma shows that computing
-the log-determinant of an SDD with positive off-diagonal entries can
-be turned into computing the log-determinants of two SDD matrices
-with non-positive off-diagonal entries.
+in \cite{Gremban1996}, solving an equation involving an SDD can be
+turned into solving an equation with an SDD in which all the off-diagonal
+terms are non-positive of twice the same size. This transform is also
+useful for computing determinants. The following lemma shows that
+computing the log-determinant of an SDD with positive off-diagonal
+entries can be turned into computing the log-determinants of two SDD
+matrices with non-positive off-diagonal entries.
 
 \begin{lemma}\label{non-negative-conversion}Consider the decomposition
 of a SDD matrix into a positive and a negative sum:
@@ -88,6 +91,8 @@ $\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\eta_{i}=\log\left|A\right|+
 
 \end{proof}
 
+Furthermore, computing the determinant of SDD matrices with non-negative
+off-diagonal entries is equivalent to computing the PLD of Laplacian.
 Recall that a Laplacian matrix can be constructed from any SDD with
 non-positive off-diagonal entries matrix by adding a ``ground''
 node (see Gremban's thesis \cite{Gremban1996}, Chapter 4).
@@ -119,10 +124,10 @@ the last column from $L$.
 
 \end{definition}
 
-The followin lemma shows that the Laplacian matrix overdetermines
-a system, and that no information is lost by ``floating'' it.
+The following lemma shows that the Laplacian matrix overdetermines
+a system, and that no information is lost by floating it.
 
-\begin{lemma}Consider $Z$ a (weigted) Laplacian matrix, then:
+\begin{lemma}Consider $Z$ a (weighted) Laplacian matrix, then:
 \begin{itemize}
 \item $L_{F_{Z}}=Z$
 \item The eigenvalues of $F_{Z}$ are the positive eigenvalues of of $Z$,
@@ -133,9 +138,11 @@ truncated by the last coefficient.
 \end{itemize}
 \end{lemma}
 
-The PLD enjoys some of the usual properties of the log-determinant.
-The following proposition shows the interest of the PLD in the study
-of the Laplacian of a graph. 
+The proof of this lemma is in Appendix XXX.
+
+Using the floating and the grounding procedures, we can transform
+the PLD of a Laplacian matrix into the log-determinant of a SDD matrix.
+The following proposition establishes this equivalence.
 
 \begin{proposition} \label{pro:pld-properties}Let $A\in SDD_{n}$,
 and $L_{A}$ its augmented Laplacian. Let $P=\left(I_{n}\,\mathbf{0}\right)$
@@ -151,20 +158,29 @@ with $L_{A}^{+}$the pseudo inverse of $L_{A}$.
 \begin{proof}XXX The proofs of this proposition are technical and
 are contained in Appendix B. \end{proof} 
 
-Here is the general technique: given $G\in SDD_{n}$, we consider
-the graph associated to its Laplacian $L_{G}$. Using graphical properties
-of $L_{G}$, we can construct a weighted subgraph $L_{H}\subseteq L_{G}$
-for which the PLD is easier to compute and which is a good approximation
-of $L_{G}$in the spectral sense. Then the results of section \ref{sec:Preconditioned-log-determinants}
-can be applied:
+A Laplacian matrix can be considered either for its graphical properties,
+or for its algebraic properties. Recent results has shown a deep connection
+between these two aspects, and let us develop a general framework
+for computing determinants: given $G\in SDD_{n}$, we consider the
+graph associated to its Laplacian $L_{G}$, through the grounding
+procedure. Using graphical properties of $L_{G}$, we can construct
+a weighted subgraph $L_{H}\subseteq L_{G}$ for which the PLD is easier
+to compute and that is a good approximation of $L_{G}$in the spectral
+sense. We can float the subgraph $L_{H}$ and apply results of Section
+\ref{sec:Preconditioned-log-determinants} to approximate the reminder
+with high probability. More precisely:
 \begin{align*}
 \log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|G\right|\\
  & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}G\right|
 \end{align*}
 
 
-Preconditioner graphs $L_{H}$ are typically efficient to factorize
-using Cholesky factorization, and close enough to $G$ that the sampling
-procedure from the previous section can be applied to compute $\log\left|F_{L_{H}}^{-1}G\right|$.
-We will see how to adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
-to produce good preconditioners $H$ for the determinant. 
+The first term $\text{ld}\left(L_{H}\right)$ is usually easier to
+compute by considering the graphical properties of $L_{H}$, while
+the reminder $\log\left|F_{L_{H}}^{-1}G\right|$ is approximated by
+sampling. Preconditioner graphs $L_{H}$ are typically efficient to
+factorize using Cholesky factorization, and close enough to $G$ that
+the sampling procedure from the previous section can be applied to
+compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to adapt
+Spielman and Teng's remarkable work on \emph{ultra-sparsifiers} to
+produce good preconditioners $H$ for the determinant. 
