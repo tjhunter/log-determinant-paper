@@ -1,40 +1,23 @@
 
 \section*{Outline}
 \begin{enumerate}
-\item Sampling log-determinants (note: this all works for PD matrices)\\
- Should be moved to the end?
+\item Sampling log-determinants
 
 \begin{enumerate}
 \item Bernstein inequality 
-\item Algo preconditioned monte carlo 
+\item Algo preconditioned Monte Carlo 
 \item Sampling theorem 
 \item Corollary with SDD 
+\item Using approximate inversion
 \end{enumerate}
 \item General method for SDD and Laplacian systems
 
 \begin{enumerate}
-\item determinant of Laplacian 
-\item idea of preconditioner for determinant 
+\item Determinant of a Laplacian 
+\item Using a tree Laplacian as preconditioner
+\item Ultra-sparsifiers
+\item Bounds using stretch
 \end{enumerate}
-\item Using a tree preconditioner
-
-\begin{enumerate}
-\item Results from Abraham 
-\item Application to log-det 
-\end{enumerate}
-\item Using an ST preconditioner
-
-\begin{enumerate}
-\item Explanation from Koutis-Miller 
-\item Explanation about recursive formulation of determinant 
-\item Using an approximate preconditioner
-
-\begin{enumerate}
-\item Approximate series 
-\item Convergence proofs 
-\end{enumerate}
-\end{enumerate}
-\item Bounds using the stretch 
 \end{enumerate}
 
 \section{Introduction}
@@ -51,7 +34,7 @@ Call $m$ the number of non-zero entries in $A$. We are interested
 in computing the determinant of sparse matrices, i.e. matrices for
 which $m\ll n^{2}$.
 
-The best algorithm known for computing the determinant of general
+The best exact algorithm known for computing the determinant of general
 matrices, the Cholesky factorization, runs in a cubic complexity $O\left(n^{3}\right)$.
 Computing the factorization can be sped up for a few specific patterns
 such as trees, but no algorithm has been shown to work in a generic
@@ -88,7 +71,7 @@ compute upper and lower bounds of the logarithm of the determinant,
 and that may be of more immediate practical interest.
 
 \textbf{Background} There are two approaches in numerical linear algebra
-to compute approximately a determinant (or the log of the determinant):
+to approximately compute a determinant (or the log of the determinant):
 by performing a (partial) Cholesky factorization of $A$, or by considering
 the trace of some power series.
 
@@ -127,9 +110,9 @@ where $\log A$ is the matrix logarithm defined by the series expansion:
 \end{equation}
 The determinant can then be computed by a sum of traces of the power
 of $M$, and the rate of convergence of this series is driven by the
-spectral radius $M$. This line of reasoning has lead to looking for
-decompositions of $A$ of the form $A=U+V$ with the determinant of
-$U$ being easier to compute and $U^{-1}V+I$ having a small spectral
+spectral radius $M$. This line of reasoning has lead researchers
+to look for decompositions of $A$ of the form $A=U+V$ with the determinant
+of $U$ being easier to compute and $U^{-1}V+I$ having a small spectral
 radius. Then $\log\left|A\right|=\log\left|U\right|+\log\left|U^{-1}V+I\right|$.
 The most common decomposition $U,V$ is in terms of block diagonal
 and off-diagonal terms, which can then use Hadamard inequalities on
@@ -146,31 +129,31 @@ is close to a tree (and is more amenable to Cholesky methods), and
 one component that has a bounded condition number. Our solution is
 to use a \emph{spectral sparsifier} introduced by Spielman in \cite{Spielman2008}.
 
-The problem of estimating determinants has important applications
-in spatial data analysis, statistical physics and statistics. In spatial
-statistics, it is often convenient to interpolate measurements in
-a 2-, 3- or 4-dimensional volume using a sparse Gaussian process,
-a technique known in the geospatial community as \emph{kriging }\cite{zhang2010kriging,li2005analysis}\emph{.
-}Computing the optimal parameters of this Gaussian process involves
-repeated evaluations of the partition function, which is a log-determinant.
-In this context, a diagonally dominant matrix for the Gram matrix
-of the process corresponds to weak interactions between points of
-measure (which is verified in some contexts \cite{KelleyPace1997291}).
-Determinants also play a crucial role in quantum physics and in theoretical
-physics. The wave function of a system of multiple fermion particles
-is an antisymmetric function which can be described as a determinant
-(Slatter determinant, \cite{atkins2011molecular,lowdin1955quantum}).
-In the theory of quantum chromodynamics (QCD), the interaction between
-fundamental particles can be discretized as a lattice, and the energy
-level of particles is the determinant of some functional operators
-over this lattice \cite{duncan1998efficient}. It is itself a very
-complex problem because of the size of the matrices involved for any
-non-trivial problem, for which the number of variables is typically
-in the millions \cite{bernardson1994monte}. In this respect, the
-restriction to diagonally dominant matrices can be interpreted as
-an interaction between relatively massive particles \cite{deForcrand1989516},
-or as a bound on the propagation of interactions between sites in
-the lattice \cite{bernardson1994monte}.
+\textbf{Applications.} The problem of estimating determinants has
+important applications in spatial data analysis, statistical physics
+and statistics. In spatial statistics, it is often convenient to interpolate
+measurements in a 2-, 3- or 4-dimensional volume using a sparse Gaussian
+process, a technique known in the geospatial community as \emph{kriging
+}\cite{zhang2010kriging,li2005analysis}\emph{. }Computing the optimal
+parameters of this Gaussian process involves repeated evaluations
+of the partition function, which is a log-determinant. In this context,
+a diagonally dominant matrix for the Gram matrix of the process corresponds
+to distant interactions between points of measure (which is verified
+in some contexts, see \cite{KelleyPace1997291}). Determinants also
+play a crucial role in quantum physics and in theoretical physics.
+The wave function of a system of multiple fermion particles is an
+antisymmetric function which can be described as a determinant (Slatter
+determinant, \cite{atkins2011molecular,lowdin1955quantum}). In the
+theory of quantum chromodynamics (QCD), the interaction between particles
+can be discretized on a lattice, and the energy level of particles
+is the determinant of some functional operators over this lattice
+\cite{duncan1998efficient}. It is itself a very complex problem because
+of the size of the matrices involved for any non-trivial problem,
+for which the number of variables is typically in the millions \cite{bernardson1994monte}.
+In this setting, the restriction to diagonally dominant matrices can
+be interpreted as an interaction between relatively massive particles
+\cite{deForcrand1989516}, or as a bound on the propagation of interactions
+between sites in the lattice \cite{bernardson1994monte}.
 
 For these reasons, computing estimates of the log-determinant has
 been an active problem in physics and statistics. In particular, the
@@ -191,30 +174,32 @@ to carefully control the spectrum of the reminder, which in turn leads
 to strong convergence guarantees.
 
 \textbf{Main results.} We first present some general results about
-the preconditioning of determinants. Consider $A\succ0$, and some
-other matrix $B\succ0$ that is close to $A$ in the spectral sense.
-All the results of this article stem from observing that:
+the preconditioning of determinants. Consider $A\in SDD_{n}$ invertible,
+and some other matrix $B\in SDD_{n}$ that is close to $A$ in the
+spectral sense. All the results of this article stem from observing
+that:
 \begin{eqnarray*}
 \log\left|A\right| & = & \log\left|B\right|+\log\left|B^{-1}A\right|\\
  &  & \log\left|B\right|+\text{Tr}\left(\log\left(B^{-1}A\right)\right)
 \end{eqnarray*}
-The first section is concerned with estimating the reminder term using
-the Martin expansion. The exact inverse $B^{-1}$ is usually not available,
-but we are given instead a linear operator $C$ that is an $\epsilon-$approximation
-of $B^{-1}$. We show in this section that if the precision of this
-approximation is high enough, we can estimate the reminder with high
-probability and with a reasonable number of calls to the operator
-$C$ (these terms will be made precise in the rather technical Theorem
-\ref{thm:preconditioning-approx}). Using this general framework,
-the subsequent section shows that spectral sparsifiers make excellent
-preconditioners that are close enough to $A$ so that computing the
-Martin expansion is not too expansive. In particular, we build upon
-the recursive structure of Spielman-Teng ultra-sparsifiers to obtain
-our main result:
+The first section is concerned with estimating the reminder term $\text{Tr}\left(\log\left(B^{-1}A\right)\right)$
+using the Martin expansion. The exact inverse $B^{-1}$ is usually
+not available, but we are given instead a linear operator $C$ that
+is an $\epsilon-$approximation of $B^{-1}$, for example using a
+conjugate gradient method. We show in Section \ref{sec:Preconditioned-log-determinants}
+that if the precision of this approximation is high enough, we can
+estimate the reminder with high probability and with a reasonable
+number of calls to the operator $C$ (this sentence will be made precise
+in the rather technical Theorem \ref{thm:preconditioning-approx}).
+Using this general framework, the subsequent Section \ref{sec:Making-the-problem}
+shows that spectral sparsifiers make excellent preconditioners that
+are close enough to $A$ and so that computing the Martin expansion
+is not too expansive. In particular, we build upon the recursive structure
+of Spielman-Teng ultra-sparsifiers to obtain our main result:
 
 \begin{theorem}\label{thm:ultra_main}On input $A\in SDD_{n}$ with
-$m$ non-zeros, $\epsilon>0$, $\eta>0$, the algorithm XXX returns
-a scalar $z$ so that:
+$m$ non-zeros, $\epsilon>0$, $\eta>0$, the algorithm \texttt{UltraLogDet}
+returns a scalar $z$ so that:
 \[
 \mathbb{P}\left[\left|z-n^{-1}\log\left|A\right|\right|>\epsilon\right]\leq\eta
 \]
@@ -230,7 +215,7 @@ instead of the log-determinant. The regularized determinant has appealing
 properties with respect to dimensionality. In particular, its sensitivity
 to perturbations does not increase with the dimensionality, but only
 depends on spectral properties of the operator $A$. For example,
-calling $\lambda_{\min}$and $\lambda_{\max}$the minimun and maximum
+calling $\lambda_{\min}$and $\lambda_{\max}$ the minimum and maximum
 eigenvalues of $A$, respectively: 
 \[
 \log\lambda_{\min}\leq f\left(A\right)\leq\log\lambda_{\max}
@@ -239,7 +224,7 @@ eigenvalues of $A$, respectively:
 \left|f\left(A+\epsilon I\right)-f\left(A\right)\right|\leq\epsilon\left\Vert A^{-1}\right\Vert _{2}+O\left(\epsilon^{2}\right)
 \]
 The last inequality in particular shows that any perturbation to $\log\left|A\right|$
-will be in the order $O\left(n\right)$, and so why all the interesting
+will be in the order $O\left(n\right)$, and so that all the interesting
 log-determinants in practice will be dominated by some $O\left(n\right)$.
 
 The rest of the article is structured as follows. In the next section,
@@ -250,7 +235,7 @@ by Spielman et al. work on the Laplacians of weighted graphs. Section
 3 introduces some new concepts to expand the notion of determinants
 to Laplacian matrices, and presents a few straightforward results
 in the relations between graph Laplacians and SDD matrices. Section
-4 will use these new concepts to introduce a first family of preconditioners
-based on low-stretch spanning trees. Finally, Section 5 contains the
-proof of our main result, an algorithm to compute determinants in
-near-linear time.
+3.2 will use these new concepts to introduce a first family of preconditioners
+based on low-stretch spanning trees. Finally, Section 3.3 contains
+the proof of our main result, an algorithm to compute determinants
+in near-linear time.

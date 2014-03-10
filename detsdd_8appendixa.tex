@@ -2,6 +2,60 @@
 \section*{Appendix A: Proofs of Section 2}
 
 
+\subsection{Proof of Theorem \ref{thm:det-sampling-theorem}}
+
+\label{sub:det-sampling-proof}
+
+\begin{proof} The proof of this theorem follows the proof of the
+Main Theorem in \cite{Barry1999} with some slight modifications.
+Using triangular inequality: 
+\[
+\left|y-\hat{y}_{p,l}\right|\leq\left|\mathbb{E}\left[\hat{y}_{p,l}\right]-\hat{y}_{p,l}\right|+\left|y-\mathbb{E}\left[\hat{y}_{p,l}\right]\right|
+\]
+
+
+Since $S$ is upper-bounded, we have for all $k\in\mathbb{N}$: 
+\[
+\left|\mbox{Tr}\left(S^{k}\right)\right|\leq n\left(1-\delta\right)^{k}
+\]
+Using again triangle inequality, we can bound the error with respect
+to the expected value: 
+\begin{eqnarray*}
+\left|y-\mathbb{E}\left[\hat{y}_{p,l}\right]\right| & = & n^{-1}\left|\sum_{i=l+1}^{\infty}\frac{\left(-1\right)^{i}}{i}\mbox{Tr}\left(S^{k}\right)\right|\\
+ & \leq & n^{-1}\sum_{i=l+1}^{\infty}\frac{1}{i}\left|\mbox{Tr}\left(S^{k}\right)\right|\\
+ & \leq & \frac{1}{n\left(l+1\right)}\sum_{i=l+1}^{\infty}\left|\mbox{Tr}\left(S^{k}\right)\right|\\
+ & \leq & \frac{1}{l+1}\sum_{i=l+1}^{\infty}\left(1-\delta\right)^{k}\\
+ & \leq & \frac{1}{l+1}\frac{\left(1-\delta\right)^{l+1}}{\delta}\\
+ & \leq & \frac{\left(1-\delta\right)^{l+1}}{\delta}
+\end{eqnarray*}
+
+
+Hence, for a choice of $l\geq\delta^{-1}\log\left(\frac{2}{\epsilon\delta}\right)$,
+the latter part is less than $\epsilon/2$. We now bound the first
+part using Lemma \ref{lem:bernstein-trace}. Call $H$ the truncated
+series: 
+\[
+H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}
+\]
+This truncated series is upper-bounded by $0$ ($H$ is negative,
+semi-definite). The lowest eigenvalue of the truncated series can
+be lower-bounded in terms of $\delta$: 
+\[
+H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}\succeq-\sum_{i=1}^{m}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I=\left(\log\delta\right)I
+\]
+We can now invoke Lemma \ref{lem:bernstein-trace} to conclude: 
+\[
+\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\left(\mathbf{u}_{i}^{T}\mathbf{u}_{i}\right)^{-1}\mathbf{u}_{i}^{T}H\mathbf{u}_{i}-n^{-1}\mbox{Tr}\left(H\right)\right|\geq\frac{\epsilon}{2}\right]\leq\exp\left(-\frac{p\epsilon^{2}}{8n^{-1}\left(\log\left(1/\delta\right)\right)^{2}+4\log\left(1/\delta\right)\epsilon}\right)
+\]
+Thus, any choice of 
+\[
+p\geq8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)\geq4\log\left(\eta^{-1}\right)\epsilon^{-2}\left(2n^{-1}\log^{2}\left(\delta^{-1}\right)+\epsilon\log\left(\delta^{-1}\right)\right)
+\]
+satisfies the inequality:$\exp\left(-\frac{p\epsilon^{2}}{8n^{-1}\left(\log\delta\right)^{2}+4\log\left(1/\delta\right)\epsilon}\right)\leq\eta$.
+
+\end{proof}
+
+
 \subsection{Proof of Corollary\ref{cor:preconditioning}}
 
 \begin{proof} We introduce some notations that will prove useful
@@ -67,8 +121,8 @@ i-j
  & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(H^{i}\right)
 \end{eqnarray*}
 Hence, the practical computation of the latter sum can be done on
-$A^{-1}B$. To conclude, if we compute $p=4\epsilon^{-2}\left(\log\kappa\right)^{2}\log n$
-truncated chains of length $l=\kappa\left(2\log n+\log\kappa+\log\left(\epsilon^{-1}\right)\right)$,
+$A^{-1}B$. To conclude, if we compute $p=8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(n\right)\log^{2}\left(\kappa\right)$
+truncated chains of length $l=2\kappa\log\left(\frac{n}{\kappa\epsilon}\right)$,
 we get our result. This requires $lp$ multiplies by $A$ and inversions
 by $B$. \end{proof} 
 

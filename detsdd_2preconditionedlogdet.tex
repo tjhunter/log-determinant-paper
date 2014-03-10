@@ -4,7 +4,8 @@
 We begin by considering a simple sampling algorithm to compute log-determinants,
 presented first in \cite{Barry1999}. We will first present some error
 bounds on this algorithm that expand on bounds previously presented
-in \cite{Bai1996} and \cite{Barry1999}.
+in \cite{Bai1996} and \cite{Barry1999}. This section considers general
+symmetric matrices and does not make assumptions about diagonal dominance.
 
 Consider a real symmetric matrix $S\in\mathcal{S}_{n}^{+}$ such that
 its spectral radius is less than $1$: $0\preceq S\preceq\left(1-\delta\right)I$
@@ -18,24 +19,10 @@ expansion:
 
 This series of traces can be estimated by Monte Carlo sampling, up
 to precision $\epsilon$ with high probability. In order to bound
-the errors, we will bound the large deviation errors using Hoeffding
-inequality. We use a modified version of Proposition 4.2 from \cite{Bai1996}: 
+the errors, we will bound the large deviation errors using the following
+Bernstein inequality:
 
-\begin{lemma} \label{lem:hoeffding-trace}Consider $H\in\mathcal{S}_{n}$
-lower- and upper-bounded by $\lambda_{\text{min}}$ and $\lambda_{\text{max}}$:
-$\lambda_{\min}I\preceq H\preceq\lambda_{\max}I$. Consider $p$ vectors
-sampled from the standard Normal distribution: $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
-for $i=1\cdots p$. Then for all $\nu>0$: 
-\[
-\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\mathbf{u}_{i}^{T}H\mathbf{u}_{i}^{T}-\mbox{Tr}\left(H\right)\right|\geq\frac{\nu}{p}\right]\leq2\exp\left(-\frac{2\nu^{2}}{p\left(\lambda_{\max}-\lambda_{\min}\right)^{2}}\right)
-\]
-\end{lemma}
-
-\begin{proof} This is a simple adaptation from \cite{Bai1996}. \end{proof}
-
-We use the following Bernstein inequality:
-
-\begin{lemma} \label{lem:bernstein}$X_{1}\cdots X_{U}$ are independant
+\begin{lemma} \label{lem:bernstein}Let $X_{1}\cdots X_{U}$ be independent
 random variables with $\mathbb{E}\left[X_{u}\right]=0$, $\left|X_{u}\right|<c$.
 Call $\sigma^{2}=\frac{1}{U}\sum_{u}\text{Var}\left(X_{u}\right)$,
 then for all $\epsilon>0$: 
@@ -44,18 +31,22 @@ then for all $\epsilon>0$:
 \]
 
 
-\end{lemma} The proof of this result can be found in a lecture note
-from Peter Bartlett's class (stat241B/spring 2003). We can adapt some
-results from \cite{Barry1999} to prove this bound on the deviation
-from the trace. \begin{lemma} \label{lem:bernstein-trace}Consider
-$H\in\mathcal{S}_{n}$, and call $\lambda_{i}$ the eigenvalues of
-$H$. Consider $p$ vectors sampled from the standard Normal distribution:
-$\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$ for
-$i=1\cdots p$. Then for all $\epsilon>0$: 
+\end{lemma}
+
+The proof of this result can be found in a lecture note from Peter
+Bartlett's class (stat241B/spring 2003). We can adapt some results
+from \cite{Barry1999} to prove this bound on the deviation from the
+trace.
+
+\begin{lemma} \label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$,
+and call $\lambda_{i}$ the eigenvalues of $H$. Consider $p$ vectors
+sampled from the standard Normal distribution: $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
+for $i=1\cdots p$. Then for all $\epsilon>0$: 
 \[
 \mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon}\right)
 \]
-with $\lambda_{\text{max}}=\max\lambda_{i}$ and $\lambda_{\min}=\min\lambda_{i}$.\end{lemma}
+with $\lambda_{\text{max}}=\max\lambda_{i}$ and $\lambda_{\min}=\min\lambda_{i}$.\end{lemma} 
+
 \begin{proof} The distribution of $\mathbf{u}_{i}$ is invariant
 through a rotation, so we can consider $H$ diagonal. We assume without
 loss of generality that $H=\text{diag}\left(\lambda_{1}...\lambda_{n}\right)$.
@@ -75,86 +66,44 @@ gives:
 \mathbb{P}\left[\frac{1}{p}\sum_{i=1}^{p}V_{i}\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
 with $\sigma^{2}=\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}$
-\end{proof} The previous lemma shows that if the eigenspectrum of
-a matrix is bounded, we can obtain a Hoeffding bound on the error
-done by sampling the trace. Furthermore, the convergence of the series
-\ref{eq:martin} is also determned by the extremal eigenvalues of
-$S$. If we truncate the series (\ref{eq:martin}), we can bound the
-truncation error using the extremal eigenvalues. We formalize this
-intuition in the following theorem, which is adapted from the main
-Theorem in \cite{Barry1999}. While that main Theorem in \cite{Barry1999}
-only considered a confidence interval based on the covariance properties
-of Gaussian distribution, we generalize this result to more general
-Hoeffding bounds. \begin{theorem} \label{thm:det-sampling-theorem}Consider
-$S\in\mathcal{S}_{n}^{+}$ with $0\preceq S\preceq\left(1-\delta\right)I$
-for some $\delta\in\left(0,1\right)$. Call $y$ the quantity to estimate:
-\[
-y=\log\left|I-S\right|
-\]
-and consider $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
+\end{proof}
+
+The previous lemma shows that if the eigenspectrum of a matrix is
+bounded, we can obtain a Hoeffding bound on the error done by sampling
+the trace. Furthermore, the convergence of the series \ref{eq:martin}
+is also determined by the extremal eigenvalues of $S$. If we truncate
+the series (\ref{eq:martin}), we can bound the truncation error using
+the extremal eigenvalues. We formalize this intuition in the following
+theorem, which is adapted from the main Theorem in \cite{Barry1999}.
+While that main Theorem in \cite{Barry1999} only considered a confidence
+interval based on the covariance properties of Gaussian distribution,
+we generalize this result to more general Bernstein bounds.
+
+\begin{theorem} \label{thm:det-sampling-theorem}Consider $S\in\mathcal{S}_{n}^{+}$
+with $0\preceq S\preceq\left(1-\delta\right)I$ for some $\delta\in\left(0,1\right)$.
+Call $y=n^{-1}\log\left|I-S\right|$ the quantity to estimate, and
+consider $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
 for $i=1\cdots p$. Call $\hat{y}_{p,l}$ an estimator of the truncated
 series of $l$ elements computed by sampling the trace using $p$
 samples: 
 \[
-\hat{y}_{p,l}=\frac{n}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
+\hat{y}_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
 \]
-By choosing $p\geq4\log\left(\eta^{-1}\right)\epsilon^{-2}\left(2n^{-1}\log^{2}\left(\delta^{-1}\right)+\epsilon\log\left(\delta^{-1}\right)\right)$
+By choosing $p\geq8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
 and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$,
 the error probability is small: 
 \[
-\mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq n\epsilon\right]\leq\eta
+\mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon\right]\leq\eta
 \]
-\end{theorem} \begin{proof} The proof of this theorem follows the
-proof of the Main Theorem in \cite{Barry1999} with some slight modifications.
-Using triangular inequality: 
-\[
-\left|y-\hat{y}_{p,l}\right|\leq\left|\mathbb{E}\left[\hat{y}_{p,l}\right]-\hat{y}_{p,l}\right|+\left|y-\mathbb{E}\left[\hat{y}_{p,l}\right]\right|
-\]
+\end{theorem}
 
+The proof of this result is detailed in Appendix A.
 
-Since $S$ is upper-bounded, we have for all $k\in\mathbb{N}$: 
-\[
-\left|\mbox{Tr}\left(S^{k}\right)\right|\leq n\left(1-\delta\right)^{k}
-\]
-Using again triangle inequality, we can bound the error with respect
-to the expected value: 
-\begin{eqnarray*}
-\left|y-\mathbb{E}\left[\hat{y}_{p,l}\right]\right| & = & \left|\sum_{i=l+1}^{\infty}\frac{\left(-1\right)^{i}}{i}\mbox{Tr}\left(S^{k}\right)\right|\\
- & \leq & \sum_{i=l+1}^{\infty}\frac{1}{i}\left|\mbox{Tr}\left(S^{k}\right)\right|\\
- & \leq & \frac{1}{l+1}\sum_{i=l+1}^{\infty}\left|\mbox{Tr}\left(S^{k}\right)\right|\\
- & \leq & \frac{n}{l+1}\sum_{i=l+1}^{\infty}\left(1-\delta\right)^{k}\\
- & \leq & \frac{n}{l+1}\frac{\left(1-\delta\right)^{l+1}}{\delta}\\
- & \leq & n\frac{\left(1-\delta\right)^{l+1}}{\delta}
-\end{eqnarray*}
-
-
-Hence, for a choice of $l\geq\delta^{-1}\log\left(\frac{2n}{\epsilon\delta}\right)$,
-the latter part is less than $\epsilon/2$. We now bound the first
-part using Lemma \ref{lem:bernstein-trace}. Call $H$ the truncated
-series: 
-\[
-H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}
-\]
-This truncated series is upper-bounded by $0$. The lowest eigenvalue
-of the truncated series can be lower-bounded in terms of $\delta$:
-\[
-H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}\succeq-\sum_{i=1}^{m}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I=\left(\log\delta\right)I
-\]
-We can now invoke Lemma \ref{lem:bernstein-trace} to conclude: 
-\[
-\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\left(\mathbf{u}_{i}^{T}\mathbf{u}_{i}\right)^{-1}\mathbf{u}_{i}^{T}H\mathbf{u}_{i}-n^{-1}\mbox{Tr}\left(H\right)\right|\geq\frac{\epsilon}{2}\right]\leq\exp\left(-\frac{p\epsilon^{2}}{8n^{-1}\left(\log\delta\right)^{2}+4\log\left(1/\delta\right)\epsilon}\right)
-\]
-and $\exp\left(-\frac{p\epsilon^{2}}{8n^{-1}\left(\log\delta\right)^{2}+4\log\left(1/\delta\right)\epsilon}\right)\leq\eta$.
-This latter inequality is verified for any 
-\[
-p\geq4\log\left(\eta^{-1}\right)\epsilon^{-2}\left(2n^{-1}\log^{2}\left(\delta^{-1}\right)+\epsilon\log\left(\delta^{-1}\right)\right)
-\]
-
-
-\end{proof} We immediately get the following result that justifies
-the notion of preconditioners for determinants. The corresponding
-algorithm, which we call \texttt{PreconditionedLogDetMonteCarlo},
-is presented in Algorithm \ref{alg:SampleLogDet}.
+From this theoem we derive two results that justify the notion of
+preconditioners for determinants: one for exact preconditioners and
+one for approximate preconditioners. The corresponding algorithm,
+which we call \texttt{PreconditionedLogDetMonteCarlo}, is presented
+in Algorithm \ref{alg:SampleLogDet}.
 
 \begin{corollary} \label{cor:preconditioning}If $A$ and $B$ are
 positive definite matrices so that $B$ is a $\kappa-$approximation
@@ -163,32 +112,33 @@ of $A$:
 A\preceq B\preceq\kappa A\label{eq:A-B-bounds}
 \end{equation}
 then the algorithm \texttt{PreconditionedLogDetMonteCarlo} computes
-an $\epsilon$-approximation of $\frac{1}{n}\log\left|B^{-1}A\right|$
-with high probability, by performing $O\left(\kappa\epsilon^{-2}\left(\log\kappa\right)^{2}\log\left(\frac{n^{2}\kappa}{\epsilon}\right)\right)$
-vector inversions from $B$ and vector multiplies from $A$.
+$\frac{1}{n}\log\left|B^{-1}A\right|$ up to some precision $\epsilon$
+with probability greater than $1/n$, by performing $\mathcal{O}\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(n\right)\log^{2}\left(\kappa\right)\log\left(\frac{n}{\kappa\epsilon}\right)\right)$vector
+inversions from $B$ and vector multiplies from $A$.
 
 \end{corollary}
 
-Usually, computing the exact inverse by an SDD matrix is too expensive.
-We can instead extend the previous result to consider a black bock
-that approximatively inverts compute $B^{-1}x$. If the error introduced
-by the approximate inversion is limited, the result from the previous
-corollary still holds. This is wha the following theorem establishes:
+The proof of this corollary is presented in Appendix A. Usually, computing
+the exact inverse by an SDD matrix is too expensive. We can instead
+extend the previous result to consider a black box that approximatively
+computes $B^{-1}x$. If the error introduced by the approximate inversion
+is small enough, the result from the previous corollary still holds.
+This is what the following theorem establishes:
 
 \begin{theorem}\label{thm:preconditioning-approx}Consider $A,B\in\mathcal{S}_{n}^{+*}$
 with $B$ a $\kappa-$approximation of $A$. Furthermore, assume there
 exists a function $C$ so that for all $y\in\mathbb{R}^{n}$, $C$
-returns an $\epsilon-$approximation of $B^{-1}y$:
+returns an $\nu-$approximation of $B^{-1}y$:
 \[
-\left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\left\Vert B^{-1}y\right\Vert _{B}\epsilon
+\left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\nu\left\Vert B^{-1}y\right\Vert _{B}
 \]
-Given $\eta>0$ and$\mu>0$, if $\epsilon\leq\frac{\mu^{3}\eta}{16\kappa^{3}\kappa\left(B\right)\left(1+n\epsilon\right)\log\left(\eta^{-1}\right)\log^{2}\kappa}$,
+Given $\eta>0$ and $\epsilon>0$, if $\nu\leq\frac{\epsilon^{3}\eta}{16\kappa^{3}\kappa\left(B\right)\left(1+n\epsilon\right)\log\left(\eta^{-1}\right)\log^{2}\kappa}$,
 then the algorithm \texttt{PreconditionedLogDetMonteCarlo} returns
 a scalar $z$ so that:
 \[
-\mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\mu\right]\leq\eta
+\mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\epsilon\right]\leq\eta
 \]
-by performing $O\left(\kappa\mu^{-2}\log\left(\frac{n\kappa}{\mu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)$
+by performing $O\left(\kappa\epsilon^{-2}\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)$
 vector calls to the operator $C$ and vector multiplies from $A$. 
 
 \end{theorem}

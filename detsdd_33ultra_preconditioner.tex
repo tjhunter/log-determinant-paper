@@ -8,16 +8,18 @@ and hence have a determinant that is relatively easy to compute, and
 that furthermore they are excellent spectral preconditioners, so the
 procedure \texttt{PreconditionedLogDetMonteCarlo} is efficient to
 apply. We reintroduce some concepts presented in \cite{Koutis2010}
-to present a self-contained result.
+to present a self-contained result. The following paragraphs are well-known
+facts about Spielman-Teng preconditioners and have been presented
+in \cite{Koutis2010,Spielman2009a}.
 
-The central idea is to sample $O\left(n\right)$ edges from the graph
-$A$, to form a subgraph $B$ that is close to a tree (hence it is
-easy to compute some partial Cholesky factorization), yet it is close
-to the original $A$ is the spectral sense ($A\preceq B\preceq\kappa A$),
-thanks to the additional edges. The partial Cholesky factorization
-is computed using the \texttt{GreedyElimination} algorithm presented
-in \cite{Koutis2010}. In order for this section to be self-contained,
-we repeat the main results of Section 4 in \cite{Spielman2009a}.
+The central idea to the Spielman-Teng preconditioner is to sample
+$O\left(n\right)$ edges from the graph $A$, to form a subgraph $B$
+that is close to a tree (hence it is easy to compute some partial
+Cholesky factorization), yet it is close to the original $A$ is the
+spectral sense ($A\preceq B\preceq\kappa A$), thanks to the additional
+edges. The partial Cholesky factorization is computed using the \texttt{GreedyElimination}
+algorithm presented in \cite{Koutis2010}. In order for this section
+to be self-contained, we repeat the main results of Section 4 in \cite{Spielman2009a}.
 
 Consider a Laplacian matrix $G$. There exists an algorithm that computes
 the partial Cholesky factorization: 
@@ -52,10 +54,10 @@ Furthermore, $A_{1}$ is itself Laplacian and:
 The exact algorithm is detailled that achieves this factorization
 is presented in \cite{Koutis2010}. Using this factorization, the
 PLD of the original Laplacian $A$ is: 
-\begin{eqnarray*}
-\text{ld}\left(A\right) & = & \text{ld}\left(B\right)+\text{ld}\left(B^{+}A\right)\\
- & = & \sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(A_{1}\right)+\text{ld}\left(B^{+}A\right)
-\end{eqnarray*}
+\begin{eqnarray}
+\text{ld}\left(A\right) & = & \text{ld}\left(B\right)+\text{ld}\left(B^{+}A\right)\nonumber \\
+ & = & \sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(A_{1}\right)+\text{ld}\left(B^{+}A\right)\label{eq:chain-recursion}
+\end{eqnarray}
 Thus, we are left with solving a smaller problem $A_{1}$, and approximate
 the value of $\text{ld}\left(B^{+}A\right)$ using the algorithm \texttt{SampleLogDet}.
 ST preconditioners are appealing for this task: they guarantee that
@@ -64,17 +66,21 @@ in $O\left(\log\log n\right)$ steps. Furthermore, computing the vector
 product $B^{+}Ax$ is itself efficient (in can be done in near-linear
 time), so the sampling algorithm can be run is reasonable time. We
 formalize the notion of chain of preconditioners by reintroducing
-some material from \cite{Koutis2010}. \begin{definition} Definition
-7.1 from \cite{Koutis2010}. $\kappa\left(n\right)$-good chain. $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
+some material from \cite{Koutis2010}.
+
+\begin{definition} Definition 7.1 from \cite{Koutis2010}. $\kappa\left(n\right)$-good
+chain. $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
 a chain of graphs with $n_{i}$ and $m_{i}$ the number of vertices
 and edges of $A_{i}$. $\mathcal{C}$ is $\kappa\left(n\right)$-good
-for $A$ if:\end{definition} 
+for $A$ if:
 \begin{enumerate}
 \item $A_{i}\preceq B_{i}\preceq\kappa\left(n_{i}\right)A_{i}$ 
 \item $A_{i+1}$= GreedyElimination$\left(B_{i}\right)$ 
 \item $m_{i}/m_{i+1}\geq c_{r}\sqrt{\kappa\left(n_{i}\right)}$ for some
 constant $c_{r}$. 
 \end{enumerate}
+\end{definition} 
+
 Good chains exist, as found by Koutis, Miller and Peng:
 
 \begin{lemma} \label{lem:good-chain} (Lemma 7.3 from \cite{Koutis2010})
@@ -86,14 +92,18 @@ with probability $1-p$. The algorithm runs in time
 \]
 
 
-\end{lemma} These chains furthermore can be used a good preconditioners
-for conjugate gradient and lead to near-linear algorithms for approximate
-inversion (Lemma 7.2 from \cite{Koutis2010}) 
-
-\begin{lemma} (Lemma 7.2 from \cite{Koutis2010}) Given a $\kappa\left(n\right)$-good
-chain for $A$, a vector $x$ such that $\left\Vert x-L_{A}^{+}b\right\Vert _{A}<\epsilon\left\Vert L_{A}^{+}b\right\Vert _{A}$
-can be computed in $O\left(m_{d}^{3}m_{1}\sqrt{\kappa\left(n_{1}\right)}\log\left(1/\epsilon\right)\right)$
 \end{lemma}
+
+These chains furthermore can be used a good preconditioners for conjugate
+gradient and lead to near-linear algorithms for approximate inversion
+(Lemma 7.2 from \cite{Koutis2010}). This remarkable result has been
+significantly strenghtened in the previous years, so that SDD systems
+can be considered to be solved in (expected) linear time.
+
+\begin{lemma} \label{lem:linear-precond-existence}(CITE Koutis2011)
+Given $A\in SDD_{n}$ with $m$ non-zero entries, $b\in\mathbb{R}^{n}$
+and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
+can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$.\end{lemma}
 
 It should now become clear how we can combine a $\kappa\left(n\right)$-good
 chain with the Algorithm \texttt{PreconditionedLogDetMonteCarlo}.
@@ -102,4 +112,22 @@ provide an upper bound to $\mbox{ld}\left(A\right)$. We then refine
 this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
 at each state of the chain to approximate $\mbox{ld}\left(B_{i}^{+}A_{i}\right)$
 with high probability. The complete algorithm is presented in Algorithm
-\ref{alg:The-main-algorithm}. Using 
+\ref{alg:The-main-algorithm}.
+
+\textbf{Proof of Theorem \ref{thm:ultra_main}.} Using Lemma \ref{lem:good-chain},
+consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
+a $\tilde{O}\left(\log^{4}n\right)$-good chain for $L_{A}$, with
+$d=\mathcal{O}\left(\log\log n\right)=\tilde{O}\left(1\right)$. We
+use Equation \ref{eq:chain-recursion} to compute the Cholesky terms
+for each stage of the chain, and we are left with estimating $\tilde{\mathcal{O}}\left(1\right)$
+reminders $\text{ld}\left(B_{i}^{+}A_{i}\right)$. By construction,
+$A_{i}\preceq B_{i}\preceq\kappa\left(n_{i}\right)A_{i}$ and by Lemma
+\ref{lem:linear-precond-existence}, there exists an operator $C$
+so that $\left\Vert C\left(b\right)-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
+for all $b$ so that $\nu=\frac{\epsilon^{3}\eta}{16\kappa^{3}\kappa\left(B\right)\left(1+n\epsilon\right)}=\tilde{\mathcal{O}}\left(\frac{\epsilon^{3}\eta}{\log^{12}\left(n\right)\kappa\left(B\right)\left(1+n\epsilon\right)}\right)$.
+By Theorem \ref{thm:preconditioning-approx}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
+can be approximated to precision $\epsilon$ with probability at least
+$1-\eta$ using Algorithm \ref{BROKEN: Ref: alg:The-main-alg...}.
+Furthermore, this algorithm works in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\kappa\epsilon^{-2}\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)=\tilde{O}\left(m\epsilon^{-2}\log^{5}n\log\left(\frac{n\kappa\left(B\right)}{\epsilon\eta}\left(1+n\epsilon\right)\right)\log\left(\eta^{-1}\right)\right)$.
+By a union bound, the result also holds on the sum of all the approximations
+of the reminders.
