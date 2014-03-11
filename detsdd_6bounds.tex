@@ -1,0 +1,131 @@
+
+\section{Structural bounds on the log-determinant}
+
+How good is the estimate provided by the tree $T$? Intuitively, this
+depends on how well the tree $T$ approximates the graph $G$. This
+notion of quality of approximation can be formalized by the notion
+of \emph{stretch}. \begin{definition} Stretch of a graph. Consider
+$G$ a weighted graph, and $T$ a spanning tree of $G$. The stretch
+of each edge $e$ from $G$ is defined as $\text{st}_{T}\left(e\right)=\omega_{e}\left(\sum_{f\in P}\frac{1}{\omega_{f}}\right)$
+where $\omega_{e}$ is the weight of edge $e$ in $G$, and $P$ is
+the unique path between the endpoints of $e$ in the tree $T$. The
+stretch of the graph is the sum of the stretches of each edge: 
+\[
+\text{st}_{T}\left(G\right)=\sum_{e\in G}\text{st}_{T}\left(e\right)
+\]
+
+
+\end{definition} The stretch can be obtained as a by-product of the
+computation of low-stretch spanning trees, of which the construction
+can be done in $O\left(m\log n+n\log^{2}n\right)$ \cite{Abraham2008}.
+Knowing the stretch gives upper and lower bounds on the value of the
+log-determinant. \begin{proposition} Stretch bounds on the tree PLD:
+\end{proposition} 
+\begin{equation}
+\log\left|T\right|+\left(n-1\right)\log\left(\frac{\text{st}_{G}\left(T\right)}{n-1}\right)\geq\log\left|G\right|\geq\log\left|T\right|+\log\left(\text{st}_{T}\left(G\right)-n+2\right)\label{eq:encadrement}
+\end{equation}
+
+
+\begin{proof} This is an application of Jensen's inequality on $\text{ld}\left(T^{+}G\right)$.
+We have $\text{ld}G=\text{ld}T+\text{ld}\left(T^{+}G\right)$ and
+$\text{ld}\left(T^{+}G\right)=\text{ld}\left(\sqrt{T}^{+}G\sqrt{T}^{+}\right)=\text{Tr}\left(\log^{+}\left(\sqrt{T}^{+}G\sqrt{T}^{+}\right)\right)$
+with $\sqrt{T}$ the matrix square root of $T$. From Lemma \ref{lem:Jensen-inequality-matrix-logarithm},
+we have 
+\begin{eqnarray*}
+\text{Tr}\left(\log^{+}\left(\sqrt{T}^{+}G\sqrt{T}^{+}\right)\right) & \leq & \left(n-1\right)\log\left(\frac{\text{Tr}\left(\sqrt{T}^{+}G\sqrt{T}^{+}\right)}{n-1}\right)\\
+ & = & \left(n-1\right)\log\left(\frac{\text{Tr}\left(T^{+}G\right)}{n-1}\right)\\
+ & = & \left(n-1\right)\log\left(\frac{\text{st}_{G}\left(T\right)}{n-1}\right)
+\end{eqnarray*}
+
+
+The lower bound is slightly more involved. Call $\lambda_{i}$ the
+positive eigenvalues of $\sqrt{T^{+}}G\sqrt{T^{+}}$ and $\sigma=\text{st}_{T}\left(G\right)$.
+We have $1\leq\lambda_{i}\leq\sigma$ because of the inequality$T\preceq G\preceq\text{st}_{T}\left(G\right)T$.
+There are precisely $n-1$ positive eigenvalues $\lambda_{i}$, and
+we have: $\text{ld}\left(T^{+}G\right)=\sum_{i}\log\lambda_{i}$.
+One can show that $\sum_{i}\log\lambda_{i}\geq\log\left(\sigma-n+2\right)$
+by considering the problem of minimizing $\sum_{i}\log x_{i}$ under
+the constraints $\sum_{i}x_{i}=\sigma$ and $x_{i}\geq1$. This bound
+is tight. \end{proof} Intuitively since the stretch of a tree is
+bounded my $O\left(m\log n\right)$, it means that a low-stretch spanning
+tree provides an approximation of a log-determinant up to a factor
+of $O\left(n\log n\right)$. This could be of interest for nearly-cut
+graphs, with large condition numbers.
+
+
+
+\begin{lemma} \label{lem:Jensen-inequality-matrix-logarithm}Jensen
+inequality for the matrix logarithm. Given $A\in\mathcal{S}_{n}^{+},$
+$0\prec A\prec2$, the following inequalities hold: 
+\[
+\log\left(\frac{\text{Tr}\left(A\right)}{n}\right)\geq\frac{1}{n}\text{Tr}\left(\log A\right)
+\]
+\[
+\text{ld}\left(\frac{\text{Tr}\left(A\right)}{n-1}\right)\geq\frac{1}{n-1}\text{Tr}\left(\log A\right)
+\]
+with $\log A=\sum_{k\geq1}\frac{1}{k}\left(I-A\right)^{k}$\end{lemma}
+\begin{proof} Consider the diagonalization of $A$: $A=P\Delta P^{T}$
+with $\Delta$ a diagonal (positive) matrix, and $P$ an orthogonal
+matrix. Then 
+\[
+\log A=\sum_{k\geq1}\frac{1}{k}\left(PP^{T}-P\Delta P^{T}\right)^{k}=\sum_{k\geq1}\frac{1}{k}\left[P\left(I-\Delta\right)P^{T}\right]^{k}=P\left[\sum_{k\geq1}\frac{1}{k}\left(I-\Delta\right)^{k}\right]P^{T}=P\Gamma P^{T}
+\]
+with $\Gamma$ a diagonal matrix that verifies $\Gamma_{ii}=\log\Delta_{ii}$.
+We can then conclude using the concavity of the logarithm over the
+reals: 
+\[
+\log\left(\frac{\text{Tr}\left(A\right)}{n}\right)=\log\left(\frac{\sum_{i}\Delta_{ii}}{n}\right)\geq\frac{1}{n}\sum_{i}\log\Delta_{ii}=\frac{1}{n}\text{Tr}\left(\Gamma\right)=\frac{1}{n}\text{Tr}\left(\log A\right)
+\]
+
+
+The same reasoning holds for the pseudo-log-determinant while considering
+all but one eigenvalue\end{proof} \begin{lemma} Power relation for
+the matrix log: Given $A\in\mathcal{S}_{n}^{+},$ $0\prec A\prec2$,
+and $k\in\mathbb{N}$, then $\log\left(A^{k}\right)=k\log A$ \end{lemma}
+
+
+\subsection{Stretch of a graph\label{sub:Stretch-graph}}
+
+We introduce here a refinement on an upper bound that is a byproduct
+of using the algorithm XXX. \begin{definition} We define the \textbf{stretch
+of a graph} $G=\left(V,E,\omega\right)$ with respect to a subgraph
+$H=\left(V,\tilde{E},\tilde{\omega}\right)\subset G$ by the weighted
+sum of effective resistances of edges $e\in E$ with respect to the
+graph $H$: 
+\[
+\text{st}_{H}\left(G\right)=\sum_{e\in E}\omega_{e}\text{eff}_{H}\left(e\right)
+\]
+
+
+\end{definition} This is a generalization of the notion of stretch
+defined by Alon, Karp, Peleg and West in .... We can use this definition
+to generalize theorem 2.1 in \cite{Spielman2009b} \begin{theorem}
+Let $G=\left(V,E,\omega\right)$ be a connected graph and let $H=\left(V,\tilde{E},\tilde{\omega}\right)$
+be a connected subgraph of $G$. Let $L_{G}$ and $L_{H}$ be the
+Laplacian matrices of $G$ and $H$ respectively. Then: 
+\[
+\text{Tr}\left(L_{H}^{+}L_{G}\right)=\text{st}_{H}\left(G\right)
+\]
+where $L_{H}^{+}$ is the pseudo inverse of $L_{H}$.\end{theorem}
+\begin{proof} The proof is nearly identical to that of \cite{Spielman2009b},
+except for the last line:
+
+\begin{eqnarray*}
+\text{Tr}\left(L_{H}^{+}L_{G}\right) & = & \sum_{\left(u,v\right)\in E}\omega\left(u,v\right)\text{Tr}\left(L_{\left(u,v\right)}L_{H}^{+}\right)\\
+ & = & \sum_{\left(u,v\right)\in E}\omega\left(u,v\right)\text{Tr}\left(\left(\psi_{u}-\psi_{v}\right)\left(\psi_{u}-\psi_{v}\right)^{T}L_{H}^{+}\right)\\
+ & = & \sum_{\left(u,v\right)\in E}\omega\left(u,v\right)\left(\psi_{u}-\psi_{v}\right)^{T}L_{H}^{+}\left(\psi_{u}-\psi_{v}\right)
+\end{eqnarray*}
+and the latter term is the effective resistance between $u$ and $v$
+in the graph $H$: 
+\begin{eqnarray*}
+ & = & \sum_{\left(u,v\right)\in E}\omega\left(u,v\right)\text{eff}_{H}\left(u,v\right)\\
+ & = & \text{st}_{H}\left(G\right)
+\end{eqnarray*}
+
+
+\end{proof} From a practical perspective, the graph stretch can be
+computed in $\tilde{O}\left(m\log n/\epsilon^{2}\right)$ \begin{proposition}
+There exists an algorithm that computes an $\epsilon$-approximation
+of $\text{st}_{H}\left(G\right)$ in $\tilde{O}\left(m\log n/\epsilon^{2}\right)$\end{proposition}
+\begin{proof} This is the second main result from Spielman and Srivastana
+(XXX cite). \end{proof}

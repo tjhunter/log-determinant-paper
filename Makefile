@@ -1,11 +1,15 @@
 
-all: siam.pdf
+all: det_sdd.pdf
 
 clean:
-	rm -f *.aux *.log *.bbl *.blg siam.pdf
+	rm -f *.aux *.log *.bbl *.blg det_sdd.pdf
 
-siam.pdf: siam.tex 2012_sparse_info.bib
-	pdflatex siam.tex
-	bibtex siam
-	pdflatex siam.tex
-	pdflatex siam.tex
+det_sdd.pdf: det_sdd.tex detsdd_1introduction.tex detsdd_2preconditionedlogdet.tex \
+detsdd_3laplacian_problem.tex \
+detsdd_31tree_preconditioner.tex detsdd_33ultra_preconditioner.tex \
+detsdd_34stretch_bounds.tex \
+detsdd_8appendixa.tex 2012_sparse_info.bib
+	pdflatex det_sdd.tex
+	bibtex det_sdd
+	pdflatex det_sdd.tex
+	pdflatex det_sdd.tex

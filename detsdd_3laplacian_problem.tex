@@ -1,0 +1,185 @@
+
+\section{Ultra-sparsifiers as determinant preconditioners}
+
+
+\subsection{Making the problem laplacian}
+
+\label{sec:Making-the-problem}
+
+From now on, we consider all matrices to be in $SDD_{n}$. The techniques
+we will develop work on Laplacian matrices instead of SDD matrices.
+An SDD matrix is positive semi-definite while a Laplacian matrix is
+always singular, since its nullspace is spanned by $\mathbf{1}$.
+We generalize the definition of the determinant to handle this technicality. 
+
+\begin{definition} \emph{Pseudo-log-determinant (PLD):} Let $A\in\mathcal{S}^{n+}$
+be a non-null positive semi-definite matrix. The pseudo-log-determinant
+is defined by the sum of the logarithms of all the positive eigenvalues:
+\[
+\text{ld}\left(A\right)=\sum_{\lambda_{i}>0}\log\left(\lambda_{i}\right)
+\]
+where $\lambda_{i}$ are the eigenvalues of $A$. \end{definition}
+
+The interest of the PLD lies in the connection between SDD matrices
+and their associated Laplacian. Recall that an SDD matrix can be transformed
+into a Laplacian (which has all off-diagonal terms non-positive, and
+for which the sum of each row and each column is zero). As underlined
+in \cite{Gremban1996}, solving an equation involving an SDD can be
+turned into solving an equation with an SDD of twice the same size
+in which all the off-diagonal terms are non-positive. This transform
+is also useful for computing determinants. The following lemma shows
+that computing the log-determinant of an SDD with positive off-diagonal
+entries can be turned into computing the log-determinants of two SDD
+matrices with non-positive off-diagonal entries.
+
+\begin{lemma}\label{non-negative-conversion}Consider the decomposition
+of a SDD matrix into a positive and a negative sum:
+\[
+A=P-N
+\]
+with $P_{ij}\leq0$ for $i\neq j$ and $N_{ij}\leq0$ for all $i,j$
+so that $\left|A_{ij}\right|=\left|P_{ij}\right|+\left|N_{ij}\right|$.
+Then the matrices $\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\in SDD_{2n}$ and $P+N\in SDD_{n}$ have all the off-diagonal coefficients non-positive,
+and we have the relation:
+\[
+\log\left|\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\right|=\log\left|P+N\right|+\log\left|P-N\right|
+\]
+
+
+\end{lemma}
+
+\begin{proof} Call $B=N+P$ and $C=\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)$. Consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
+$Ax=\mu x$. Then:
+\[
+\left(\begin{array}{cc}
+P & N\\
+N & P
+\end{array}\right)\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)=\left(\begin{array}{c}
+Ax\\
+-Ax
+\end{array}\right)=\mu\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)
+\]
+which shows that the vector $\left(\begin{array}{c}
+x\\
+-x
+\end{array}\right)$ is an eigenvector of $C$ with associated eigenvalue $\mu$ . Similarly,
+if $\eta$ is an eigenvector of $B$ with associated eigenvalue $y$,
+then $\eta$ is also an eigenvector of $C$ with associated eigenvalue
+$\left(\begin{array}{c}
+y\\
+y
+\end{array}\right)$. Since $C$ is exactly of size $2n$, the set of eigenvalues of $C$
+is exactly the concatenation of sets of eigenvalues of $A$ and $B$.
+Thus $\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\eta_{i}=\log\left|A\right|+\log\left|B\right|$.
+
+\end{proof}
+
+Furthermore, computing the determinant of SDD matrices with non-negative
+off-diagonal entries is equivalent to computing the PLD of Laplacian.
+Recall that a Laplacian matrix can be constructed from any SDD with
+non-positive off-diagonal entries matrix by adding a ``ground''
+node (see Gremban's thesis \cite{Gremban1996}, Chapter 4).
+
+\begin{definition} \emph{Augmented Laplacian of an SDD matrix.} Let
+$A\in SDD_{n}$. Let $L,D$ be the decomposition of $A$ into $L$
+a Laplacian matrix and $D$ a (non-negative) diagonal matrix such
+that $A=L+D$. The augmented matrix of $A$ is: 
+\[
+L_{A}=\left(\begin{array}{cc}
+A & -\mathbf{d}\\
+-\mathbf{d}^{T} & h
+\end{array}\right)
+\]
+with $\mathbf{d}\in\mathbb{R}^{n}$: $\mathbf{d}_{i}=D_{ii}$ and
+$h=\sum_{i}D_{ii}$. \end{definition}
+
+From now on, given any $A\in SDD_{n}$, we will implicitly define
+a Laplacian $L_{A}$ associated to it, using the augmented Laplacian.
+This process is also reversible: to any Laplacian $L$ we can associate
+a unique positive definite matrix $F_{L}$ (up to a permutation),
+and this transform preserves eigenvalues and matrix inequalities.
+We call this process ``floating'' of the Laplacian, by analogy to
+the ``grounding'' in the electrical sense of the SDD matrix as a
+Laplacian. 
+
+\begin{definition}\emph{Floating a Laplacian}. Consider $L$ a Laplacian
+matrix. Call $F_{L}$ the matrix formed by removing the last row and
+the last column from $L$.
+
+\end{definition}
+
+The following lemma shows that the Laplacian matrix overdetermines
+a system, and that no information is lost by floating it.
+
+\begin{lemma}\label{lem:floating-properties}Consider $Z$ a (weighted)
+Laplacian matrix of a connected graph, then:
+\begin{enumerate}
+\item Idempotence: $L_{F_{Z}}=Z$
+\item The eigenvalues of $F_{Z}$ are the positive eigenvalues of $Z$,
+and the corresponding eigenvectors for $F_{Z}$ are the same eigenvectors,
+truncated by the last coefficient.
+\item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$
+\item Given $Z_{1},Z_{2}$ Laplacian matrices, we have $Z_{1}\succeq Z_{2}\Rightarrow F_{Z_{1}}\succeq F_{Z_{2}}$
+\end{enumerate}
+\end{lemma}
+
+The proof of this lemma is in Appendix B.
+
+Using the floating and the grounding procedures, we can transform
+the PLD of a Laplacian matrix into the log-determinant of a SDD matrix.
+The following proposition establishes this equivalence.
+
+\begin{lemma} \label{pro:pld-properties}Let $A\in SDD_{n}$, and
+$L_{A}$ its augmented Laplacian.
+\begin{itemize}
+\item $\text{ld}\left(L_{A}\right)=\log\left|A\right|$ 
+\item Let $A,B\in SDD_{n}$. $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(L_{A}\right)+\text{ld}\left(L_{B}\right)$
+and $\text{ld}\left(L_{B}^{+}L_{A}\right)=\log\left|B^{-1}A\right|$
+with $L_{A}^{+}$the pseudo inverse of $L_{A}$. 
+\end{itemize}
+\end{lemma}
+
+\begin{proof}The proofs of this lemma are straightforward and are
+contained in Appendix B. \end{proof} 
+
+A Laplacian matrix can be considered either for its graphical properties,
+or for its algebraic properties. Recent results has shown a deep connection
+between these two aspects, and let us develop a general framework
+for computing determinants: given $G\in SDD_{n}$, we consider the
+graph associated to its Laplacian $L_{G}$, through the grounding
+procedure. Using graphical properties of $L_{G}$, we can construct
+a weighted subgraph $L_{H}\subseteq L_{G}$ for which the PLD is easier
+to compute and that is a good approximation of $L_{G}$in the spectral
+sense. We can float the subgraph $L_{H}$ and apply results of Section
+\ref{sec:Preconditioned-log-determinants} to approximate the reminder
+with high probability. More precisely:
+\begin{align*}
+\log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|G\right|\\
+ & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}G\right|
+\end{align*}
+
+
+The first term $\text{ld}\left(L_{H}\right)$ is usually easier to
+compute by considering the graphical properties of $L_{H}$, while
+the reminder $\log\left|F_{L_{H}}^{-1}G\right|$ is approximated by
+sampling. Preconditioner graphs $L_{H}$ are typically efficient to
+factorize using Cholesky factorization, and close enough to $G$ that
+the sampling procedure from the previous section can be applied to
+compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to adapt
+Spielman and Teng's remarkable work on \emph{ultra-sparsifiers} to
+produce good preconditioners $H$ for the determinant. 
