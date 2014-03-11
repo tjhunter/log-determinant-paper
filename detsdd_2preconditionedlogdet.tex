@@ -110,45 +110,49 @@ one for approximate preconditioners. The corresponding algorithm,
 which we call \texttt{PreconditionedLogDetMonteCarlo}, is presented
 in Algorithm \ref{alg:SampleLogDet}.
 
-\begin{corollary} \label{cor:preconditioning}If $A$ and $B$ are
-positive definite matrices so that $B$ is a $\kappa-$approximation
-of $A$: 
+\begin{corollary} \label{cor:preconditioning}Let $A\in\mathcal{S}_{n}^{+}$
+and $B\in\mathcal{S}_{n}^{+}$ be positive definite matrices so that
+$B$ is a $\kappa-$approximation of $A$: 
 \begin{equation}
 A\preceq B\preceq\kappa A\label{eq:A-B-bounds}
 \end{equation}
-then the algorithm \texttt{PreconditionedLogDetMonteCarlo} computes
-$\frac{1}{n}\log\left|B^{-1}A\right|$ up to some precision $\epsilon$
-with probability greater than $1/n$, by performing $\mathcal{O}\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(n\right)\log^{2}\left(\kappa\right)\log\left(\frac{n}{\kappa\epsilon}\right)\right)$vector
-inversions from $B$ and vector multiplies from $A$.
+Given $\epsilon>0$ and $\eta\in\left(0,1\right)$, the algorithm
+\texttt{PreconditionedLogDetMonteCarlo} computes $\frac{1}{n}\log\left|B^{-1}A\right|$
+up to precision $\epsilon$ with probability greater than $1-\eta$,
+by performing $\mathcal{O}\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}\left(\kappa\right)\log\left(\frac{n\kappa}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$
+vector inversions from $B$ and vector multiplies from $A$.
 
 \end{corollary}
 
 The proof of this corollary is presented in Appendix A. Usually, computing
 the exact inverse by an SDD matrix is too expensive. We can instead
-extend the previous result to consider a black box that approximatively
-computes $B^{-1}x$. If the error introduced by the approximate inversion
-is small enough, the result from the previous corollary still holds.
-This is what the following theorem establishes:
+extend the previous result to consider a black box procedure that
+approximatively computes $B^{-1}x$. If the error introduced by the
+approximate inversion is small enough, the result from the previous
+corollary still holds. This is what the following theorem establishes:
 
-\begin{theorem}\label{thm:preconditioning-approx}Consider $A,B\in\mathcal{S}_{n}^{+*}$
-with $B$ a $\kappa-$approximation of $A$. Furthermore, assume there
-exists a function $C$ so that for all $y\in\mathbb{R}^{n}$, $C$
-returns an $\nu-$approximation of $B^{-1}y$:
+\begin{theorem}\label{thm:preconditioning-approx}Consider $A,B\in\mathcal{S}_{n}^{+}$
+positive definite with $B$ a $\kappa-$approximation of $A$ with
+$\kappa\geq2$. Furthermore, assume there exists a linear operator
+$C$ so that for all $y\in\mathbb{R}^{n}$, $C$ returns an $\nu-$approximation
+of $B^{-1}y$:
 \[
 \left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\nu\left\Vert B^{-1}y\right\Vert _{B}
 \]
-Given $\eta>0$ and $\epsilon>0$, if $\nu\leq\frac{\epsilon^{3}\eta}{16\kappa^{3}\kappa\left(B\right)\left(1+n\epsilon\right)\log\left(\eta^{-1}\right)\log^{2}\kappa}$,
-then the algorithm \texttt{PreconditionedLogDetMonteCarlo} returns
+Given $\eta\in\left(0,1\right)$ and $\epsilon>0$, if $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$,
+then the algorithm \texttt{ApproxPreconditionedLogDetMonteCarlo} returns
 a scalar $z$ so that:
 \[
 \mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\epsilon\right]\leq\eta
 \]
-by performing $O\left(\kappa\epsilon^{-2}\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)$
+by performing $64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}\left(\kappa\right)\log\left(\frac{n\kappa}{\epsilon}\right)\log\left(\eta^{-1}\right)$
 vector calls to the operator $C$ and vector multiplies from $A$. 
 
 \end{theorem}
 
-The proof of this result is detailed in Appendix A.
+The proof of this result is detailed in Appendix A. While the overall
+bound looks the same, the constant (taken away by the $O\left(\right)$
+notation) is twice as large as Corollary \ref{cor:preconditioning}.
 
 This last theorem shows that we can compute a good approximation of
 the log-determinant if the preconditioner $B$: (a) is close to $A$

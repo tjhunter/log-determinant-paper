@@ -207,16 +207,17 @@ and this algorithm completes in expected time $\tilde{\mathcal{O}}\left(m\left(\
 
 \end{theorem}
 
-\textbf{A note on scaling.} Unlike other characteristics of linear
-operators, the determinant and the log-determinant are very sensitive
-to dimensionality. We will follow the approach of Reuksen \cite{Reusken2002}
-and consider the \emph{regularized log-determinant} $f\left(A\right)=n^{-1}\log\left|A\right|$
-instead of the log-determinant. The regularized determinant has appealing
-properties with respect to dimensionality. In particular, its sensitivity
-to perturbations does not increase with the dimensionality, but only
-depends on spectral properties of the operator $A$. For example,
-calling $\lambda_{\min}$and $\lambda_{\max}$ the minimum and maximum
-eigenvalues of $A$, respectively: 
+\textbf{A note on scaling.} Unlike other common characteristics of
+linear operators, the determinant and the log-determinant are very
+sensitive to dimensionality. We will follow the approach of Reuksen
+\cite{Reusken2002} and consider the \emph{regularized log-determinant}
+$f\left(A\right)=n^{-1}\log\left|A\right|$ instead of the log-determinant.
+The regularized determinant has appealing properties with respect
+to dimensionality. In particular, its sensitivity to perturbations
+does not increase with the dimensionality, but only depends on spectral
+properties of the operator $A$. For example, calling $\lambda_{\min}$
+and $\lambda_{\max}$ the minimum and maximum eigenvalues of $A$,
+respectively: 
 \[
 \log\lambda_{\min}\leq f\left(A\right)\leq\log\lambda_{\max}
 \]

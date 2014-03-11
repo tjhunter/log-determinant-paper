@@ -57,7 +57,7 @@ satisfies the inequality:$\exp\left(-\frac{p\epsilon^{2}}{8n^{-1}\left(\log\delt
 \end{proof}
 
 
-\subsection{Proof of Corollary\ref{cor:preconditioning}}
+\subsection{Proof of Corollary \ref{cor:preconditioning}}
 
 \begin{proof} We introduce some notations that will prove useful
 for the rest of the article: 
@@ -77,9 +77,9 @@ or also:
 \[
 \left(1-\kappa^{-1}\right)I\succeq I-B^{-1/2}AB^{-1/2}\succeq0
 \]
-\[
-\left(1-\kappa^{-1}\right)I\succeq S\succeq0
-\]
+\begin{equation}
+\left(1-\kappa^{-1}\right)I\succeq S\succeq0\label{eq:s-encadrement}
+\end{equation}
 
 
 The matrix $S$ is a contraction, and its spectral radius is determined
@@ -151,6 +151,9 @@ R=I-B^{-1}A\label{eq:R-def}
 \]
 
 
+Recall the definition of the matrix norm. Given $M\in\mathcal{S}_{n}^{+}$,
+$\left\Vert M\right\Vert _{B}=\max_{x\neq0}\sqrt{\frac{x^{T}Mx}{x^{T}Bx}}$
+
 \begin{lemma}\label{lem:S-R-contractions} $S$ and $R$ are contractions
 for the Euclidian and $B-$norms: 
 \begin{eqnarray*}
@@ -161,15 +164,14 @@ for the Euclidian and $B-$norms:
 \end{lemma} 
 
 \begin{proof} Recall the definition of the matrix norm:$\left\Vert S\right\Vert =\max_{x^{T}x\leq1}\sqrt{x^{T}Sx}$.
-Since we know that $S\preceq\left(1-\varphi\right)I$, we get the
-first inequality.
+Since we know from Equation \ref{eq:s-encadrement} that $S\preceq\left(1-\varphi\right)I$,
+we get the first inequality.
 
 The second inequality is a consequence of Proposition 3.3 from \cite{Spielman2009a}:
 $A$ and $B$ have the same nullspace and we have the linear matrix
 inequality $A\preceq B\preceq\kappa A$, which implies that the eigenvalues
 of $B^{-1}A$ lie between $\kappa^{-1}=\varphi$ and $1$. This implies
-that the eigenvalues of $I-B^{-1}A$ are between $1-\varphi$ and
-$0$.
+that the eigenvalues of $I-B^{-1}A$ are between $0$ and $1-\varphi$.
 
 Recall the definition of the matrix norm induced by the $B$-norm
 over $\mathbb{R}^{n}$: 
@@ -196,8 +198,8 @@ so we get:
 The approximation of the log-determinant is performed by computing
 sequences of power series $\left(R^{k}x\right)_{k}$. These chains
 are computed approximately by repeated applications of the $R$ operator
-on the previous element of the chain, starting from a Gaussian white
-noise element $x_{0}\sim\mathcal{N}\left(0,\mathbf{I}\right)$. We
+on the previous element of the chain, starting from a unit Gaussian
+distribution $x_{0}\sim\mathcal{N}\left(0,\mathbf{I}\right)$. We
 formalize the notion of an approximate chain. 
 
 \begin{definition} \emph{Approximate power sequence. }Given a linear
@@ -216,11 +218,12 @@ We now prove the following result that is quite intuitive: if the
 operator $H$ is a contraction and if the relative error $\epsilon$
 is not too great, the sum of all the errors on the chain is bounded. 
 
-\begin{lemma} Given the previous hypothesis, and assuming furthermore
-that $\left\Vert H\right\Vert _{D}\leq1-\eta$ and that $2\epsilon\leq\eta\leq1/2$,
-the total error is bounded by $\mathcal{O}\left(\eta^{-3}\epsilon\right)$:
+\begin{lemma}\label{lem:nu-sequence-bound}Consider $\left(x^{\left(k\right)}\right)_{k}$
+a $\nu-$approximate power sequence for the operator $H$ and the
+norm $D$. Assuming that $\left\Vert H\right\Vert _{D}\leq1-\rho$
+and that $2\nu\leq\rho\leq1/2$, the total error is bounded by $\mathcal{O}\left(\rho^{-3}\nu\right)$:
 \[
-\sum_{k=0}^{\infty}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}\leq4\epsilon\eta^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\sum_{k=0}^{\infty}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}\leq4\nu\rho^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 \end{lemma}
 
@@ -238,45 +241,44 @@ We now bound the error on the $\omega_{k}$ sequence:
 \begin{eqnarray*}
 \omega_{k+1} & = & \left\Vert x^{\left(k+1\right)}-Hx^{\left(k\right)}+Hx^{\left(k\right)}-H^{k+1}x^{\left(0\right)}\right\Vert _{D}\\
  & \leq & \left\Vert Hx^{\left(k\right)}-H^{k+1}x^{\left(0\right)}\right\Vert _{D}+\left\Vert x^{\left(k+1\right)}-Hx^{\left(k\right)}\right\Vert _{D}\\
- & \leq & \left\Vert H\right\Vert _{D}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}+\epsilon\left\Vert Hx^{\left(k\right)}\right\Vert _{D}\\
- & = & \left\Vert H\right\Vert _{D}\omega_{k}+\epsilon\theta_{k}\\
- & \leq & \left\Vert H\right\Vert _{D}\omega_{k}+\epsilon\left(\omega_{k}+\left\Vert H\right\Vert _{D}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\right)\\
- & \leq & \left[\left(1-\eta\right)^{2}+\epsilon\right]\omega_{k}+\epsilon\left(1-\eta\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+ & \leq & \left\Vert H\right\Vert _{D}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}+\nu\left\Vert Hx^{\left(k\right)}\right\Vert _{D}\\
+ & = & \left\Vert H\right\Vert _{D}\omega_{k}+\nu\theta_{k}\\
+ & \leq & \left\Vert H\right\Vert _{D}\omega_{k}+\nu\left(\omega_{k}+\left\Vert H\right\Vert _{D}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\right)\\
+ & \leq & \left[\left(1-\rho\right)^{2}+\nu\right]\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \end{eqnarray*}
 
 
-Note that the condition $\left(1-\eta\right)^{2}+\epsilon\leq1-\eta$
-is equivalent to $\epsilon\leq\eta-\eta^{2}$. We can assume without
-loss of generality that $0\leq\eta\leq1/2$. Under this condition,
-$\eta/2\leq\eta-\eta^{2}$. So the condition $2\epsilon\leq\eta$
-implies $\left(1-\eta\right)^{2}+\epsilon\leq1-\eta$ which leads
-to: 
+Note that the inequality $\left(1-\rho\right)^{2}+\nu\leq1-\rho$
+is equivalent to $\nu\leq\rho-\rho^{2}$. We can assume without loss
+of generality that $0<\rho\leq1/2$. Under this condition, $\rho/2\leq\rho-\rho^{2}$.
+So the condition $2\nu\leq\rho$ implies $\left(1-\rho\right)^{2}+\nu\leq1-\rho$
+which leads to: 
 \[
-\omega_{k+1}\leq\left(1-\eta\right)\omega_{k}+\epsilon\left(1-\eta\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\omega_{k+1}\leq\left(1-\rho\right)\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 
 
 By induction, one obtains: 
 \[
-\omega_{k}\leq\omega_{1}\left(1-\eta\right)^{k}+\frac{\epsilon\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\eta}\left(1-\eta\right)^{2k-1}
+\omega_{k}\leq\omega_{1}\left(1-\rho\right)^{k}+\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\rho}\left(1-\rho\right)^{2k-1}
 \]
-and since $\omega_{1}=\left\Vert x^{\left(1\right)}-Hx^{\left(0\right)}\right\Vert _{D}\leq\epsilon\left\Vert Hx^{\left(0\right)}\right\Vert _{D}\leq\epsilon\left\Vert H\right\Vert _{D}\left\Vert x^{\left(0\right)}\right\Vert _{D}\leq\epsilon\left(1-\eta\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}$,
-we have a final bound that depends on $\epsilon$: 
+and since $\omega_{1}=\left\Vert x^{\left(1\right)}-Hx^{\left(0\right)}\right\Vert _{D}\leq\nu\left\Vert Hx^{\left(0\right)}\right\Vert _{D}\leq\nu\left\Vert H\right\Vert _{D}\left\Vert x^{\left(0\right)}\right\Vert _{D}\leq\nu\left(1-\rho\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}$,
+we have a final bound that depends on $\nu$: 
 \[
-\omega_{k}\leq\epsilon\left(1-\eta\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}\left(1-\eta\right)^{k}+\frac{\epsilon\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\eta}\left(1-\eta\right)^{2k-1}
+\omega_{k}\leq\nu\left(1-\rho\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}\left(1-\rho\right)^{k}+\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\rho}\left(1-\rho\right)^{2k-1}
 \]
 
 
 This is the sum of two geometric series, which give the bound: 
 \[
-\sum_{k}\omega_{k}\leq\epsilon\eta^{-1}\left[1+\frac{1}{\eta^{2}\left(1-\eta\right)^{2}}\right]\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\sum_{k}\omega_{k}\leq\nu\rho^{-1}\left[1+\frac{1}{\rho^{2}\left(1-\rho\right)^{2}}\right]\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 
 
-Since $\eta\leq1/2$, it implies $\left(1-\eta\right)^{-2}\leq4$
-and $1\leq\eta^{-2}$, so we can further simplify: 
+Since $\rho\leq1/2$, it implies $\left(1-\rho\right)^{-2}\leq4$
+and $1\leq\rho^{-2}$, so we can further simplify: 
 \[
-\sum_{k}\omega_{k}\leq4\epsilon\eta^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\sum_{k}\omega_{k}\leq4\nu\rho^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 
 
@@ -286,11 +288,11 @@ We can use the bound on the norm of $A$ to compute bound the error
 with a preconditioner:
 
 \begin{lemma}\label{lem:partial-sequence-approximate}Consider $A,B$
-with the same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, $\epsilon\in\left(0,\varphi/2\right)$
-and $\left(x_{u}\right)_{u}$ an $\epsilon-$approximate power sequence
-for the operator $R$ with start vector $x_{0}$. Then:
+with the same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, $\nu\in\left(0,\varphi/2\right)$,
+$\varphi\leq1/2$, and $\left(x_{u}\right)_{u}$ an $\nu-$approximate
+power sequence for the operator $R$ with start vector $x_{0}$. Then:
 \[
-\left|\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}-\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}\right|\leq4\epsilon\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
+\left|\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}-\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}\right|\leq4\nu\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
 \]
  where $\kappa\left(B\right)$ is the condition number of $B$.
 
@@ -314,9 +316,9 @@ Using the Cauchy-Schwartz inequality, we obtain:
 \[
 \left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|=\left|\left\langle B^{-1}x_{0},R^{i}x_{0}-x_{i}\right\rangle _{B}\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}
 \]
-so that we can bound the deviation: 
+so that we can bound the deviation using the bound from Lemma \ref{lem:nu-sequence-bound}.
 \[
-\left|\hat{z}-z\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\sum_{i=1}^{l}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq4\epsilon\kappa^{3}\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert x_{0}\right\Vert _{B}\leq4\epsilon\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
+\left|\hat{z}-z\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\sum_{i=1}^{l}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq4\nu\kappa^{3}\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert x_{0}\right\Vert _{B}\leq4\nu\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
 \]
 where $\kappa\left(B\right)$ is the condition number of $B$. \end{proof}
 
@@ -326,48 +328,36 @@ We now have all the elements required for the proof of Theorem \ref{thm:precondi
 
 Consider $\mathbf{u}_{j}\sim\mathcal{N}\left(0,I_{n}\right)$ for
 $j=1\cdots p$, and $x_{i,j}=\begin{cases}
-\mathbf{u}_{j} & i=0\\
-x_{i-1,j}-C\left(Ax_{i-1,j}\right) & i>0
+\mathbf{u}_{j}/\left\Vert \mathbf{u}_{j}\right\Vert  & \,\, i=0\\
+x_{i-1,j}-C\left(Ax_{i-1,j}\right) & \,\, i>0
 \end{cases}$
 
 Call 
 \[
-z_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{i=1}^{l}\frac{1}{i}\frac{\left(x_{0,j}\right)^{T}x_{i,j}}{x_{0,j}^{T}x_{0,j}}
+z_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{i=1}^{l}\frac{1}{i}\left(x_{0,j}\right)^{T}x_{i,j}
 \]
 \[
-\hat{y}_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
+\hat{y}_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\left(x_{0,j}\right)^{T}S^{k}x_{0,j}
 \]
 
 
-By construction, $\left(x_{i,j}\right)_{i}$ is an $\epsilon-$approximate
+By construction, $\left(x_{i,j}\right)_{i}$ is an $\nu-$approximate
 chain for the operator $R$. Applying Lemma \ref{lem:partial-sequence-approximate},
 we get:
 \begin{eqnarray*}
-\left|z_{p,l}-\hat{y}_{p,l}\right| & \leq & 4\epsilon\kappa^{3}\kappa\left(B\right)\left[\frac{1}{p}\sum_{j=1}^{p}\left\Vert \mathbf{u}_{j}\right\Vert ^{2}\right]
+\left|z_{p,l}-\hat{y}_{p,l}\right| & \leq & 4\nu\kappa^{3}\kappa\left(B\right)\left[\frac{1}{p}\sum_{j=1}^{p}\left\Vert x_{0,j}\right\Vert ^{2}\right]=4\nu\kappa^{3}\kappa\left(B\right)
 \end{eqnarray*}
 
 
-Call $\beta=4p^{-1}\kappa^{3}\kappa\left(B\right)$While this bound
-depends on the (random) value of the squared norms of the start vectors,
-it is enough to bound this term with high probability using a Chebyshev
-bound. Call $Z=\sum_{j=1}^{p}\left\Vert \mathbf{u}_{j}\right\Vert ^{2}$
-and $Y=\epsilon\beta Z$. The random variable $Z$ is a sum of square
-norms of $np$ independent scaled, centered Gaussian distributions,
-hence it follows a Chi-square distribution with $np$ degrees of freedom.
-We have $\mathbb{E}\left[Z\right]=np$ and $\text{Cov}\left[Z\right]=2np$,
-so $\mathbb{P}\left[\left|Z-np\right|\geq\mu\right]\leq2\frac{np}{\mu^{2}}$.
-
-Assume $\epsilon\leq\min\left(\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n},\frac{1}{4\kappa^{3}\kappa\left(B\right)}\frac{\mu}{n\sqrt{p}}\eta,\frac{1}{2\kappa}\right)$.
-Then $\mathbb{E}\left[Y\right]=4p^{-1}\epsilon\kappa^{3}\kappa\left(B\right)np\leq\mu$,
-which means that 
-\begin{eqnarray*}
-\mathbb{P}\left[Y\geq\mu\right] & \leq & \mathbb{P}\left[\left|Y-\mathbb{E}\left[Y\right]\right|\geq\mu\right]\\
- & \leq & \frac{\text{Var}\left(Y\right)}{\mu^{2}}\\
- & = & \epsilon^{2}\frac{\beta^{2}np}{\mu^{2}}
-\end{eqnarray*}
-and our choice of $\epsilon$ ensures that $\epsilon^{2}\frac{\beta^{2}np}{\mu^{2}}\leq\eta$.
-Finally, we can simplify the bound on $\epsilon$ since $\frac{\eta}{\sqrt{p}}\le1$.
-
-Thus, we have $\mathbb{P}\left[\left|z_{p,l}-\hat{y}_{p,l}\right|\geq\mu\right]\leq\mathbb{P}\left[Y\geq\mu\right]\leq\eta$
+since $\left\Vert x_{0,j}\right\Vert ^{2}=1$, which gives us a deterministic
+bound. Consider $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$.
+Then $\left|z_{p,l}-\hat{y}_{p,l}\right|\leq\epsilon/2$. Furthermore:
+\[
+\left|z_{p,l}-y\right|\leq\left|z_{p,l}-\hat{y}_{p,l}\right|+\left|y-\hat{y}_{p,l}\right|
+\]
+and $\mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon/2\right]\leq\eta$
+for a choice of $p\geq16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
+and $l\geq4\kappa\log\left(\frac{n}{\delta\epsilon}\right)$. Hence,
+we get our bound result of $O\left(pl\right)=O\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)\log\left(\frac{n}{\delta\epsilon}\right)\right)$.
 
 \end{proof}
