@@ -159,3 +159,73 @@ the log-determinant if the preconditioner $B$: (a) is close to $A$
 in the spectral sense, and (b) can be approximately inverted and the
 error introduced by the approximate inversion can be controlled. This
 happens to be the case for symmetric, diagonally dominant matrices.
+
+\begin{algorithm}
+\begin{raggedright} Algorithm \textbf{UltraLogDet}($A$,$\epsilon$,$\eta$): 
+
+\end{raggedright}
+
+\begin{raggedright} If $A$ is of a small size ($<$100), directly
+compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization. 
+
+\end{raggedright}
+
+\begin{raggedright} Compute $B=$\textbf{IncrementalSparsify($A$)} 
+
+\end{raggedright}
+
+\begin{raggedright} Compute $D,A'=$\textbf{PartialCholesky($B$)} 
+
+\end{raggedright}
+
+\begin{raggedright} $\eta\leftarrow\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$
+
+\end{raggedright}
+
+\begin{raggedright} $p\leftarrow8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
+
+\end{raggedright}
+
+\begin{raggedright} $l\leftarrow\delta^{-1}\log\left(\frac{2}{\epsilon\delta}\right)$
+
+\end{raggedright}
+
+\begin{raggedright} Compute $s=$\textbf{PreconditionedLogDetMonteCarlo($B,A,\eta,p,l$)} 
+
+\end{raggedright}
+
+\begin{raggedright} Return $s+\log\left|D\right|+$\textbf{UltraLogDet($A'$,$\epsilon$,$\eta$)} 
+
+\end{raggedright}
+
+\caption{Sketch of the main algorithm\label{alg:The-main-algorithm}}
+\end{algorithm}
+
+
+\begin{algorithm}
+Algorithm \textbf{PreconditionedLogDetMonteCarlo}($B$,$A$,$\eta$,$p$,$l$):
+
+$y\leftarrow0$
+
+for $j$ from $1$ to $p$:
+
+~~Sample $\mathbf{u}\sim\mathcal{N}\left(\mathbf{0},I\right)$
+
+~~$\mathbf{v}\leftarrow\mathbf{u}/\left\Vert \mathbf{u}\right\Vert $
+
+~~$z\leftarrow0$
+
+~~for $k$ from $1$ to $l$:
+
+~~~~$\mathbf{v}\leftarrow B^{-1}A\mathbf{v}$~up to precision
+$\eta$
+
+~~~~$z\leftarrow z+k^{-1}\mathbf{v}^{T}\mathbf{u}$
+
+~~$y\leftarrow y-p^{-1}z$
+
+Return $y$
+
+\caption{\textbf{PreconditionedLogDetMonteCarlo}\label{alg:SampleLogDet}}
+\end{algorithm}
+
