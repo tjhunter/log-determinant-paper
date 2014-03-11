@@ -102,9 +102,9 @@ gradient and lead to near-linear algorithms for approximate inversion
 significantly strenghtened in the previous years, so that SDD systems
 can be considered to be solved in (expected) linear time.
 
-\begin{lemma} \label{lem:linear-precond-existence}(CITE Koutis2011)
-Given $A\in SDD_{n}$ with $m$ non-zero entries, $b\in\mathbb{R}^{n}$
-and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
+\begin{lemma} \label{lem:linear-precond-existence}(Theorem 4.6 from
+\cite{Koutis2011}). Given $A\in SDD_{n}$ with $m$ non-zero entries,
+$b\in\mathbb{R}^{n}$ and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
 can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$.\end{lemma}
 
 It should now become clear how we can combine a $\kappa\left(n\right)$-good

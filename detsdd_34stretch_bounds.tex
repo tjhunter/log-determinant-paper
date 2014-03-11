@@ -39,7 +39,7 @@ carry over to our definition of stretch. For the sake of completeness,
 we include this result:
 
 \begin{lemma}\label{lem:stretch-trace}(Straightforward generalization
-of Theorem 2.1 in \cite{Spielman2009b})Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
+of Theorem 2.1 in \cite{Spielman2009b}) Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
 their respective Laplacians. Then:
 \[
@@ -51,8 +51,9 @@ with $L_{H}^{+}$the pseudo-inverse of $L_{H}$.
 
 \begin{proof}
 
-We denote $E\left(u,v\right)$ the unit matrix that is $1$ in position
-$u,v$. This is the same arguments as the original proof:
+We denote $E\left(u,v\right)$ the Laplacian unit matrix that is $1$
+in position $u,v$: $E\left(u,v\right)=\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}$.
+This is the same arguments as the original proof:
 \begin{eqnarray*}
 \text{Tr}\left(L_{H}^{+}L_{G}\right) & = & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}L_{G}\left(u,v\right)\text{Tr}\left(E\left(u,v\right)L_{H}^{+}\right)\\
  & = & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}L_{G}\left(u,v\right)\text{Tr}\left(\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\right)\\
@@ -63,10 +64,11 @@ $u,v$. This is the same arguments as the original proof:
 
 \end{proof}
 
-A number of properties of the stretch extend to general graphs using
-this definition. In particular, the stretch inequality (Lemma 8.2
-in \cite{Spielman2009a}) can be generalized to arbitrary graphs (instead
-of spanning trees).
+A consequence is $\text{st}_{H}\left(G\right)\geq\text{Card}\left(\mathcal{E}_{G}\right)\geq n-1$
+for connected $G$ and $H$ with $L_{G}\succeq L_{H}$. A number of
+properties of the stretch extend to general graphs using the generalized
+stretch. In particular, the stretch inequality (Lemma 8.2 in \cite{Spielman2009a})
+can be generalized to arbitrary graphs (instead of spanning trees).
 
 \begin{lemma}\label{lem:stretch-inequality}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
@@ -101,9 +103,9 @@ L_{G} & \preceq & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}\omega_{\left(u,v\rig
 This bound is remarkable as it relates any pair of (connected) graphs,
 as opposed to spanning trees or subgraphs. An approximation of the
 generalized stretch can be quickly computed using a construct detailled
-in \cite{Spielman2009}. We now introduce the main result of this
-section: a bound on the PLD of $L_{G}$ using the PLD of $L_{H}$
-and the stretch.
+in \cite{Spielman2009}, as we will see below. We now introduce the
+main result of this section: a bound on the PLD of $L_{G}$ using
+the PLD of $L_{H}$ and the stretch.
 
 \begin{theorem}\label{thm:stretch-pld-bounds}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
@@ -113,7 +115,7 @@ their respective Laplacians. Assuming $L_{H}\preceq L_{G}$, then:
 \end{equation}
 
 
-This inequality is an equality for $G=H$.
+This bound is tight.
 
 \end{theorem}
 
@@ -160,20 +162,24 @@ and this inequality is tight for $u_{1}=\sigma-\left(n-1\right)$
 and $u_{i\geq2}=0$. Thus the vector $\lambda^{*}=\left(\sigma-n+2,\,1\cdots1\right)^{T}$
 is (a) a solution to the minimization problem above, and (b) the objective
 value of any feasible vector $\lambda$ is higher or equal. Thus,
-this is the solution (unique up to a permutation). Hence we have $\text{ld}\left(L_{H}^{+}L_{G}\right)\geq\sum_{i}\log\lambda_{i}^{*}=\log\left(\sigma-n+2\right)$.\end{proof}
+this is the solution (unique up to a permutation). Hence we have $\text{ld}\left(L_{H}^{+}L_{G}\right)\geq\sum_{i}\log\lambda_{i}^{*}=\log\left(\sigma-n+2\right)$.
 
-Note that this inequality is a stronger result than the bound $L_{H}\preceq L_{G}\Rightarrow\text{st}_{H}\left(G\right)\geq n-1$
-presented in \cite{Spielman2009b} (a direct consequence of Lemma
-\ref{lem:stretch-trace}). Interestingly, it does not make assumption
-on the topology of the graphs (such as $L_{H}$ being a subset of
-$L_{G}$). Research on conditioners has focused so far on low-stretch
-approximations that are subgraphs of the original graph. It remains
-to be seen if some better preconditioners can be found with stretches
-in $\mathcal{O}\left(n\right)$ by considering more general graphs.
-In this case, the machinery developped in Section 3 would not be necessary.
+Finally, note that if $G$ is a tree and $H=G$ ($G$ is its own spanning
+tree), then $\text{st}_{H}\left(G\right)=n-1$, which gives an equality.\end{proof}
 
-From a practical perspective, the stretch can be calculated also linearly
-with respect to the number of non-zero entries.
+Note that Lemma \ref{lem:stretch-inequality} gives us $L_{H}\preceq L_{G}\preceq\text{st}_{H}\left(G\right)L_{H}$
+which implies $\text{ld}\left(L_{H}\right)\leq\text{ld}\left(L_{G}\right)\leq\text{ld}\left(L_{H}\right)+n\log\text{st}_{H}\left(G\right)$.
+The inequalities in Theorem \ref{thm:stretch-pld-bounds} are stronger.
+Interestingly, it does not make assumption on the topology of the
+graphs (such as $L_{H}$ being a subset of $L_{G}$). Research on
+conditioners has focused so far on low-stretch approximations that
+are subgraphs of the original graph. It remains to be seen if some
+better preconditioners can be found with stretches in $\mathcal{O}\left(n\right)$
+by considering more general graphs. In this case, the machinery developped
+in Section 3 would not be necessary.
+
+From a practical perspective, the stretch can be calculated also with
+respect to the number of non-zero entries.
 
 \begin{lemma}\label{lem:stretch-approx}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
