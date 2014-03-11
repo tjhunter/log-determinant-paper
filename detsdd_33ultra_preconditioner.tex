@@ -5,7 +5,7 @@ We can do better and achieve near-linear time by using ultra-sparsifiers.
 The main insight of our result is that the class preconditioners presented
 by Spielman and Teng are based on incomplete Cholesky factorization,
 and hence have a determinant that is relatively easy to compute, and
-that furthermore they are excellent spectral preconditioners, so the
+furthermore that they are excellent spectral preconditioners, so the
 procedure \texttt{PreconditionedLogDetMonteCarlo} is efficient to
 apply. We reintroduce some concepts presented in \cite{Koutis2010}
 to present a self-contained result. The following paragraphs are well-known
@@ -19,12 +19,13 @@ Cholesky factorization), yet it is close to the original $A$ is the
 spectral sense ($A\preceq B\preceq\kappa A$), thanks to the additional
 edges. The partial Cholesky factorization is computed using the \texttt{GreedyElimination}
 algorithm presented in \cite{Koutis2010}. In order for this section
-to be self-contained, we repeat the main results of Section 4 in \cite{Spielman2009a}.
+to be self-contained, we include here the main results of Section
+4 in \cite{Spielman2009a}.
 
-Consider a Laplacian matrix $G$. There exists an algorithm that computes
-the partial Cholesky factorization: 
+Consider the Laplacian matrix $L_{B}$ of the subgraph $B$. There
+exists an algorithm that computes the partial Cholesky factorization:
 \[
-B=PLCL^{T}P^{T}
+L_{B}=PLCL^{T}P^{T}
 \]
 where: 
 \begin{itemize}
@@ -41,32 +42,33 @@ with the diagonal of $L_{1,1}$ being all ones.
 \[
 C=\left(\begin{array}{cc}
 D_{n-n_{1}} & 0\\
-0 & A_{1}
+0 & L_{A_{1}}
 \end{array}\right)
 \]
-and every row and column of $A_{1}$ has at least 3 non-zero coefficients.
-Furthermore, $A_{1}$ is itself Laplacian and: 
+and every row and column of $L_{A_{1}}$ has at least 3 non-zero coefficients.
+Furthermore, $L_{A_{1}}$ is itself Laplacian and: 
 \[
-\text{ld}\left(B\right)=\sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(A_{1}\right)
+\text{ld}\left(L_{G}\right)=\sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(L_{A_{1}}\right)
 \]
 
 \end{itemize}
-The exact algorithm is detailled that achieves this factorization
-is presented in \cite{Koutis2010}. Using this factorization, the
-PLD of the original Laplacian $A$ is: 
+The exact algorithm that achieves this factorization is called \texttt{GreedyElimination}
+and is presented in \cite{Koutis2010}. Using this factorization,
+the PLD of the original Laplacian $L_{A}$ is: 
 \begin{eqnarray}
-\text{ld}\left(A\right) & = & \text{ld}\left(B\right)+\text{ld}\left(B^{+}A\right)\nonumber \\
+\text{ld}\left(L_{A}\right) & = & \text{ld}\left(L_{B}\right)+\text{ld}\left(B^{+}A\right)\nonumber \\
  & = & \sum_{1}^{n-n_{1}}\log D_{ii}+\mbox{\text{ld}}\left(A_{1}\right)+\text{ld}\left(B^{+}A\right)\label{eq:chain-recursion}
 \end{eqnarray}
-Thus, we are left with solving a smaller problem $A_{1}$, and approximate
-the value of $\text{ld}\left(B^{+}A\right)$ using the algorithm \texttt{SampleLogDet}.
-ST preconditioners are appealing for this task: they guarantee that
-$A_{1}$ is substantially smaller than $A$, so the recursion completes
-in $O\left(\log\log n\right)$ steps. Furthermore, computing the vector
-product $B^{+}Ax$ is itself efficient (in can be done in near-linear
-time), so the sampling algorithm can be run is reasonable time. We
-formalize the notion of chain of preconditioners by reintroducing
-some material from \cite{Koutis2010}.
+Thus, we are left with solving a smaller problem $A_{1}$, and we
+approximate the value of $\text{ld}\left(B^{+}A\right)$ using the
+algorithm \texttt{SampleLogDet}. ST preconditioners are appealing
+for this task: they guarantee that $A_{1}$ is substantially smaller
+than $A$, so the recursion completes in $O\left(\log\log n\right)$
+steps. Furthermore, computing the vector product $B^{+}Ax$ is itself
+efficient (in can be done approximated in near-linear time), so we
+can apply Theorem \ref{thm:preconditioning-approx}. We formalize
+the notion of chain of preconditioners by reintroducing some material
+from \cite{Koutis2010}.
 
 \begin{definition} Definition 7.1 from \cite{Koutis2010}. $\kappa\left(n\right)$-good
 chain. $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
@@ -75,7 +77,7 @@ and edges of $A_{i}$. $\mathcal{C}$ is $\kappa\left(n\right)$-good
 for $A$ if:
 \begin{enumerate}
 \item $A_{i}\preceq B_{i}\preceq\kappa\left(n_{i}\right)A_{i}$ 
-\item $A_{i+1}$= GreedyElimination$\left(B_{i}\right)$ 
+\item $A_{i+1}$= \texttt{GreedyElimination}$\left(B_{i}\right)$ 
 \item $m_{i}/m_{i+1}\geq c_{r}\sqrt{\kappa\left(n_{i}\right)}$ for some
 constant $c_{r}$. 
 \end{enumerate}
@@ -108,11 +110,12 @@ can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\r
 It should now become clear how we can combine a $\kappa\left(n\right)$-good
 chain with the Algorithm \texttt{PreconditionedLogDetMonteCarlo}.
 We start by building a chain. The partial Cholesky factorizations
-provide an upper bound to $\mbox{ld}\left(A\right)$. We then refine
-this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
+at each step of the chain provide an upper bound to $\mbox{ld}\left(A\right)$.
+We then refine this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
 at each state of the chain to approximate $\mbox{ld}\left(B_{i}^{+}A_{i}\right)$
 with high probability. The complete algorithm is presented in Algorithm
-\ref{alg:The-main-algorithm}.
+\ref{alg:The-main-algorithm}. We now have all the tools required
+to prove Theorem \ref{thm:ultra_main}.
 
 \textbf{Proof of Theorem \ref{thm:ultra_main}.} Using Lemma \ref{lem:good-chain},
 consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
@@ -124,10 +127,11 @@ reminders $\text{ld}\left(B_{i}^{+}A_{i}\right)$. By construction,
 $A_{i}\preceq B_{i}\preceq\kappa\left(n_{i}\right)A_{i}$ and by Lemma
 \ref{lem:linear-precond-existence}, there exists an operator $C$
 so that $\left\Vert C\left(b\right)-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
-for all $b$ so that $\nu=\frac{\epsilon^{3}\eta}{16\kappa^{3}\kappa\left(B\right)\left(1+n\epsilon\right)}=\tilde{\mathcal{O}}\left(\frac{\epsilon^{3}\eta}{\log^{12}\left(n\right)\kappa\left(B\right)\left(1+n\epsilon\right)}\right)$.
+for all $b$ with a choice of relative precision $\nu=\frac{\epsilon}{16\kappa^{3}\kappa\left(B\right)}$.
 By Theorem \ref{thm:preconditioning-approx}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
 can be approximated to precision $\epsilon$ with probability at least
 $1-\eta$ using Algorithm \ref{BROKEN: Ref: alg:The-main-alg...}.
-Furthermore, this algorithm works in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\kappa\epsilon^{-2}\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)=\tilde{O}\left(m\epsilon^{-2}\log^{5}n\log\left(\frac{n\kappa\left(B\right)}{\epsilon\eta}\left(1+n\epsilon\right)\right)\log\left(\eta^{-1}\right)\right)$.
+Furthermore, this algorithm works in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)=\tilde{O}\left(m\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$.
 By a union bound, the result also holds on the sum of all the approximations
-of the reminders.
+of the reminders. We can simplify this bound a little by assuming
+that $\epsilon\geq n^{-1}$, which then becomes $\tilde{O}\left(m\epsilon^{-1}\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$.

@@ -3,6 +3,41 @@
 
 We put here the proofs that pertain to Section \ref{sec:Making-the-problem}. 
 
+
+\subsection{Properties of the generalized Laplacian}
+
+Proof of Lemma \ref{lem:floating-properties}.
+
+\begin{proof}The first statement is obvious from the construction
+of the grounded Laplacian.
+
+Statment (2) is a direct consequence of the fact that $F_{Z}=PZP^{T}$
+with $P=\left(I_{n}\,0\right)$.
+
+Then the third statement is a simple consequence of statement 2, as
+$\text{ld}\left(Z\right)=\sum_{i}\log\lambda_{i}$ with $\left(\lambda_{i}\right)_{i}$
+the $n-1$ positive eigenvalues of $Z$.
+
+Statement (4) is straightforward after observing that the floating
+procedure is a linear transform from $\mathcal{S}_{n}$ to $\mathcal{S}_{n-1}$,
+so it preserves the matrix inequalities.
+
+\end{proof}
+
+Proof of Lemma \ref{pro:pld-properties}.
+
+\begin{proof} Consider $A,B\in SDD_{n}$ positive definite. Let $P=\left(I_{n}\,\mathbf{0}\right)$
+be a projection matrix over the first $n$ columns of $L_{A}$. If
+$\lambda$ is an eigenvalue of $A$ with associated eigenvector $x$,
+it is also an eigenvalue of $PL_{A}P^{T}$ with the same eigenvector.
+Thus $\text{ld}\left(L_{A}\right)=\log\left|A\right|$. Using the
+floating procedure, the second statement is straightforward.
+
+\end{proof}
+
+
+\subsection{Technical lemmas for Theorem \ref{thm:ultra_main}}
+
 This lemma generalizes Lemma 8.1 in \cite{Spielman2009a}.
 
 \begin{lemma}\label{lem:simple-inequality}Consider $A\in\mathcal{S}_{n}$

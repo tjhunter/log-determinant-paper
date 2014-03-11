@@ -25,10 +25,10 @@ and their associated Laplacian. Recall that an SDD matrix can be transformed
 into a Laplacian (which has all off-diagonal terms non-positive, and
 for which the sum of each row and each column is zero). As underlined
 in \cite{Gremban1996}, solving an equation involving an SDD can be
-turned into solving an equation with an SDD in which all the off-diagonal
-terms are non-positive of twice the same size. This transform is also
-useful for computing determinants. The following lemma shows that
-computing the log-determinant of an SDD with positive off-diagonal
+turned into solving an equation with an SDD of twice the same size
+in which all the off-diagonal terms are non-positive. This transform
+is also useful for computing determinants. The following lemma shows
+that computing the log-determinant of an SDD with positive off-diagonal
 entries can be turned into computing the log-determinants of two SDD
 matrices with non-positive off-diagonal entries.
 
@@ -42,8 +42,8 @@ so that $\left|A_{ij}\right|=\left|P_{ij}\right|+\left|N_{ij}\right|$.
 Then the matrices $\left(\begin{array}{cc}
 P & N\\
 N & P
-\end{array}\right)\in SDD_{2n}$ and $P+N\in SDD_{n}$ with all the off-diagonal coefficients being
-negative, and we have the relation:
+\end{array}\right)\in SDD_{2n}$ and $P+N\in SDD_{n}$ have all the off-diagonal coefficients non-positive,
+and we have the relation:
 \[
 \log\left|\left(\begin{array}{cc}
 P & N\\
@@ -54,12 +54,10 @@ N & P
 
 \end{lemma}
 
-\begin{proof} Call $C=\left(\begin{array}{cc}
+\begin{proof} Call $B=N+P$ and $C=\left(\begin{array}{cc}
 P & N\\
 N & P
-\end{array}\right)$
-
-Consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
+\end{array}\right)$. Consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
 $Ax=\mu x$. Then:
 \[
 \left(\begin{array}{cc}
@@ -86,8 +84,8 @@ $\left(\begin{array}{c}
 y\\
 y
 \end{array}\right)$. Since $C$ is exactly of size $2n$, the set of eigenvalues of $C$
-is exactly the union of sets of eigenvalues of $A$ and $B$. Thus
-$\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\eta_{i}=\log\left|A\right|+\log\left|B\right|$
+is exactly the concatenation of sets of eigenvalues of $A$ and $B$.
+Thus $\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\eta_{i}=\log\left|A\right|+\log\left|B\right|$.
 
 \end{proof}
 
@@ -97,10 +95,10 @@ Recall that a Laplacian matrix can be constructed from any SDD with
 non-positive off-diagonal entries matrix by adding a ``ground''
 node (see Gremban's thesis \cite{Gremban1996}, Chapter 4).
 
-\begin{definition} \emph{Augmented Laplacian of an SDD matrix (Definition
-XXX in \cite{Gremban1996}):} Let $A\in SDD_{n}$. Let $L,D$ be the
-decomposition of $A$ into $L$ a Laplacian matrix and $D$ a (non-negative)
-diagonal matrix such that $A=L+D$. The augmented matrix of $A$ is:
+\begin{definition} \emph{Augmented Laplacian of an SDD matrix.} Let
+$A\in SDD_{n}$. Let $L,D$ be the decomposition of $A$ into $L$
+a Laplacian matrix and $D$ a (non-negative) diagonal matrix such
+that $A=L+D$. The augmented matrix of $A$ is: 
 \[
 L_{A}=\left(\begin{array}{cc}
 A & -\mathbf{d}\\
@@ -115,8 +113,9 @@ a Laplacian $L_{A}$ associated to it, using the augmented Laplacian.
 This process is also reversible: to any Laplacian $L$ we can associate
 a unique positive definite matrix $F_{L}$ (up to a permutation),
 and this transform preserves eigenvalues and matrix inequalities.
-We call this process ``floating'' of the Laplacian, by opposition
-to ``grounding'' the SDD matrix as a Laplacian. 
+We call this process ``floating'' of the Laplacian, by analogy to
+the ``grounding'' in the electrical sense of the SDD matrix as a
+Laplacian. 
 
 \begin{definition}\emph{Floating a Laplacian}. Consider $L$ a Laplacian
 matrix. Call $F_{L}$ the matrix formed by removing the last row and
@@ -127,36 +126,36 @@ the last column from $L$.
 The following lemma shows that the Laplacian matrix overdetermines
 a system, and that no information is lost by floating it.
 
-\begin{lemma}Consider $Z$ a (weighted) Laplacian matrix, then:
-\begin{itemize}
-\item $L_{F_{Z}}=Z$
-\item The eigenvalues of $F_{Z}$ are the positive eigenvalues of of $Z$,
+\begin{lemma}\label{lem:floating-properties}Consider $Z$ a (weighted)
+Laplacian matrix of a connected graph, then:
+\begin{enumerate}
+\item Idempotence: $L_{F_{Z}}=Z$
+\item The eigenvalues of $F_{Z}$ are the positive eigenvalues of $Z$,
 and the corresponding eigenvectors for $F_{Z}$ are the same eigenvectors,
 truncated by the last coefficient.
 \item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$
-\item Given $Z_{1},Z_{2}$Laplacian matrices, we have $Z_{1}\succeq Z_{2}\Rightarrow F_{Z_{1}}\succeq F_{Z_{2}}$
-\end{itemize}
+\item Given $Z_{1},Z_{2}$ Laplacian matrices, we have $Z_{1}\succeq Z_{2}\Rightarrow F_{Z_{1}}\succeq F_{Z_{2}}$
+\end{enumerate}
 \end{lemma}
 
-The proof of this lemma is in Appendix XXX.
+The proof of this lemma is in Appendix B.
 
 Using the floating and the grounding procedures, we can transform
 the PLD of a Laplacian matrix into the log-determinant of a SDD matrix.
 The following proposition establishes this equivalence.
 
-\begin{proposition} \label{pro:pld-properties}Let $A\in SDD_{n}$,
-and $L_{A}$ its augmented Laplacian. Let $P=\left(I_{n}\,\mathbf{0}\right)$
-be a projection matrix over the first $n$ columns of $L_{A}$. Then:\end{proposition} 
+\begin{lemma} \label{pro:pld-properties}Let $A\in SDD_{n}$, and
+$L_{A}$ its augmented Laplacian.
 \begin{itemize}
-\item If $\lambda$ is an eigenvalue of $A$ with associated eigenvector
-$x$, it is also an eigenvalue of $PL_{A}P^{T}$ with the same eigenvector 
 \item $\text{ld}\left(L_{A}\right)=\log\left|A\right|$ 
 \item Let $A,B\in SDD_{n}$. $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(L_{A}\right)+\text{ld}\left(L_{B}\right)$
 and $\text{ld}\left(L_{B}^{+}L_{A}\right)=\log\left|B^{-1}A\right|$
 with $L_{A}^{+}$the pseudo inverse of $L_{A}$. 
 \end{itemize}
-\begin{proof}XXX The proofs of this proposition are technical and
-are contained in Appendix B. \end{proof} 
+\end{lemma}
+
+\begin{proof}The proofs of this lemma are straightforward and are
+contained in Appendix B. \end{proof} 
 
 A Laplacian matrix can be considered either for its graphical properties,
 or for its algebraic properties. Recent results has shown a deep connection
