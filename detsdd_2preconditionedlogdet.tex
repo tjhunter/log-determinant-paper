@@ -1,15 +1,16 @@
 
 \section{Preconditioned log-determinants\label{sec:Preconditioned-log-determinants}}
 
-We begin by considering a simple sampling algorithm to compute log-determinants,
-presented first in \cite{Barry1999}. We will first present some error
-bounds on this algorithm that expand on bounds previously presented
-in \cite{Bai1996} and \cite{Barry1999}. This section considers general
-symmetric matrices and does not make assumptions about diagonal dominance.
+We begin by a close inspection of a simple sampling algorithm to compute
+log-determinants, presented first in \cite{Barry1999}. We will first
+present some error bounds on this algorithm that expand on bounds
+previously presented in \cite{Bai1996} and \cite{Barry1999}. This
+section considers general symmetric matrices and does not make assumptions
+about diagonal dominance.
 
 Consider a real symmetric matrix $S\in\mathcal{S}_{n}^{+}$ such that
 its spectral radius is less than $1$: $0\preceq S\preceq\left(1-\delta\right)I$
-for some $\delta\in\left(0,1\right)$. We want to compute $\log\left|I-S\right|$
+for some $\delta\in\left(0,1\right)$. Our goal is to compute $\log\left|I-S\right|$
 up to precision $\epsilon$ and with high probability. From the Martin
 expansion: 
 \begin{equation}
@@ -18,7 +19,9 @@ expansion:
 
 
 This series of traces can be estimated by Monte Carlo sampling, up
-to precision $\epsilon$ with high probability. In order to bound
+to precision $\epsilon$ with high probability, by truncating the
+series and by replacing the exact trace evaluation by $x^{T}S^{k}x$
+for some suitably chosen random variables $x$. In order to bound
 the errors, we will bound the large deviation errors using the following
 Bernstein inequality:
 
@@ -38,14 +41,15 @@ Bartlett's class (stat241B/spring 2003). We can adapt some results
 from \cite{Barry1999} to prove this bound on the deviation from the
 trace.
 
-\begin{lemma} \label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$,
-and call $\lambda_{i}$ the eigenvalues of $H$. Consider $p$ vectors
-sampled from the standard Normal distribution: $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
-for $i=1\cdots p$. Then for all $\epsilon>0$: 
+\begin{lemma} \label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$
+with the assumption $\lambda_{\text{min}}I_{n}\preceq H\preceq\lambda_{\text{max}}I$.
+Consider $p$ vectors sampled from the standard Normal distribution:
+$\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$ for
+$i=1\cdots p$. Then for all $\epsilon>0$: 
 \[
 \mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon}\right)
 \]
-with $\lambda_{\text{max}}=\max\lambda_{i}$ and $\lambda_{\min}=\min\lambda_{i}$.\end{lemma} 
+\end{lemma} 
 
 \begin{proof} The distribution of $\mathbf{u}_{i}$ is invariant
 through a rotation, so we can consider $H$ diagonal. We assume without
@@ -60,13 +64,13 @@ $\mathbb{E}\left[V_{i}\right]=0$ and:
 \]
 
 
-Each of the variables $V_{i}$ is independent, so invoking Lemma \ref{lem:bernstein}
-gives: 
+Each of the variables $V_{i}$ is independent (see \cite{Barry1999}),
+so invoking Lemma \ref{lem:bernstein} gives: 
 \[
 \mathbb{P}\left[\frac{1}{p}\sum_{i=1}^{p}V_{i}\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
-with $\sigma^{2}=\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}$
-\end{proof}
+with $\sigma^{2}=\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}\leq\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}=2n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}$.
+Dropping the factor $2/3$, we get our result. \end{proof}
 
 The previous lemma shows that if the eigenspectrum of a matrix is
 bounded, we can obtain a Hoeffding bound on the error done by sampling
@@ -77,21 +81,22 @@ the extremal eigenvalues. We formalize this intuition in the following
 theorem, which is adapted from the main Theorem in \cite{Barry1999}.
 While that main Theorem in \cite{Barry1999} only considered a confidence
 interval based on the covariance properties of Gaussian distribution,
-we generalize this result to more general Bernstein bounds.
+we generalize this result to a more general Bernstein bound.
 
 \begin{theorem} \label{thm:det-sampling-theorem}Consider $S\in\mathcal{S}_{n}^{+}$
 with $0\preceq S\preceq\left(1-\delta\right)I$ for some $\delta\in\left(0,1\right)$.
 Call $y=n^{-1}\log\left|I-S\right|$ the quantity to estimate, and
 consider $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
-for $i=1\cdots p$. Call $\hat{y}_{p,l}$ an estimator of the truncated
-series of $l$ elements computed by sampling the trace using $p$
-samples: 
+for $i=1\cdots p$ all independent. Call $\hat{y}_{p,l}$ an estimator
+of the truncated series of $l$ elements computed by sampling the
+trace using $p$ samples: 
 \[
 \hat{y}_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
 \]
-By choosing $p\geq8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
-and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$,
-the error probability is small: 
+Given $\epsilon>0$ and $\eta\in\left(0,1\right)$, the $\hat{y}_{p,l}$
+approximates $y$ up to precision $\epsilon$ with probability at
+least $1-\eta$ by choosing $p\geq8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
+and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$:
 \[
 \mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon\right]\leq\eta
 \]

@@ -14,7 +14,8 @@ Using triangular inequality:
 \]
 
 
-Since $S$ is upper-bounded, we have for all $k\in\mathbb{N}$: 
+Since $S$ is upper-bounded by $\left(1-\delta\right)I$, we have
+for all $k\in\mathbb{N}$: 
 \[
 \left|\mbox{Tr}\left(S^{k}\right)\right|\leq n\left(1-\delta\right)^{k}
 \]
@@ -30,10 +31,10 @@ to the expected value:
 \end{eqnarray*}
 
 
-Hence, for a choice of $l\geq\delta^{-1}\log\left(\frac{2}{\epsilon\delta}\right)$,
-the latter part is less than $\epsilon/2$. We now bound the first
-part using Lemma \ref{lem:bernstein-trace}. Call $H$ the truncated
-series: 
+And since $\delta\le-\log\left(1-\delta\right)$, for a choice of
+$l\geq\delta^{-1}\log\left(\frac{2}{\epsilon\delta}\right)$, the
+latter part is less than $\epsilon/2$. We now bound the first part
+using Lemma \ref{lem:bernstein-trace}. Call $H$ the truncated series:
 \[
 H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}
 \]
@@ -41,7 +42,7 @@ This truncated series is upper-bounded by $0$ ($H$ is negative,
 semi-definite). The lowest eigenvalue of the truncated series can
 be lower-bounded in terms of $\delta$: 
 \[
-H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}\succeq-\sum_{i=1}^{m}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I=\left(\log\delta\right)I
+H=-\sum_{i=1}^{m}\frac{1}{i}S^{i}\succeq-\sum_{i=1}^{m}\frac{1}{i}\left(1-\delta\right)^{i}I\succeq-\sum_{i=1}^{+\infty}\frac{1}{i}\left(1-\delta\right)^{i}I=\left(\log\delta\right)I
 \]
 We can now invoke Lemma \ref{lem:bernstein-trace} to conclude: 
 \[
