@@ -47,8 +47,8 @@ with high probability and in expected time%
 \footnote{We use the notation $\tilde{O}$ to hide a factor at most $\left(\log\log n\right)^{8}$%
 }: 
 \[
-\tilde{O}\left(m\epsilon^{-1}\log^{3}n\log^{2}\left(\frac{n\kappa\left(B\right)}{\epsilon}\right)\right)
-\]
+\tilde{O}\left(m\epsilon^{-2}\log^{3}n\log^{2}\left(\frac{n\kappa_A}{\epsilon}\right)\right)
+\]%\left(B\right)
 
 
 where $\kappa_{A}$ is the condition number of $A$. This algorithm
@@ -70,7 +70,8 @@ Furthermore, we also present simpler, non-optimal algorithms that
 compute upper and lower bounds of the logarithm of the determinant,
 and that may be of more immediate practical interest.
 
-\textbf{Background} There are two approaches in numerical linear algebra
+\subsection{Background} 
+There are two approaches in numerical linear algebra
 to approximately compute a determinant (or the log of the determinant):
 by performing a (partial) Cholesky factorization of $A$, or by considering
 the trace of some power series.
@@ -129,7 +130,8 @@ is close to a tree (and is more amenable to Cholesky methods), and
 one component that has a bounded condition number. Our solution is
 to use a \emph{spectral sparsifier} introduced by Spielman in \cite{Spielman2008}.
 
-\textbf{Applications.} The problem of estimating determinants has
+\subsection{Applications} 
+The problem of estimating determinants has
 important applications in spatial data analysis, statistical physics
 and statistics. In spatial statistics, it is often convenient to interpolate
 measurements in a 2-, 3- or 4-dimensional volume using a sparse Gaussian
@@ -170,44 +172,10 @@ by the use of a preconditioner. However, Reuksen considers preconditioners
 based on a clever approximation of the Cholesky decomposition, and
 its interaction with the eigenvalues of the complete matrix is not
 well understood. Using simpler methods based on sampling, we are able
-to carefully control the spectrum of the reminder, which in turn leads
+to carefully control the spectrum of the remainder, which in turn leads
 to strong convergence guarantees.
 
-\textbf{Main results.} We first present some general results about
-the preconditioning of determinants. Consider $A\in SDD_{n}$ invertible,
-and some other matrix $B\in SDD_{n}$ that is close to $A$ in the
-spectral sense. All the results of this article stem from observing
-that:
-\begin{eqnarray*}
-\log\left|A\right| & = & \log\left|B\right|+\log\left|B^{-1}A\right|\\
- &  & \log\left|B\right|+\text{Tr}\left(\log\left(B^{-1}A\right)\right)
-\end{eqnarray*}
-The first section is concerned with estimating the reminder term $\text{Tr}\left(\log\left(B^{-1}A\right)\right)$
-using the Martin expansion. The exact inverse $B^{-1}$ is usually
-not available, but we are given instead a linear operator $C$ that
-is an $\epsilon-$approximation of $B^{-1}$, for example using a
-conjugate gradient method. We show in Section \ref{sec:Preconditioned-log-determinants}
-that if the precision of this approximation is high enough, we can
-estimate the reminder with high probability and with a reasonable
-number of calls to the operator $C$ (this sentence will be made precise
-in the rather technical Theorem \ref{thm:preconditioning-approx}).
-Using this general framework, the subsequent Section \ref{sec:Making-the-problem}
-shows that spectral sparsifiers make excellent preconditioners that
-are close enough to $A$ and so that computing the Martin expansion
-is not too expansive. In particular, we build upon the recursive structure
-of Spielman-Teng ultra-sparsifiers to obtain our main result:
-
-\begin{theorem}\label{thm:ultra_main}On input $A\in SDD_{n}$ with
-$m$ non-zeros, $\epsilon>n^{-1}$, $\eta>0$, the algorithm \texttt{UltraLogDet}
-returns a scalar $z$ so that:
-\[
-\mathbb{P}\left[\left|z-n^{-1}\log\left|A\right|\right|>\epsilon\right]\leq\eta
-\]
-and this algorithm completes in expected time $\tilde{O}\left(m\epsilon^{-1}\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$.
-
-\end{theorem}
-
-\textbf{A note on scaling.} Unlike other common characteristics of
+\subsection{A note on scaling} Unlike other common characteristics of
 linear operators, the determinant and the log-determinant are very
 sensitive to dimensionality. We will follow the approach of Reuksen
 \cite{Reusken2002} and consider the \emph{regularized log-determinant}
@@ -227,6 +195,40 @@ respectively:
 The last inequality in particular shows that any perturbation to $\log\left|A\right|$
 will be in the order $O\left(n\right)$, and so that all the interesting
 log-determinants in practice will be dominated by some $O\left(n\right)$.
+
+\subsection{Main results} We first present some general results about
+the preconditioning of determinants. Consider $A\in SDD_{n}$ invertible,
+and some other matrix $B\in SDD_{n}$ that is close to $A$ in the
+spectral sense. All the results of this article stem from observing
+that:
+\begin{eqnarray*}
+\log\left|A\right| & = & \log\left|B\right|+\log\left|B^{-1}A\right|\\
+ &  & \log\left|B\right|+\text{Tr}\left(\log\left(B^{-1}A\right)\right)
+\end{eqnarray*}
+The first section is concerned with estimating the remainder term $\text{Tr}\left(\log\left(B^{-1}A\right)\right)$
+using the Martin expansion. The exact inverse $B^{-1}$ is usually
+not available, but we are given instead a linear operator $C$ that
+is an $\epsilon-$approximation of $B^{-1}$, for example using a
+conjugate gradient method. We show in Section \ref{sec:Preconditioned-log-determinants}
+that if the precision of this approximation is high enough, we can
+estimate the remainder with high probability and with a reasonable
+number of calls to the operator $C$ (this sentence will be made precise
+in the rather technical Theorem \ref{thm:preconditioning-approx}).
+Using this general framework, the subsequent Section \ref{sec:Making-the-problem}
+shows that spectral sparsifiers make excellent preconditioners that
+are close enough to $A$ and so that computing the Martin expansion
+is not too expansive. In particular, we build upon the recursive structure
+of Spielman-Teng ultra-sparsifiers to obtain our main result:
+
+\begin{theorem}\label{thm:ultra_main}On input $A\in SDD_{n}$ with
+$m$ non-zeros, $\epsilon>n^{-1}$, $\eta>0$, the algorithm \texttt{UltraLogDet}
+returns a scalar $z$ so that:
+\[
+\mathbb{P}\left[\left|z-n^{-1}\log\left|A\right|\right|>\epsilon\right]\leq\eta
+\]
+and this algorithm completes in expected time $\tilde{O}\left(m\epsilon^{-2}\log^{2}n\log^{2}\left(\frac{\kappa_A}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$.
+
+\end{theorem}
 
 The rest of the article is structured as follows. In the next section,
 we present some results about estimating the log-determinant from

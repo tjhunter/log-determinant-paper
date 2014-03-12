@@ -25,20 +25,16 @@ for some suitably chosen random variables $x$. In order to bound
 the errors, we will bound the large deviation errors using the following
 Bernstein inequality:
 
-\begin{lemma} \label{lem:bernstein}Let $X_{1}\cdots X_{U}$ be independent
-random variables with $\mathbb{E}\left[X_{u}\right]=0$, $\left|X_{u}\right|<c$.
-Call $\sigma^{2}=\frac{1}{U}\sum_{u}\text{Var}\left(X_{u}\right)$,
+\begin{lemma}[Bernstein's inequality] \label{lem:bernstein} Let $X_{1}\cdots X_{n}$ be independent
+random variables with $\mathbb{E}\left[X_{i}\right]=0$, $\left|X_{i}\right|<c$ almost surely.
+Call $\sigma^{2}=\frac{1}{n}\sum_{i}\text{Var}\left(X_{i}\right)$,
 then for all $\epsilon>0$: 
 \[
-\mathbb{P}\left[\frac{1}{U}\sum_{u}X_{u}\geq\epsilon\right]\leq\exp\left(-\frac{U\epsilon^{2}}{2\sigma^{2}+2c\epsilon/3}\right)
+\mathbb{P}\left[\frac{1}{n}\Big|\sum_{i}X_{i}\Big|\geq\epsilon\right] \leq 2\exp\left(-\frac{n\epsilon^{2}}{2\sigma^{2}+2c\epsilon/3}\right)
 \]
-
-
 \end{lemma}
 
-The proof of this result can be found in a lecture note from Peter
-Bartlett's class (stat241B/spring 2003). We can adapt some results
-from \cite{Barry1999} to prove this bound on the deviation from the
+We can adapt some results from \cite{Barry1999} to prove this bound on the deviation from the
 trace.
 
 \begin{lemma} \label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$
@@ -47,39 +43,40 @@ Consider $p$ vectors sampled from the standard Normal distribution:
 $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$ for
 $i=1\cdots p$. Then for all $\epsilon>0$: 
 \[
-\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon}\right)
+\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right] \leq 2\exp\left(-\frac{p\epsilon^{2}}{4n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
 \end{lemma} 
 
 \begin{proof} The distribution of $\mathbf{u}_{i}$ is invariant
 through a rotation, so we can consider $H$ diagonal. We assume without
-loss of generality that $H=\text{diag}\left(\lambda_{1}...\lambda_{n}\right)$.
+loss of generality that $H=\text{diag}\left(\lambda_{1},\cdots,\lambda_{n}\right)$.
 Again without loss of generality, we assume that $\lambda'_{\max}=\lambda_{\max}-\lambda_{\min}$
 and $\lambda'_{\min}=0$ (by considering $H'=H-\lambda_{\min}I$).
 Call $V_{i}=\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-n^{-1}\text{Tr}\left(H\right)$.
 Using results from \cite{Barry1999}, we have: $\left|V_{i}\right|\leq\lambda_{\max}-\lambda_{\min}$,
-$\mathbb{E}\left[V_{i}\right]=0$ and: 
+$\mathbb{E}\left[V_{i}\right]=0$ and 
 \[
-\text{Var}\left(V_{i}\right)=\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}
+\text{Var}\left(V_{i}\right)=\frac{2}{n(n+2)}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}
 \]
 
 
-Each of the variables $V_{i}$ is independent (see \cite{Barry1999}),
+Each of the variables $V_{i}$ is independent, %(see \cite{Barry1999})
 so invoking Lemma \ref{lem:bernstein} gives: 
 \[
-\mathbb{P}\left[\frac{1}{p}\sum_{i=1}^{p}V_{i}\geq\epsilon\right]\leq\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
+\mathbb{P}\left[\frac{1}{p}\left|\sum_{i=1}^{p}V_{i}\right|\geq\epsilon\right] \leq 2\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
-with $\sigma^{2}=\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}\leq\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}=2n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}$.
-Dropping the factor $2/3$, we get our result. \end{proof}
+with $\sigma^{2}=\frac{2}{n(n+2)}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}\leq\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}=\frac{2}{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}$.
+%Dropping the factor $2/3$, we get our result. 
+\end{proof}
 
 The previous lemma shows that if the eigenspectrum of a matrix is
-bounded, we can obtain a Hoeffding bound on the error done by sampling
+bounded, we can obtain a Bernstein bound on the error incurred by sampling
 the trace. Furthermore, the convergence of the series \ref{eq:martin}
 is also determined by the extremal eigenvalues of $S$. If we truncate
 the series (\ref{eq:martin}), we can bound the truncation error using
 the extremal eigenvalues. We formalize this intuition in the following
-theorem, which is adapted from the main Theorem in \cite{Barry1999}.
-While that main Theorem in \cite{Barry1999} only considered a confidence
+theorem, which is adapted from the main theorem in \cite{Barry1999}.
+While that main theorem in \cite{Barry1999} only considered a confidence
 interval based on the covariance properties of Gaussian distribution,
 we generalize this result to a more general Bernstein bound.
 
@@ -95,7 +92,7 @@ trace using $p$ samples:
 \]
 Given $\epsilon>0$ and $\eta\in\left(0,1\right)$, the $\hat{y}_{p,l}$
 approximates $y$ up to precision $\epsilon$ with probability at
-least $1-\eta$ by choosing $p\geq8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
+least $1-\eta$ by choosing $p\geq 8\left(\frac{2}{\epsilon}\log^{2}\left(1/\delta\right)+\frac{1}{3n\epsilon^{2}}\log\left(1/\delta\right)\right)\log\left(1/\eta\right)$
 and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$:
 \[
 \mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon\right]\leq\eta
@@ -104,7 +101,7 @@ and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$:
 
 The proof of this result is detailed in Appendix A.
 
-From this theoem we derive two results that justify the notion of
+From this theorem we derive two results that justify the notion of
 preconditioners for determinants: one for exact preconditioners and
 one for approximate preconditioners. The corresponding algorithm,
 which we call \texttt{PreconditionedLogDetMonteCarlo}, is presented
