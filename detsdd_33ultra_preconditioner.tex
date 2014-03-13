@@ -6,7 +6,7 @@ The main insight of our result is that the class preconditioners presented
 by Spielman and Teng are based on incomplete Cholesky factorization,
 and hence have a determinant that is relatively easy to compute, and
 furthermore that they are excellent spectral preconditioners, so the
-procedure \texttt{PreconditionedLogDetMonteCarlo} is efficient to
+procedure \texttt{PreconditionedLogDet- MonteCarlo} is efficient to
 apply. We reintroduce some concepts presented in \cite{Koutis2010}
 to present a self-contained result. The following paragraphs are well-known
 facts about Spielman-Teng preconditioners and have been presented
@@ -108,7 +108,7 @@ $b\in\mathbb{R}^{n}$ and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\ri
 can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$.\end{lemma}
 
 It should now become clear how we can combine a $\kappa\left(n\right)$-good
-chain with the Algorithm \texttt{PreconditionedLogDetMonteCarlo}.
+chain with the Algorithm \texttt{Precondit- ionedLogDetMonteCarlo}.
 We start by building a chain. The partial Cholesky factorizations
 at each step of the chain provide an upper bound to $\mbox{ld}\left(A\right)$.
 We then refine this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
