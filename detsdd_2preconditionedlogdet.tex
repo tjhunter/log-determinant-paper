@@ -25,17 +25,17 @@ for some suitably chosen random variables $x$. In order to bound
 the errors, we will bound the large deviation errors using the following
 Bernstein inequality:
 
-\begin{lemma}[Bernstein's inequality] \label{lem:bernstein} Let $X_{1}\cdots X_{n}$ be independent
-random variables with $\mathbb{E}\left[X_{i}\right]=0$, $\left|X_{i}\right|<c$ almost surely.
-Call $\sigma^{2}=\frac{1}{n}\sum_{i}\text{Var}\left(X_{i}\right)$,
+\begin{lemma}{[}Bernstein's inequality{]} \label{lem:bernstein}
+Let $X_{1}\cdots X_{n}$ be independent random variables with $\mathbb{E}\left[X_{i}\right]=0$,
+$\left|X_{i}\right|<c$ almost surely. Call $\sigma^{2}=\frac{1}{n}\sum_{i}\text{Var}\left(X_{i}\right)$,
 then for all $\epsilon>0$: 
 \[
-\mathbb{P}\left[\frac{1}{n}\Big|\sum_{i}X_{i}\Big|\geq\epsilon\right] \leq 2\exp\left(-\frac{n\epsilon^{2}}{2\sigma^{2}+2c\epsilon/3}\right)
+\mathbb{P}\left[\frac{1}{n}\Big|\sum_{i}X_{i}\Big|\geq\epsilon\right]\leq2\exp\left(-\frac{n\epsilon^{2}}{2\sigma^{2}+2c\epsilon/3}\right)
 \]
 \end{lemma}
 
-We can adapt some results from \cite{Barry1999} to prove this bound on the deviation from the
-trace.
+We can adapt some results from \cite{Barry1999} to prove this bound
+on the deviation from the trace.
 
 \begin{lemma} \label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$
 with the assumption $\lambda_{\text{min}}I_{n}\preceq H\preceq\lambda_{\text{max}}I$.
@@ -43,9 +43,9 @@ Consider $p$ vectors sampled from the standard Normal distribution:
 $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$ for
 $i=1\cdots p$. Then for all $\epsilon>0$: 
 \[
-\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right] \leq 2\exp\left(-\frac{p\epsilon^{2}}{4n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
+\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{4n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
-\end{lemma} 
+\end{lemma}
 
 \begin{proof} The distribution of $\mathbf{u}_{i}$ is invariant
 through a rotation, so we can consider $H$ diagonal. We assume without
@@ -63,15 +63,15 @@ $\mathbb{E}\left[V_{i}\right]=0$ and
 Each of the variables $V_{i}$ is independent, %(see \cite{Barry1999})
 so invoking Lemma \ref{lem:bernstein} gives: 
 \[
-\mathbb{P}\left[\frac{1}{p}\left|\sum_{i=1}^{p}V_{i}\right|\geq\epsilon\right] \leq 2\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
+\mathbb{P}\left[\frac{1}{p}\left|\sum_{i=1}^{p}V_{i}\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
 with $\sigma^{2}=\frac{2}{n(n+2)}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}\leq\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}=\frac{2}{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}$.
 %Dropping the factor $2/3$, we get our result. 
 \end{proof}
 
 The previous lemma shows that if the eigenspectrum of a matrix is
-bounded, we can obtain a Bernstein bound on the error incurred by sampling
-the trace. Furthermore, the convergence of the series \ref{eq:martin}
+bounded, we can obtain a Bernstein bound on the error incurred by
+sampling the trace. Furthermore, the convergence of the series \ref{eq:martin}
 is also determined by the extremal eigenvalues of $S$. If we truncate
 the series (\ref{eq:martin}), we can bound the truncation error using
 the extremal eigenvalues. We formalize this intuition in the following
@@ -92,7 +92,7 @@ trace using $p$ samples:
 \]
 Given $\epsilon>0$ and $\eta\in\left(0,1\right)$, the $\hat{y}_{p,l}$
 approximates $y$ up to precision $\epsilon$ with probability at
-least $1-\eta$ by choosing $p\geq 8\left(\frac{2}{\epsilon}\log^{2}\left(1/\delta\right)+\frac{1}{3n\epsilon^{2}}\log\left(1/\delta\right)\right)\log\left(1/\eta\right)$
+least $1-\eta$ by choosing $p\geq8\left(\frac{2}{\epsilon}\log^{2}\left(1/\delta\right)+\frac{1}{3n\epsilon^{2}}\log\left(1/\delta\right)\right)\log\left(1/\eta\right)$
 and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$:
 \[
 \mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon\right]\leq\eta
@@ -132,18 +132,18 @@ corollary still holds. This is what the following theorem establishes:
 positive definite with $B$ a $\kappa-$approximation of $A$ with
 $\kappa\geq2$. Furthermore, assume there exists a linear operator
 $C$ so that for all $y\in\mathbb{R}^{n}$, $C$ returns an $\nu-$approximation
-of $B^{-1}y$:
+of $B^{-1}y$: 
 \[
 \left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\nu\left\Vert B^{-1}y\right\Vert _{B}
 \]
 Given $\eta\in\left(0,1\right)$ and $\epsilon>0$, if $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$,
-then the algorithm \texttt{ApproxPreconditioned- LogDetMonteCarlo} returns
-a scalar $z$ so that:
+then the algorithm \texttt{ApproxPreconditioned- LogDetMonteCarlo}
+returns a scalar $z$ so that: 
 \[
 \mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\epsilon\right]\leq\eta
 \]
 by performing $64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}\left(\kappa\right)\log\left(\frac{n\kappa}{\epsilon}\right)\log\left(\eta^{-1}\right)$
-vector calls to the operator $C$ and vector multiplies from $A$. 
+vector calls to the operator $C$ and vector multiplies from $A$.
 
 \end{theorem}
 
@@ -158,20 +158,20 @@ error introduced by the approximate inversion can be controlled. This
 happens to be the case for symmetric, diagonally dominant matrices.
 
 \begin{algorithm}
-\begin{raggedright} Algorithm \textbf{UltraLogDet}($A$,$\epsilon$,$\eta$): 
+\begin{raggedright} Algorithm \textbf{UltraLogDet}($A$,$\epsilon$,$\eta$):
 
 \end{raggedright}
 
 \begin{raggedright} If $A$ is of a small size ($<$100), directly
-compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization. 
+compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization.
 
 \end{raggedright}
 
-\begin{raggedright} Compute $B=$\textbf{IncrementalSparsify($A$)} 
+\begin{raggedright} Compute $B=$\textbf{IncrementalSparsify($A$)}
 
 \end{raggedright}
 
-\begin{raggedright} Compute $D,A'=$\textbf{PartialCholesky($B$)} 
+\begin{raggedright} Compute $D,A'=$\textbf{PartialCholesky($B$)}
 
 \end{raggedright}
 
@@ -187,11 +187,11 @@ compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization.
 
 \end{raggedright}
 
-\begin{raggedright} Compute $s=$\textbf{PreconditionedLogDetMonteCarlo($B,A,\eta,p,l$)} 
+\begin{raggedright} Compute $s=$\textbf{PreconditionedLogDetMonteCarlo($B,A,\eta,p,l$)}
 
 \end{raggedright}
 
-\begin{raggedright} Return $s+\log\left|D\right|+$\textbf{UltraLogDet($A'$,$\epsilon$,$\eta$)} 
+\begin{raggedright} Return $s+\log\left|D\right|+$\textbf{UltraLogDet($A'$,$\epsilon$,$\eta$)}
 
 \end{raggedright}
 

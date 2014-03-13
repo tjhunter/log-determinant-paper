@@ -65,10 +65,41 @@ This is the same arguments as the original proof:
 \end{proof}
 
 A consequence is $\text{st}_{H}\left(G\right)\geq\text{Card}\left(\mathcal{E}_{G}\right)\geq n-1$
-for connected $G$ and $H$ with $L_{G}\succeq L_{H}$. A number of
-properties of the stretch extend to general graphs using the generalized
-stretch. In particular, the stretch inequality (Lemma 8.2 in \cite{Spielman2009a})
-can be generalized to arbitrary graphs (instead of spanning trees).
+for connected $G$ and $H$ with $L_{G}\succeq L_{H}$, and that for
+any connected graph $G$, $\text{st}_{G}\left(G\right)=n-1$. Scaling
+and matrix inequalities carry over with the stretch as well. Given
+$A,B,C$ connected graphs, and $\alpha,\beta>0$:
+\[
+\text{st}_{\alpha A}\left(\beta B\right)=\alpha^{-1}\beta\text{st}_{A}\left(B\right)
+\]
+
+
+\[
+L_{A}\preceq L_{B}\Rightarrow\text{st}_{A}\left(C\right)\geq\text{st}_{B}\left(C\right)
+\]
+\[
+L_{A}\preceq L_{B}\Rightarrow\text{st}_{C}\left(A\right)\leq\text{st}_{C}\left(B\right)
+\]
+
+
+\begin{lemma}For any connected graph $G$, $\text{st}_{G}\left(G\right)=n-1$.
+
+\end{lemma}
+
+\begin{proof}Consider the diagonalization of $L_{G}$: $L_{G}=P\Delta P^{T}$
+with $P\in\mathbb{R}^{n\times n-1}$ and $\Delta=\text{diag}\left(\lambda_{1}\cdots\lambda_{n-1}\right)$.
+Then 
+\[
+\text{st}_{G}\left(G\right)=\text{Tr}\left(P\Delta P^{T}P\Delta^{-1}P^{T}\right)=\text{Tr}\left(\Delta\Delta^{-1}\right)=n-1
+\]
+
+
+\end{proof}
+
+A number of properties of the stretch extend to general graphs using
+the generalized stretch. In particular, the stretch inequality (Lemma
+8.2 in \cite{Spielman2009a}) can be generalized to arbitrary graphs
+(instead of spanning trees).
 
 \begin{lemma}\label{lem:stretch-inequality}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
@@ -164,8 +195,8 @@ is (a) a solution to the minimization problem above, and (b) the objective
 value of any feasible vector $\lambda$ is higher or equal. Thus,
 this is the solution (unique up to a permutation). Hence we have $\text{ld}\left(L_{H}^{+}L_{G}\right)\geq\sum_{i}\log\lambda_{i}^{*}=\log\left(\sigma-n+2\right)$.
 
-Finally, note that if $G$ is a tree and $H=G$ ($G$ is its own spanning
-tree), then $\text{st}_{H}\left(G\right)=n-1$, which gives an equality.\end{proof}
+Finally, note that if $H=G$, then $\text{st}_{H}\left(G\right)=n-1$,
+which gives an equality.\end{proof}
 
 Note that Lemma \ref{lem:stretch-inequality} gives us $L_{H}\preceq L_{G}\preceq\text{st}_{H}\left(G\right)L_{H}$
 which implies $\text{ld}\left(L_{H}\right)\leq\text{ld}\left(L_{G}\right)\leq\text{ld}\left(L_{H}\right)+n\log\text{st}_{H}\left(G\right)$.
@@ -199,3 +230,76 @@ can be approximated in time $O\left(\log n/\epsilon^{2}\right)$,
 we can sum it and weight it by the conductance in $G$ for each edge.
 
 \end{proof}
+
+
+\subsection{Fast inexact estimates}
+
+The bound presented in Equation \ref{eq:encadrement-1} has some interesting
+consequences if one is interested only in a rough estimate of the
+log-determinant: if $\epsilon=O\left(1\right)$, it is possible to
+approximate the log-determinant in expected time $\tilde{O}\left(m+n\log^{3}n\right)$.
+We will make use of this sparsification result from Spielman and Srivastava:
+
+\begin{lemma}\label{lem:sriva-sparsification}(Theorem 12 in \cite{Spielman2009}).
+Given a Laplacian $L_{G}$ with $m$ edges, there is an expected $\tilde{O}\left(m/\epsilon^{2}\right)$
+algorithm that produces a graph $L_{H}$ with $O\left(n\log n/\epsilon^{2}\right)$
+edges that satisfies $\left(1-\epsilon\right)L_{G}\preceq L_{H}\preceq\left(1+\epsilon\right)L_{G}$.
+
+\end{lemma}
+
+An immediate consequence is that given any graph, we can find a graph
+with a near-optimal stretch (up to an $\epsilon$ factor) and $O\left(n\log n/\epsilon^{2}\right)$
+edges.
+
+\begin{lemma}\label{lem:low-stretch-bounding}Given a Laplacian $L_{G}$
+with $m$ edges, there is an expected $\tilde{O}\left(m/\epsilon^{2}\right)$
+algorithm that produces a graph $L_{H}$ with $O\left(n\log n/\epsilon^{2}\right)$
+edges that satisfies $\left(n-1\right)\leq\text{st}_{H}\left(G\right)\preceq\frac{1+\epsilon}{1-\epsilon}\left(n-1\right)$.
+
+\end{lemma}
+
+\begin{proof}Consider a graph $H$ produced by Lemma \ref{lem:sriva-sparsification},
+which verifies $\left(1-\epsilon\right)L_{G}\preceq L_{H}\preceq\left(1+\epsilon\right)L_{G}$.
+Using the stretch over this matrix inequality, this implies:
+\[
+\text{st}_{\left(1-\epsilon\right)G}\left(G\right)\geq\text{st}_{H}\left(G\right)\geq\text{st}_{\left(1+\epsilon\right)G}\left(G\right)
+\]
+which is equivalent to:
+\[
+\left(1-\epsilon\right)^{-1}\text{st}_{G}\left(G\right)\geq\text{st}_{H}\left(G\right)\geq\left(1+\epsilon\right)^{-1}\text{st}_{G}\left(G\right)
+\]
+and the stretch of a connected graph with respect to itself is $n-1$.
+By rescaling $H$ to $\left(1+\epsilon\right)^{-1}H$, we get:
+\[
+\frac{1+\epsilon}{1-\epsilon}\left(n-1\right)\geq\text{st}_{H}\left(G\right)\geq n-1
+\]
+
+
+\end{proof}
+
+Here is the main result of this section:
+
+\begin{proposition}There exists an algorithm that on input $A\in SDD_{n}$,
+returns an approximation $n^{-1}\log\left|A\right|$ with precision
+$1/2$ in expected time $\tilde{O}\left(m+n\log^{3}n\log^{2}\kappa_{A}\right)$
+with $\kappa_{A}$ the condition number of $A$.
+
+\end{proposition}
+
+\begin{proof}Given $L_{A}$, compute $H$ from Lemma \ref{lem:low-stretch-bounding}
+using $\epsilon=1/16$ so that $\left(n-1\right)\leq\text{st}_{H}\left(G\right)\preceq\left(1+1/8\right)\left(n-1\right)$.
+Then, using Theorem \ref{thm:stretch-pld-bounds}, this leads to the
+bound:
+\[
+\text{\text{ld}}\left(H\right)\leq\log\left|A\right|\leq\text{ld}\left(H\right)+\frac{n-1}{4}
+\]
+since $H$ has $O\left(n\log n\right)$ edges by construction, we
+can use Theorem \ref{thm:ultra_main} to compute a $1/4$- approximation
+of $\text{ld}\left(H\right)$ in expected time $\tilde{O}\left(n\log^{3}n\log^{2}\left(\kappa_{H}\right)\right)$.
+By construction $\kappa_{H}\leq\frac{1+1/16}{1-1/16}\kappa_{A}$,
+hence the result.
+
+\end{proof}
+
+It would be interesting to see if this technique could be developed
+to handle arbitrary precision as well.

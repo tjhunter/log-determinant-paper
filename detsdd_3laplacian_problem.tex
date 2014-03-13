@@ -10,7 +10,7 @@ From now on, we consider all matrices to be in $SDD_{n}$. The techniques
 we will develop work on Laplacian matrices instead of SDD matrices.
 An SDD matrix is positive semi-definite while a Laplacian matrix is
 always singular, since its nullspace is spanned by $\mathbf{1}$.
-We generalize the definition of the determinant to handle this technicality. 
+We generalize the definition of the determinant to handle this technicality.
 
 \begin{definition} \emph{Pseudo-log-determinant (PLD):} Let $A\in\mathcal{S}^{n+}$
 be a non-null positive semi-definite matrix. The pseudo-log-determinant
@@ -33,7 +33,7 @@ entries can be turned into computing the log-determinants of two SDD
 matrices with non-positive off-diagonal entries.
 
 \begin{lemma}\label{non-negative-conversion}Consider the decomposition
-of a SDD matrix into a sum of a positive and a negative term:
+of a SDD matrix into a sum of a positive and a negative term: 
 \[
 A=P-N
 \]
@@ -43,7 +43,7 @@ Then the matrices $\left(\begin{array}{cc}
 P & N\\
 N & P
 \end{array}\right)\in SDD_{2n}$ and $P+N\in SDD_{n}$ have all the off-diagonal coefficients non-positive,
-and we have the relation:
+and we have the relation: 
 \[
 \log\left|\left(\begin{array}{cc}
 P & N\\
@@ -58,7 +58,7 @@ N & P
 P & N\\
 N & P
 \end{array}\right)$. Consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
-$Ax=\mu x$. Then:
+$Ax=\mu x$. Then: 
 \[
 \left(\begin{array}{cc}
 P & N\\
@@ -115,7 +115,7 @@ a unique positive definite matrix $F_{L}$ (up to a permutation),
 and this transform preserves eigenvalues and matrix inequalities.
 We call this process ``floating'' of the Laplacian, by analogy to
 the ``grounding'' in the electrical sense of the SDD matrix as a
-Laplacian. 
+Laplacian.
 
 \begin{definition}\emph{Floating a Laplacian}. Consider $L$ a Laplacian
 matrix. Call $F_{L}$ the matrix formed by removing the last row and
@@ -127,14 +127,14 @@ The following lemma shows that the Laplacian matrix overdetermines
 a system, and that no information is lost by floating it.
 
 \begin{lemma}\label{lem:floating-properties}Consider $Z$ a (weighted)
-Laplacian matrix of a connected graph, then:
+Laplacian matrix of a connected graph, then: 
 \begin{enumerate}
-\item Idempotence: $L_{F_{Z}}=Z$
+\item Idempotence: $L_{F_{Z}}=Z$ 
 \item The eigenvalues of $F_{Z}$ are the positive eigenvalues of $Z$,
 and the corresponding eigenvectors for $F_{Z}$ are the same eigenvectors,
-truncated by the last coefficient.
-\item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$
-\item Given $Z_{1},Z_{2}$ Laplacian matrices, we have $Z_{1}\succeq Z_{2}\Rightarrow F_{Z_{1}}\succeq F_{Z_{2}}$
+truncated by the last coefficient. 
+\item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$ 
+\item Given $Z_{1},Z_{2}$ Laplacian matrices, we have $Z_{1}\succeq Z_{2}\Rightarrow F_{Z_{1}}\succeq F_{Z_{2}}$ 
 \end{enumerate}
 \end{lemma}
 
@@ -145,7 +145,7 @@ the PLD of a Laplacian matrix into the log-determinant of a SDD matrix.
 The following proposition establishes this equivalence.
 
 \begin{lemma} \label{pro:pld-properties}Let $A\in SDD_{n}$, and
-$L_{A}$ its augmented Laplacian.
+$L_{A}$ its augmented Laplacian. 
 \begin{itemize}
 \item $\text{ld}\left(L_{A}\right)=\log\left|A\right|$ 
 \item Let $A,B\in SDD_{n}$. $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(L_{A}\right)+\text{ld}\left(L_{B}\right)$
@@ -155,7 +155,7 @@ with $L_{A}^{+}$the pseudo inverse of $L_{A}$.
 \end{lemma}
 
 \begin{proof}The proofs of this lemma are straightforward and are
-contained in Appendix B. \end{proof} 
+contained in Appendix B. \end{proof}
 
 A Laplacian matrix can be considered either for its graphical properties,
 or for its algebraic properties. Recent results has shown a deep connection
@@ -167,7 +167,7 @@ a weighted subgraph $L_{H}\subseteq L_{G}$ for which the PLD is easier
 to compute and that is a good approximation of $L_{G}$in the spectral
 sense. We can float the subgraph $L_{H}$ and apply results of Section
 \ref{sec:Preconditioned-log-determinants} to approximate the remainder
-with high probability. More precisely:
+with high probability. More precisely: 
 \begin{align*}
 \log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|G\right|\\
  & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}G\right|
@@ -176,10 +176,10 @@ with high probability. More precisely:
 
 The first term $\text{ld}\left(L_{H}\right)$ is usually easier to
 compute by considering the graphical properties of $L_{H}$, while
-the remainder $\log\left|F_{L_{H}}^{-1}G\right|$ is approximated by
-sampling. Preconditioner graphs $L_{H}$ are typically efficient to
-factorize using Cholesky factorization, and close enough to $G$ that
-the sampling procedure from the previous section can be applied to
-compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to adapt
-Spielman and Teng's remarkable work on \emph{ultra-sparsifiers} to
-produce good preconditioners $H$ for the determinant. 
+the remainder $\log\left|F_{L_{H}}^{-1}G\right|$ is approximated
+by sampling. Preconditioner graphs $L_{H}$ are typically efficient
+to factorize using Cholesky factorization, and close enough to $G$
+that the sampling procedure from the previous section can be applied
+to compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to
+adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
+to produce good preconditioners $H$ for the determinant. 
