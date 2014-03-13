@@ -1,6 +1,5 @@
 log-determinant-paper
 =====================
 
-Log determinant paper
+A draft in a good shape. Still needs more proof reading, citations and better presentation [Ahmed]  
 
-This is not the latest version of the paper, right? It does not include the motivation + note on scaling. 
