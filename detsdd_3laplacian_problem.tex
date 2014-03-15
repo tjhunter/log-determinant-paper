@@ -144,14 +144,14 @@ between these two aspects, and let us develop a general framework
 for computing determinants: given $G\in SDD_{n}$, we consider the
 graph associated to its Laplacian $L_{G}$, through the grounding
 procedure. Using graphical properties of $L_{G}$, we can construct
-a weighted subgraph $L_{H}\subseteq L_{G}$ for which the PLD is easier
-to compute and that is a good approximation of $L_{G}$in the spectral
-sense. We can float the subgraph $L_{H}$ and apply results of Section
+a weighted subgraph $H$ of $G$ for which the PLD is easier
+to compute and that is a good approximation of $G$ in the spectral
+sense. We can float the subgraph $H$ and apply results of section
 \ref{sec:Preconditioned-log-determinants} to approximate the remainder
 with high probability. More precisely: 
 \begin{align*}
-\log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|G\right|\\
- & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}G\right|
+\log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|L_G\right|\\
+ & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}L_G\right|
 \end{align*}
 
 
@@ -160,7 +160,7 @@ compute by considering the graphical properties of $L_{H}$, while
 the remainder $\log\left|F_{L_{H}}^{-1}G\right|$ is approximated
 by sampling. Preconditioner graphs $L_{H}$ are typically efficient
 to factorize using Cholesky factorization, and close enough to $G$
-that the sampling procedure from the previous section can be applied
+so that the sampling procedure from the previous section can be applied
 to compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to
 adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
 to produce good preconditioners $H$ for the determinant. 

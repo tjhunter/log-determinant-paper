@@ -69,17 +69,11 @@ for connected $G$ and $H$ with $L_{G}\succeq L_{H}$, and that for
 any connected graph $G$, $\text{st}_{G}\left(G\right)=n-1$. Scaling
 and matrix inequalities carry over with the stretch as well. Given
 $A,B,C$ connected graphs, and $\alpha,\beta>0$:
-\[
-\text{st}_{\alpha A}\left(\beta B\right)=\alpha^{-1}\beta\text{st}_{A}\left(B\right)
-\]
-
-
-\[
-L_{A}\preceq L_{B}\Rightarrow\text{st}_{A}\left(C\right)\geq\text{st}_{B}\left(C\right)
-\]
-\[
-L_{A}\preceq L_{B}\Rightarrow\text{st}_{C}\left(A\right)\leq\text{st}_{C}\left(B\right)
-\]
+\begin{align*}
+\text{st}_{\alpha A}\left(\beta B\right) &=\alpha^{-1}\beta\text{st}_{A}\left(B\right)\\
+L_{A}\preceq L_{B}&\Rightarrow\text{st}_{A}\left(C\right)\geq\text{st}_{B}\left(C\right)\\
+L_{A}\preceq L_{B}&\Rightarrow\text{st}_{C}\left(A\right)\leq\text{st}_{C}\left(B\right)
+\end{align*}
 
 
 \begin{lemma}For any connected graph $G$, $\text{st}_{G}\left(G\right)=n-1$.
@@ -152,7 +146,7 @@ This bound is tight.
 \end{theorem}
 
 \begin{proof} This is an application of Jensen's inequality on $\text{ld}\left(L_{H}^{+}L_{G}\right)$.
-We have $\text{ld}L_{G}=\text{ld}L_{H}+\text{ld}\left(L_{H}^{+}G\right)$
+We have $\text{ld}(L_{G})=\text{ld}(L_{H})+\text{ld}\left(L_{H}^{+}G\right)$
 and $\text{ld}\left(L_{H}^{+}G\right)=\text{ld}\left(\sqrt{L_{H}}^{+}L_{G}\sqrt{L_{H}}^{+}\right)$
 with $\sqrt{T}$ the matrix square root of $T$. From Lemma \ref{lem:Jensen-inequality-matrix-logarithm-1},
 we have the following inequality: 
