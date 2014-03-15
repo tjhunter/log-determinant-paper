@@ -16,8 +16,8 @@ subgraph of $L_{G}$ so that:
 \[
 L_{G}\preceq L_{T}\preceq\kappa L_{G}
 \]
-with $\kappa=Cm\log n\log\log n\left(\log\log\log n\right)^{3}$ for
-some constant $C>0$.\end{lemma} 
+with $\kappa = \tilde{\mathcal{O}}\left(m\log n\right)$. %$\kappa=Cm\log n\log\log n\left(\log\log\log n\right)^{3}$ for some constant $C>0$.
+\end{lemma} 
 
 \begin{proof} This follows directly from \cite{Abraham2008}. $L_{T}$
 is a subgraph of $L_{G}$ (with the same weights on the edges), so
@@ -49,13 +49,12 @@ computations by forward-backward substitution. Applying Corollary
 \ref{cor:preconditioning} gives immediately: 
 
 \begin{theorem} \label{thm:PLD-tree}Let $G$ be a graph with $n$
-vertices and $m$ edges. Its PLD can be computed up to a precision
-of $\epsilon$ and with high probability in time $\tilde{O}\left(mn\left(\epsilon^{-1}+\frac{1}{n\epsilon^{2}}\right)\left(\log m\right)^{3}\left(\log n\right)^{2}\log\epsilon^{-1}\right)$.\end{theorem}
+vertices and $m$ edges. Its PLD can be computed up to a precision $\epsilon$ and with high probability in time $\tilde{O}\left(mn\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\left(\log m\right)^{3}\left(\log n\right)^{2}\log\epsilon^{-1}\right)$.\end{theorem}
 
 \begin{proof} We assume $G$ is connected, hence $m\geq n$ and $\log\kappa=\tilde{\mathcal{O}}\left(m\log n\right)$.
 \end{proof}
 
-This bound may be of independent interest since it requires relatively
+This result may be of independent interest since it requires relatively
 little machinery to compute, and it is an improvement already for
 graphs with small vertex degree ($m=\mathcal{O}\left(n^{1+o\left(1\right)}\right)$)
 over the Cholesky factorization of $G$. Also, note that the PLD of

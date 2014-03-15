@@ -87,10 +87,10 @@ L_{A}\preceq L_{B}\Rightarrow\text{st}_{C}\left(A\right)\leq\text{st}_{C}\left(B
 \end{lemma}
 
 \begin{proof}Consider the diagonalization of $L_{G}$: $L_{G}=P\Delta P^{T}$
-with $P\in\mathbb{R}^{n\times n-1}$ and $\Delta=\text{diag}\left(\lambda_{1}\cdots\lambda_{n-1}\right)$.
+with $P\in\mathbb{R}^{n\times n-1}$ and $\Delta=\text{diag}\left(\lambda_{1},\cdots,\lambda_{n-1}\right)$.
 Then 
 \[
-\text{st}_{G}\left(G\right)=\text{Tr}\left(P\Delta P^{T}P\Delta^{-1}P^{T}\right)=\text{Tr}\left(\Delta\Delta^{-1}\right)=n-1
+\text{st}_{G}\left(G\right)=\text{Tr}\left(P\Delta P^{T}P\Delta^{-1}P^{T}\right)= \text{Tr}\left( I_{n-1}\right)=n-1
 \]
 
 
@@ -118,9 +118,9 @@ be written as a linear combination of edge Laplacian matrices:
 \[
 L_{G}=\sum_{e\in\mathcal{E}_{G}}\omega_{e}L\left(e\right)=\sum_{\left(u,v\right)\in\mathcal{E}_{G}}\omega_{\left(u,v\right)}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}
 \]
-and using Lemma \ref{lem:simple-inequality} gives:
+and a positivity result on the Schur complement gives%using Lemma \ref{lem:simple-inequality} gives:
 \[
-\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}\preceq\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)L_{H}
+\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T} \preceq \Big(\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)\Big)L_{H}
 \]
 By summing all the edge inequalities, we get:
 \begin{eqnarray*}
@@ -142,7 +142,8 @@ the PLD of $L_{H}$ and the stretch.
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
 their respective Laplacians. Assuming $L_{H}\preceq L_{G}$, then:
 \begin{equation}
-\text{ld}\left(L_{H}\right)+\left(n-1\right)\log\left(\frac{\text{st}_{H}\left(G\right)}{n-1}\right)\geq\text{ld}\left(L_{G}\right)\geq\text{ld}\left(L_{H}\right)+\log\left(\text{st}_{H}\left(G\right)-n+2\right)\label{eq:encadrement-1}
+\text{ld}\left(L_{H}\right)+\log\left(\text{st}_{H}\left(G\right)-n+2\right) \leq \text{ld}\left(L_{G}\right) \leq \text{ld}\left(L_{H}\right)+\left(n-1\right)\log\left(\frac{\text{st}_{H}\left(G\right)}{n-1}\right)
+\label{eq:encadrement-1}
 \end{equation}
 
 
@@ -170,13 +171,10 @@ $\sigma=\text{st}_{H}\left(G\right)$. We have $1\leq\lambda_{i}$
 from the asumption $L_{H}\preceq L_{G}$. By definition: $\text{ld}\left(L_{H}^{+}L_{G}\right)=\sum_{i}\log\lambda_{i}$.
 Furthermore, we know from Lemma \ref{lem:stretch-trace} that $\sum_{i}\lambda_{i}=\sigma$.
 The upper and lower bounds on $\lambda_{i}$ give:
-\[
-\begin{array}{cc}
+\begin{align*}
 \text{ld}\left(L_{H}^{+}L_{G}\right)\geq & \min\,\sum_{i}\log\lambda_{i}\\
- & 1\leq\lambda_{i}\\
- & \sum_{i}\lambda_{i}=\sigma
-\end{array}
-\]
+ & \text{s.t.} \, \lambda_{i} \geq 1,\, \sum_{i}\lambda_{i}=\sigma
+\end{align*}
 Since there are precisely $n-1$ positive eigenvalues $\lambda_{i}$,
 one can show that the minimization problem above has a unique minimum
 which is $\log\left(\sigma-n+2\right)$.
@@ -262,16 +260,16 @@ edges that satisfies $\left(n-1\right)\leq\text{st}_{H}\left(G\right)\preceq\fra
 which verifies $\left(1-\epsilon\right)L_{G}\preceq L_{H}\preceq\left(1+\epsilon\right)L_{G}$.
 Using the stretch over this matrix inequality, this implies:
 \[
-\text{st}_{\left(1-\epsilon\right)G}\left(G\right)\geq\text{st}_{H}\left(G\right)\geq\text{st}_{\left(1+\epsilon\right)G}\left(G\right)
+\text{st}_{\left(1+\epsilon\right)G}\left(G\right)\leq\text{st}_{H}\left(G\right)\leq\text{st}_{\left(1-\epsilon\right)G}\left(G\right)
 \]
 which is equivalent to:
 \[
-\left(1-\epsilon\right)^{-1}\text{st}_{G}\left(G\right)\geq\text{st}_{H}\left(G\right)\geq\left(1+\epsilon\right)^{-1}\text{st}_{G}\left(G\right)
+\left(1+\epsilon\right)^{-1}\text{st}_{G}\left(G\right)\leq\text{st}_{H}\left(G\right)\leq\left(1-\epsilon\right)^{-1}\text{st}_{G}\left(G\right)
 \]
 and the stretch of a connected graph with respect to itself is $n-1$.
 By rescaling $H$ to $\left(1+\epsilon\right)^{-1}H$, we get:
 \[
-\frac{1+\epsilon}{1-\epsilon}\left(n-1\right)\geq\text{st}_{H}\left(G\right)\geq n-1
+ n-1 \leq\text{st}_{H}\left(G\right)\leq \frac{1+\epsilon}{1-\epsilon}\left(n-1\right)
 \]
 
 

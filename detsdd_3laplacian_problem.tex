@@ -32,61 +32,33 @@ that computing the log-determinant of an SDD with positive off-diagonal
 entries can be turned into computing the log-determinants of two SDD
 matrices with non-positive off-diagonal entries.
 
-\begin{lemma}\label{non-negative-conversion}Consider the decomposition
-of a SDD matrix into a sum of a positive and a negative term: 
-\[
-A=P-N
-\]
-with $P_{ij}\leq0$ for $i\neq j$ and $N_{ij}\leq0$ for all $i,j$
-so that $\left|A_{ij}\right|=\left|P_{ij}\right|+\left|N_{ij}\right|$.
-Then the matrices $\left(\begin{array}{cc}
+\begin{lemma}\label{non-negative-conversion} For a SDD matrix $A$, let $P$ and $N$ be the positive and the negative parts of $A$ respectively, i.e. $P_{ij} = \max(A_{ij},0)$ and $N_{ij} = \min(A_{ij},0)$ for all $i,j$. Then the matrices $\left(\begin{array}{cc}
 P & N\\
 N & P
-\end{array}\right)\in SDD_{2n}$ and $P+N\in SDD_{n}$ have all the off-diagonal coefficients non-positive,
-and we have the relation: 
+\end{array}\right)\in SDD_{2n}$ and $P-N\in SDD_{n}$ have all the off-diagonal coefficients non-positive,
+and the following relation holds
 \[
 \log\left|\left(\begin{array}{cc}
 P & N\\
 N & P
 \end{array}\right)\right|=\log\left|P+N\right|+\log\left|P-N\right|
 \]
-
-
 \end{lemma}
 
-\begin{proof} Call $B=N+P$ and $C=\left(\begin{array}{cc}
+\begin{proof} Call $B=P-N$ and $C=\left(\begin{array}{cc}
 P & N\\
 N & P
-\end{array}\right)$. Consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
-$Ax=\mu x$. Then: 
-\[
-\left(\begin{array}{cc}
-P & N\\
-N & P
-\end{array}\right)\left(\begin{array}{c}
+\end{array}\right)$. As a consequence of the above definitions, $A=P+N$ and $\left|A\right| = P - N$. Then $A \in SDD_{n}$ implies that $B$ and $C$ are diagonally dominant. Next, consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
+$Ax=\mu x$. Then the vector $\left(\begin{array}{c}
 x\\
--x
-\end{array}\right)=\left(\begin{array}{c}
-Ax\\
--Ax
-\end{array}\right)=\mu\left(\begin{array}{c}
-x\\
--x
-\end{array}\right)
-\]
-which shows that the vector $\left(\begin{array}{c}
-x\\
--x
-\end{array}\right)$ is an eigenvector of $C$ with associated eigenvalue $\mu$ . Similarly,
-if $\eta$ is an eigenvector of $B$ with associated eigenvalue $y$,
-then $\eta$ is also an eigenvector of $C$ with associated eigenvalue
-$\left(\begin{array}{c}
+x
+\end{array}\right)$
+is an eigenvector of $C$ with eigenvalue $\mu$. Similarly, if $y$ is an eigenvector of $B$ with associated eigenvalue $\nu$, then $\left(\begin{array}{c}
 y\\
-y
-\end{array}\right)$. Since $C$ is exactly of size $2n$, the set of eigenvalues of $C$
+-y
+\end{array}\right)$ is also an eigenvector of $C$ with associated eigenvalue $\nu$. Since $C$ is exactly of size $2n$, the set of eigenvalues of $C$
 is exactly the concatenation of sets of eigenvalues of $A$ and $B$.
-Thus $\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\eta_{i}=\log\left|A\right|+\log\left|B\right|$.
-
+Thus $\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\nu_{i}=\log\left|A\right|+\log\left|B\right|$.
 \end{proof}
 
 Furthermore, computing the determinant of SDD matrices with non-negative
@@ -134,7 +106,7 @@ Laplacian matrix of a connected graph, then:
 and the corresponding eigenvectors for $F_{Z}$ are the same eigenvectors,
 truncated by the last coefficient. 
 \item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$ 
-\item Given $Z_{1},Z_{2}$ Laplacian matrices, we have $Z_{1}\succeq Z_{2}\Rightarrow F_{Z_{1}}\succeq F_{Z_{2}}$ 
+\item Given $Z_{1},Z_{2}$ Laplacian matrices, we have $Z_{1}\preceq Z_{2}\Rightarrow F_{Z_{1}}\preceq F_{Z_{2}}$ 
 \end{enumerate}
 \end{lemma}
 
@@ -183,3 +155,24 @@ that the sampling procedure from the previous section can be applied
 to compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to
 adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
 to produce good preconditioners $H$ for the determinant. 
+
+
+%\[
+%\left(\begin{array}{cc}
+%P & N\\
+%N & P
+%\end{array}\right)\left(\begin{array}{c}
+%x\\
+%-x
+%\end{array}\right)=\left(\begin{array}{c}
+%Ax\\
+%-Ax
+%\end{array}\right)=\mu\left(\begin{array}{c}
+%x\\
+%-x
+%\end{array}\right)
+%\]
+%which shows that the vector $\left(\begin{array}{c}
+%x\\
+%-x
+%\end{array}\right)$ is an eigenvector of $C$ with associated eigenvalue $\mu$ .
