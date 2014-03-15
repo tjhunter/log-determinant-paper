@@ -68,7 +68,7 @@ non-positive off-diagonal entries matrix by adding a ``ground''
 node (see Gremban's thesis \cite{Gremban1996}, Chapter 4).
 
 \begin{definition} \emph{Augmented Laplacian of an SDD matrix.} Let
-$A\in SDD_{n}$. Let $L,D$ be the decomposition of $A$ into $L$
+$A\in SDD_{n}$ with non-positive off-diagonal entries. Let $L,D$ be the decomposition of $A$ into $L$
 a Laplacian matrix and $D$ a (non-negative) diagonal matrix such
 that $A=L+D$. The augmented matrix of $A$ is: 
 \[
@@ -128,6 +128,15 @@ with $L_{A}^{+}$the pseudo inverse of $L_{A}$.
 
 \begin{proof}The proofs of this lemma are straightforward and are
 contained in Appendix B. \end{proof}
+
+\paragraph{General procedure:} we summarize the reduction of a generic SDD matrix together with the computation of its log-determinant as follows. Given $A \in SDD_n$:
+\begin{enumerate}
+\item Consider the matrices $C$ and $B$ defined in lemma \ref{non-negative-conversion} (they are SDD with non-positive off-diagonal entries). 
+\item Ground $C$ and $B$ to obtain the Laplacian matrices $L_C$ and $L_B$.
+\item Compute $ld(L_C)$ and $ld(L_B)$ using \texttt{UltraLogDet}.
+\item Return $\log |A| = ld(L_C) - ld(L_B)$.   
+\end{enumerate}  
+
 
 A Laplacian matrix can be considered either for its graphical properties,
 or for its algebraic properties. Recent results has shown a deep connection
