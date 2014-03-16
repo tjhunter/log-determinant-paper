@@ -32,11 +32,14 @@ that computing the log-determinant of an SDD with positive off-diagonal
 entries can be turned into computing the log-determinants of two SDD
 matrices with non-positive off-diagonal entries.
 
-\begin{lemma}\label{non-negative-conversion} For a SDD matrix $A$, let $P$ and $N$ be the positive and the negative parts of $A$ respectively, i.e. $P_{ij} = \max(A_{ij},0)$ and $N_{ij} = \min(A_{ij},0)$ for all $i,j$. Then the matrices $\left(\begin{array}{cc}
+\begin{lemma}\label{non-negative-conversion} For a SDD matrix $A$,
+let $P$ and $N$ be the positive and the negative parts of $A$ respectively,
+i.e. $P_{ij}=\max(A_{ij},0)$ and $N_{ij}=\min(A_{ij},0)$ for all
+$i,j$. Then the matrices $\left(\begin{array}{cc}
 P & N\\
 N & P
 \end{array}\right)\in SDD_{2n}$ and $P-N\in SDD_{n}$ have all the off-diagonal coefficients non-positive,
-and the following relation holds
+and the following relation holds 
 \[
 \log\left|\left(\begin{array}{cc}
 P & N\\
@@ -48,15 +51,19 @@ N & P
 \begin{proof} Call $B=P-N$ and $C=\left(\begin{array}{cc}
 P & N\\
 N & P
-\end{array}\right)$. As a consequence of the above definitions, $A=P+N$ and $\left|A\right| = P - N$. Then $A \in SDD_{n}$ implies that $B$ and $C$ are diagonally dominant. Next, consider $\mu$ an eigenvalue of $A$, and $x$ an associated eigenvector:
-$Ax=\mu x$. Then the vector $\left(\begin{array}{c}
+\end{array}\right)$. As a consequence of the above definitions, $A=P+N$ and $\left|A\right|=P-N$.
+Then $A\in SDD_{n}$ implies that $B$ and $C$ are diagonally dominant.
+Next, consider $\mu$ an eigenvalue of $A$, and $x$ an associated
+eigenvector: $Ax=\mu x$. Then the vector $\left(\begin{array}{c}
 x\\
 x
-\end{array}\right)$
-is an eigenvector of $C$ with eigenvalue $\mu$. Similarly, if $y$ is an eigenvector of $B$ with associated eigenvalue $\nu$, then $\left(\begin{array}{c}
+\end{array}\right)$ is an eigenvector of $C$ with eigenvalue $\mu$. Similarly, if $y$
+is an eigenvector of $B$ with associated eigenvalue $\nu$, then
+$\left(\begin{array}{c}
 y\\
 -y
-\end{array}\right)$ is also an eigenvector of $C$ with associated eigenvalue $\nu$. Since $C$ is exactly of size $2n$, the set of eigenvalues of $C$
+\end{array}\right)$ is also an eigenvector of $C$ with associated eigenvalue $\nu$.
+Since $C$ is exactly of size $2n$, the set of eigenvalues of $C$
 is exactly the concatenation of sets of eigenvalues of $A$ and $B$.
 Thus $\log\left|C\right|=\sum_{i}\log\mu_{i}+\sum_{i}\log\nu_{i}=\log\left|A\right|+\log\left|B\right|$.
 \end{proof}
@@ -68,9 +75,10 @@ non-positive off-diagonal entries matrix by adding a ``ground''
 node (see Gremban's thesis \cite{Gremban1996}, Chapter 4).
 
 \begin{definition} \emph{Augmented Laplacian of an SDD matrix.} Let
-$A\in SDD_{n}$ with non-positive off-diagonal entries. Let $L,D$ be the decomposition of $A$ into $L$
-a Laplacian matrix and $D$ a (non-negative) diagonal matrix such
-that $A=L+D$. The augmented matrix of $A$ is: 
+$A\in SDD_{n}$ with non-positive off-diagonal entries. Let $L,D$
+be the decomposition of $A$ into $L$ a Laplacian matrix and $D$
+a (non-negative) diagonal matrix such that $A=L+D$. The augmented
+matrix of $A$ is: 
 \[
 L_{A}=\left(\begin{array}{cc}
 A & -\mathbf{d}\\
@@ -129,29 +137,32 @@ with $L_{A}^{+}$the pseudo inverse of $L_{A}$.
 \begin{proof}The proofs of this lemma are straightforward and are
 contained in Appendix B. \end{proof}
 
-\paragraph{General procedure:} we summarize the reduction of a generic SDD matrix together with the computation of its log-determinant as follows. Given $A \in SDD_n$:
+
+\paragraph{General procedure:}
+
+we summarize the reduction of a generic SDD matrix together with the
+computation of its log-determinant as follows. Given $A\in SDD_{n}$: 
 \begin{enumerate}
-\item Consider the matrices $C$ and $B$ defined in lemma \ref{non-negative-conversion} (they are SDD with non-positive off-diagonal entries). 
-\item Ground $C$ and $B$ to obtain the Laplacian matrices $L_C$ and $L_B$.
-\item Compute $ld(L_C)$ and $ld(L_B)$ using \texttt{UltraLogDet}.
-\item Return $\log |A| = ld(L_C) - ld(L_B)$.   
-\end{enumerate}  
-
-
+\item Consider the matrices $C$ and $B$ defined in lemma \ref{non-negative-conversion}
+(they are SDD with non-positive off-diagonal entries). 
+\item Ground $C$ and $B$ to obtain the Laplacian matrices $L_{C}$ and
+$L_{B}$. 
+\item Compute $ld(L_{C})$ and $ld(L_{B})$ using \texttt{UltraLogDet}. 
+\item Return $\log|A|=ld(L_{C})-ld(L_{B})$. 
+\end{enumerate}
 A Laplacian matrix can be considered either for its graphical properties,
 or for its algebraic properties. Recent results has shown a deep connection
 between these two aspects, and let us develop a general framework
 for computing determinants: given $G\in SDD_{n}$, we consider the
 graph associated to its Laplacian $L_{G}$, through the grounding
 procedure. Using graphical properties of $L_{G}$, we can construct
-a weighted subgraph $H$ of $G$ for which the PLD is easier
-to compute and that is a good approximation of $G$ in the spectral
-sense. We can float the subgraph $H$ and apply results of section
-\ref{sec:Preconditioned-log-determinants} to approximate the remainder
-with high probability. More precisely: 
+a weighted subgraph $H$ of $G$ for which the PLD is easier to compute
+and that is a good approximation of $G$ in the spectral sense. We
+can float the subgraph $H$ and apply results of section \ref{sec:Preconditioned-log-determinants}
+to approximate the remainder with high probability. More precisely:
 \begin{align*}
-\log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|L_G\right|\\
- & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}L_G\right|
+\log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|L_{G}\right|\\
+ & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}L_{G}\right|
 \end{align*}
 
 
@@ -163,8 +174,7 @@ to factorize using Cholesky factorization, and close enough to $G$
 so that the sampling procedure from the previous section can be applied
 to compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to
 adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
-to produce good preconditioners $H$ for the determinant. 
-
+to produce good preconditioners $H$ for the determinant.
 
 %\[
 %\left(\begin{array}{cc}
@@ -185,3 +195,4 @@ to produce good preconditioners $H$ for the determinant.
 %x\\
 %-x
 %\end{array}\right)$ is an eigenvector of $C$ with associated eigenvalue $\mu$ .
+

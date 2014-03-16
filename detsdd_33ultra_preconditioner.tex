@@ -130,8 +130,8 @@ so that $\left\Vert C\left(b\right)-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\
 for all $b$ with a choice of relative precision $\nu=\frac{\epsilon}{16\kappa^{3}\kappa\left(B\right)}$.
 By Theorem \ref{thm:det-sampling-theorem}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
 can be approximated to precision $\epsilon$ with probability at least
-$1-\eta$ using Algorithm \ref{alg:SampleLogDet}.
-Furthermore, this algorithm works in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)=\tilde{O}\left(m\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$.
+$1-\eta$ using Algorithm \ref{alg:SampleLogDet}. Furthermore, this
+algorithm works in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)=\tilde{O}\left(m\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$.
 By a union bound, the result also holds on the sum of all the approximations
 of the remainders. We can simplify this bound a little by assuming
 that $\epsilon\geq n^{-1}$, which then becomes $\tilde{O}\left(m\epsilon^{-1}\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$. 
