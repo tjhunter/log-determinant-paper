@@ -15,10 +15,18 @@
 \providecommand{\algorithmname}{Algorithm}
 \floatname{algorithm}{\protect\algorithmname}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\newcommand{\Text}[1]{\text{\textnormal{#1}}}
+\newcommand{\ld}{\Text{ld}}
+\newcommand{\tr}{\Text{Tr}}
+
 \makeatother
 
 \usepackage{babel}
 \begin{document}
+\global\long\def\Tr{}
+
+
 \input{detsdd_1introduction.tex}
 
 \input{detsdd_2preconditionedlogdet.tex}
