@@ -27,7 +27,7 @@ Bernstein inequality:
 
 \begin{lemma}{[}Bernstein's inequality{]} \label{lem:bernstein}
 Let $X_{1}\cdots X_{n}$ be independent random variables with $\mathbb{E}\left[X_{i}\right]=0$,
-$\left|X_{i}\right|<c$ almost surely. Call $\sigma^{2}=\frac{1}{n}\sum_{i}\text{Var}\left(X_{i}\right)$,
+$\left|X_{i}\right|<c$ almost surely. Call $\sigma^{2}=\frac{1}{n}\sum_{i}\text{\textnormal{Var}}\left(X_{i}\right)$,
 then for all $\epsilon>0$: 
 \[
 \mathbb{P}\left[\frac{1}{n}\Big|\sum_{i}X_{i}\Big|\geq\epsilon\right]\leq2\exp\left(-\frac{n\epsilon^{2}}{2\sigma^{2}+2c\epsilon/3}\right)
@@ -38,12 +38,12 @@ We can adapt some results from \cite{Barry1999} to prove this bound
 on the deviation from the trace.
 
 \begin{lemma} \label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$
-with the assumption $\lambda_{\text{min}}I_{n}\preceq H\preceq\lambda_{\text{max}}I$.
+with the assumption $\lambda_{\text{\textnormal{min}}}I_{n}\preceq H\preceq\lambda_{\text{\textnormal{max}}}I$.
 Consider $p$ vectors sampled from the standard Normal distribution:
 $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$ for
 $i=1\cdots p$. Then for all $\epsilon>0$: 
 \[
-\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\mbox{Tr}\left(H\right)\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{4n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
+\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\Tr\left(H\right)\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{4n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
 \end{lemma}
 
@@ -71,7 +71,7 @@ with $\sigma^{2}=\frac{2}{n(n+2)}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}
 
 The previous lemma shows that if the eigenspectrum of a matrix is
 bounded, we can obtain a Bernstein bound on the error incurred by
-sampling the trace. Furthermore, the convergence of the series \ref{eq:martin}
+sampling the trace. Furthermore, the convergence of the series \eqref{eq:martin}
 is also determined by the extremal eigenvalues of $S$. If we truncate
 the series (\ref{eq:martin}), we can bound the truncation error using
 the extremal eigenvalues. We formalize this intuition in the following
@@ -131,7 +131,7 @@ corollary still holds. This is what the following theorem establishes:
 \begin{theorem}\label{thm:preconditioning-approx}Consider $A,B\in\mathcal{S}_{n}^{+}$
 positive definite with $B$ a $\kappa-$approximation of $A$ with
 $\kappa\geq2$. Furthermore, assume there exists a linear operator
-$C$ so that for all $y\in\mathbb{R}^{n}$, $C$ returns an $\nu-$approximation
+$C$ so that for all $y\in\mathbb{R}^{n}$, $C$ returns a $\nu-$approximation
 of $B^{-1}y$: 
 \[
 \left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\nu\left\Vert B^{-1}y\right\Vert _{B}
@@ -148,56 +148,14 @@ vector calls to the operator $C$ and vector multiplies from $A$.
 \end{theorem}
 
 The proof of this result is detailed in Appendix A. While the overall
-bound looks the same, the constant (taken away by the $O\left(\right)$
-notation) is twice as large as Corollary \ref{cor:preconditioning}.
+bound looks the same, the constant (taken away by the $O\left(\cdot\right)$
+notation) is twice as large as in Corollary \ref{cor:preconditioning}.
 
 This last theorem shows that we can compute a good approximation of
 the log-determinant if the preconditioner $B$: (a) is close to $A$
 in the spectral sense, and (b) can be approximately inverted and the
 error introduced by the approximate inversion can be controlled. This
 happens to be the case for symmetric, diagonally dominant matrices.
-
-\begin{algorithm}
-\begin{raggedright} Algorithm \textbf{UltraLogDet}($A$,$\epsilon$,$\eta$):
-
-\end{raggedright}
-
-\begin{raggedright} If $A$ is of a small size ($<$100), directly
-compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization.
-
-\end{raggedright}
-
-\begin{raggedright} Compute $B=$\textbf{IncrementalSparsify($A$)}
-
-\end{raggedright}
-
-\begin{raggedright} Compute $D,A'=$\textbf{PartialCholesky($B$)}
-
-\end{raggedright}
-
-\begin{raggedright} $\eta\leftarrow\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$
-
-\end{raggedright}
-
-\begin{raggedright} $p\leftarrow8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
-
-\end{raggedright}
-
-\begin{raggedright} $l\leftarrow\delta^{-1}\log\left(\frac{2}{\epsilon\delta}\right)$
-
-\end{raggedright}
-
-\begin{raggedright} Compute $s=$\textbf{PreconditionedLogDetMonteCarlo($B,A,\eta,p,l$)}
-
-\end{raggedright}
-
-\begin{raggedright} Return $s+\log\left|D\right|+$\textbf{UltraLogDet($A'$,$\epsilon$,$\eta$)}
-
-\end{raggedright}
-
-\caption{Sketch of the main algorithm\label{alg:The-main-algorithm}}
-\end{algorithm}
-
 
 \begin{algorithm}
 Algorithm \textbf{PreconditionedLogDetMonteCarlo}($B$,$A$,$\eta$,$p$,$l$):

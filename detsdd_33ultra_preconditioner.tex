@@ -70,6 +70,48 @@ can apply Theorem \ref{thm:preconditioning-approx}. We formalize
 the notion of chain of preconditioners by reintroducing some material
 from \cite{Koutis2010}.
 
+\begin{algorithm}
+\begin{raggedright} Algorithm \textbf{UltraLogDet}($A$,$\epsilon$,$\eta$):
+
+\end{raggedright}
+
+\begin{raggedright} If $A$ is of a small size ($<$100), directly
+compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization.
+
+\end{raggedright}
+
+\begin{raggedright} Compute $B=$\textbf{IncrementalSparsify($A$)}
+
+\end{raggedright}
+
+\begin{raggedright} Compute $D,A'=$\textbf{PartialCholesky($B$)}
+
+\end{raggedright}
+
+\begin{raggedright} $\eta\leftarrow\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$
+
+\end{raggedright}
+
+\begin{raggedright} $p\leftarrow8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
+
+\end{raggedright}
+
+\begin{raggedright} $l\leftarrow\delta^{-1}\log\left(\frac{2}{\epsilon\delta}\right)$
+
+\end{raggedright}
+
+\begin{raggedright} Compute $s=$\textbf{PreconditionedLogDetMonteCarlo($B,A,\eta,p,l$)}
+
+\end{raggedright}
+
+\begin{raggedright} Return $s+\log\left|D\right|+$\textbf{UltraLogDet($A'$,$\epsilon$,$\eta$)}
+
+\end{raggedright}
+
+\caption{Sketch of the main algorithm\label{alg:The-main-algorithm}}
+\end{algorithm}
+
+
 \begin{definition} Definition 7.1 from \cite{Koutis2010}. $\kappa\left(n\right)$-good
 chain. $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
 a chain of graphs with $n_{i}$ and $m_{i}$ the number of vertices
