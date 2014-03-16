@@ -88,11 +88,11 @@ for $i=1\cdots p$ all independent. Call $\hat{y}_{p,l}$ an estimator
 of the truncated series of $l$ elements computed by sampling the
 trace using $p$ samples: 
 \[
-\hat{y}_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
+\hat{y}_{p,l}=-\frac{1}{p}\sum_{j=1}^{p}\sum_{k=1}^{l}\frac{1}{k}\frac{\mathbf{u}_{j}^{T}S^{k}\mathbf{u}_{j}}{\mathbf{u}_{j}^{T}\mathbf{u}_{j}}
 \]
 Given $\epsilon>0$ and $\eta\in\left(0,1\right)$, the $\hat{y}_{p,l}$
 approximates $y$ up to precision $\epsilon$ with probability at
-least $1-\eta$ by choosing $p\geq8\left(\frac{2}{\epsilon}\log^{2}\left(1/\delta\right)+\frac{1}{3n\epsilon^{2}}\log\left(1/\delta\right)\right)\log\left(1/\eta\right)$
+least $1-\eta$ by choosing $p\geq16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\delta^{-1}\right)$
 and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$:
 \[
 \mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon\right]\leq\eta
