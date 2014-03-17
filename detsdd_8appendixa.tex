@@ -68,13 +68,12 @@ H=I-B^{-1}A
 \[
 S=I-B^{-1/2}AB^{-1/2}
 \]
-with $B^{-1/2}$ the inverse of the square root of the positive-definite
-matrix $B$%
+with $B^{-1/2}$ the inverse of the square root%
 \footnote{Given a real PSD matrix $X$, which can be diagonalized: $X=Q\Delta Q^{T}$
 with $\Delta$ diagonal, and $\Delta_{ii}\geq0$. Call $Y=Q\sqrt{\Delta}Q^{T}$
 the square root of $X$, then $Y^{2}=X$.%
-}. The inequality \ref{eq:A-B-bounds} is equivalent to $\kappa^{-1}B\preceq A\preceq B$,
-or also: 
+} of the positive-definite matrix $B$. The inequality (\ref{eq:A-B-bounds})
+is equivalent to $\kappa^{-1}B\preceq A\preceq B$, or also: 
 \[
 \left(1-\kappa^{-1}\right)I\succeq I-B^{-1/2}AB^{-1/2}\succeq0
 \]
@@ -107,26 +106,26 @@ y_{l} & = & -\mbox{Tr}\left(\sum_{i=1}^{l}\frac{1}{i}S^{i}\right)\\
  & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(\sum_{j}\left(\begin{array}{c}
 j\\
 i-j
-\end{array}\right)\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
+\end{array}\right)\left(-1\right)^{j}\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
  & = & -\sum_{i=1}^{l}\frac{1}{i}\sum_{j}\left(\begin{array}{c}
 j\\
 i-j
-\end{array}\right)\mbox{Tr}\left(\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
+\end{array}\right)\left(-1\right)^{j}\mbox{Tr}\left(\left(B^{-1/2}AB^{-1/2}\right)^{j}\right)\\
  & = & -\sum_{i=1}^{l}\frac{1}{i}\sum_{j}\left(\begin{array}{c}
 j\\
 i-j
-\end{array}\right)\mbox{Tr}\left(\left(B^{-1}A\right)^{j}\right)\\
+\end{array}\right)\left(-1\right)^{j}\mbox{Tr}\left(\left(B^{-1}A\right)^{j}\right)\\
  & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(\sum_{j}\left(\begin{array}{c}
 j\\
 i-j
-\end{array}\right)\left(B^{-1}A\right)^{j}\right)\\
+\end{array}\right)\left(-1\right)^{j}\left(B^{-1}A\right)^{j}\right)\\
  & = & -\sum_{i=1}^{l}\frac{1}{i}\mbox{Tr}\left(H^{i}\right)
 \end{eqnarray*}
 Hence, the practical computation of the latter sum can be done on
-$A^{-1}B$. To conclude, if we compute $p=8\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(n\right)\log^{2}\left(\kappa\right)$
-truncated chains of length $l=2\kappa\log\left(\frac{n}{\kappa\epsilon}\right)$,
-we get our result. This requires $lp$ multiplies by $A$ and inversions
-by $B$. \end{proof} 
+$A^{-1}B$. To conclude, if we compute $p=16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
+truncated chains of length $l=\kappa\log\left(\frac{2\kappa}{\epsilon}\right)$,
+we get our result. This requires $lp$ multiplications by $A$ and
+inversions by $B$. \end{proof} 
 
 
 \subsection{Proof of Theorem \ref{thm:preconditioning-approx}}
@@ -164,8 +163,8 @@ for the Euclidian and $B-$norms:
 \end{eqnarray*}
 \end{lemma} 
 
-\begin{proof} Recall the definition of the matrix norm:$\left\Vert S\right\Vert =\max_{x^{T}x\leq1}\sqrt{x^{T}Sx}$.
-Since we know from Equation \ref{eq:s-encadrement} that $S\preceq\left(1-\varphi\right)I$,
+\begin{proof} Recall the definition of the matrix norm: $\left\Vert S\right\Vert =\max_{x^{T}x\leq1}\sqrt{x^{T}Sx}$.
+Since we know from Equation (\ref{eq:s-encadrement}) that $S\preceq\left(1-\varphi\right)I$,
 we get the first inequality.
 
 The second inequality is a consequence of Proposition 3.3 from \cite{Spielman2009a}:
@@ -199,9 +198,8 @@ so we get:
 The approximation of the log-determinant is performed by computing
 sequences of power series $\left(R^{k}x\right)_{k}$. These chains
 are computed approximately by repeated applications of the $R$ operator
-on the previous element of the chain, starting from a unit Gaussian
-distribution $x_{0}\sim\mathcal{N}\left(0,\mathbf{I}\right)$. We
-formalize the notion of an approximate chain. 
+on the previous element of the chain, starting from a random variable
+$x_{0}$. We formalize the notion of an approximate chain. 
 
 \begin{definition} \emph{Approximate power sequence. }Given a linear
 operator $H$, a start point $x^{\left(0\right)}\in\mathbb{R}^{n}$,
@@ -219,12 +217,15 @@ We now prove the following result that is quite intuitive: if the
 operator $H$ is a contraction and if the relative error $\epsilon$
 is not too great, the sum of all the errors on the chain is bounded. 
 
-\begin{lemma}\label{lem:nu-sequence-bound}Consider $\left(x^{\left(k\right)}\right)_{k}$
-a $\nu-$approximate power sequence for the operator $H$ and the
-norm $D$. Assuming that $\left\Vert H\right\Vert _{D}\leq1-\rho$
-and that $2\nu\leq\rho\leq1/2$, the total error is bounded by $\mathcal{O}\left(\rho^{-3}\nu\right)$:
+\begin{lemma}\label{lem:nu-sequence-bound}Let $H$ be a linear operator
+and $D$ a norm over the space of that linear operator. Assume that
+the operator $H$ is a contraction under this norm ($\left\Vert H\right\Vert _{D}<1$)
+and consider $\rho\in\left(0,1\right)$ so that $\left\Vert H\right\Vert _{D}\leq\left(1-\rho\right)^{2}$.
+Consider $\left(x^{\left(k\right)}\right)_{k}$ a $\nu-$approximate
+power sequence for the operator $H$ and the norm $D$. If $\rho\leq1/2$
+and $\nu\leq\rho/2$, the total error is bounded: 
 \[
-\sum_{k=0}^{\infty}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}\leq4\nu\rho^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\sum_{k=0}^{\infty}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}\leq4\rho^{-2}\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 \end{lemma}
 
@@ -245,43 +246,55 @@ We now bound the error on the $\omega_{k}$ sequence:
  & \leq & \left\Vert H\right\Vert _{D}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}+\nu\left\Vert Hx^{\left(k\right)}\right\Vert _{D}\\
  & = & \left\Vert H\right\Vert _{D}\omega_{k}+\nu\theta_{k}\\
  & \leq & \left\Vert H\right\Vert _{D}\omega_{k}+\nu\left(\omega_{k}+\left\Vert H\right\Vert _{D}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\right)\\
- & \leq & \left[\left(1-\rho\right)^{2}+\nu\right]\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+ & \leq & \left[\left\Vert H\right\Vert _{D}+\nu\right]\omega_{k}+\nu\left\Vert H\right\Vert _{D}^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \end{eqnarray*}
+The assumption $\rho\leq1-\sqrt{\left\Vert H\right\Vert _{D}}$ is
+equivalent to $\left\Vert H\right\Vert _{D}\leq\left(1-\rho\right)^{2}$,
+so the last inequality implies:
+\[
+\omega_{k+1}\leq\left[\left(1-\rho\right)^{2}+\nu\right]\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\]
 
 
 Note that the inequality $\left(1-\rho\right)^{2}+\nu\leq1-\rho$
-is equivalent to $\nu\leq\rho-\rho^{2}$. We can assume without loss
-of generality that $0<\rho\leq1/2$. Under this condition, $\rho/2\leq\rho-\rho^{2}$.
-So the condition $2\nu\leq\rho$ implies $\left(1-\rho\right)^{2}+\nu\leq1-\rho$
-which leads to: 
+is equivalent to $\nu\leq\rho-\rho^{2}$. Using the hypothesis, this
+implies: 
+\begin{equation}
+\omega_{k+1}\leq\left(1-\rho\right)\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\label{eq:anon1}
+\end{equation}
+
+
+We show by induction that:
 \[
-\omega_{k+1}\leq\left(1-\rho\right)\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\forall k,\omega_{k}\leq\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{1-\sqrt{1-\rho}}\left(\sqrt{1-\rho}\right)^{k-1}
 \]
 
 
-By induction, one obtains: 
+Note first that 
 \[
-\omega_{k}\leq\omega_{1}\left(1-\rho\right)^{k}+\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\rho}\left(1-\rho\right)^{2k-1}
+\omega_{1}=\left\Vert x^{\left(1\right)}-Hx^{\left(0\right)}\right\Vert _{D}\leq\nu\left\Vert Hx^{\left(0\right)}\right\Vert _{D}\leq\nu\left\Vert H\right\Vert _{D}\left\Vert x^{\left(0\right)}\right\Vert _{D}\leq\nu\left(1-\rho\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}\leq\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
-and since $\omega_{1}=\left\Vert x^{\left(1\right)}-Hx^{\left(0\right)}\right\Vert _{D}\leq\nu\left\Vert Hx^{\left(0\right)}\right\Vert _{D}\leq\nu\left\Vert H\right\Vert _{D}\left\Vert x^{\left(0\right)}\right\Vert _{D}\leq\nu\left(1-\rho\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}$,
-we have a final bound that depends on $\nu$: 
+So this relation is verified for $k=1$. Now, assuming it is true
+for $k$, we use Equation (\ref{eq:anon1}) to see that:
+\begin{eqnarray*}
+\omega_{k} & \leq & \left(1-\rho\right)\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\\
+ & \leq & \left(1-\rho\right)\omega_{k}+\nu\left(\sqrt{1-\rho}\right)^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\\
+ & \leq & \nu\left\Vert x^{\left(0\right)}\right\Vert _{D}\left[\frac{\left(1-\rho\right)}{1-\sqrt{1-\rho}}\left(\sqrt{1-\rho}\right)^{k-1}+\left(\sqrt{1-\rho}\right)^{k}\right]\\
+ & = & \nu\left\Vert x^{\left(0\right)}\right\Vert _{D}\left(\sqrt{1-\rho}\right)^{k}\left[\frac{\sqrt{1-\rho}}{1-\sqrt{1-\rho}}+1\right]\\
+ & = & \frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{1-\sqrt{1-\rho}}\left(\sqrt{1-\rho}\right)^{k}
+\end{eqnarray*}
+which is the the property for $k+1$. Using this property, we can
+sum all the errors by a geometric series (note that $\omega_{0}=0$).
 \[
-\omega_{k}\leq\nu\left(1-\rho\right)^{2}\left\Vert x^{\left(0\right)}\right\Vert _{D}\left(1-\rho\right)^{k}+\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\rho}\left(1-\rho\right)^{2k-1}
-\]
-
-
-This is the sum of two geometric series, which give the bound: 
-\[
-\sum_{k}\omega_{k}\leq\nu\rho^{-1}\left[1+\frac{1}{\rho^{2}\left(1-\rho\right)^{2}}\right]\left\Vert x^{\left(0\right)}\right\Vert _{D}
-\]
-
-
-Since $\rho\leq1/2$, it implies $\left(1-\rho\right)^{-2}\leq4$
-and $1\leq\rho^{-2}$, so we can further simplify: 
-\[
-\sum_{k}\omega_{k}\leq4\nu\rho^{-3}\left\Vert x^{\left(0\right)}\right\Vert _{D}
+\sum_{k=1}^{\infty}\omega_{k}\leq\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{1-\sqrt{1-\rho}}\sum_{k=0}^{\infty}\left(\sqrt{1-\rho}\right)^{k}=\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{\left(1-\sqrt{1-\rho}\right)^{2}}
 \]
 
+
+Finally, note that for $\rho\in\left(0,1/2\right)$, the inequality
+$\nu\leq\rho/2$ implies $\nu\leq\rho-\rho^{2}$. Furthermore, by
+concavity of the square root function, we have $\sqrt{1-\rho}\leq1-\rho/2$
+for $\rho\leq1$. Thus, $\left(1-\sqrt{1-\rho}\right)^{2}\geq\rho^{2}/4$
+and we get our result.
 
 \end{proof}
 
@@ -289,11 +302,12 @@ We can use the bound on the norm of $A$ to compute bound the error
 with a preconditioner:
 
 \begin{lemma}\label{lem:partial-sequence-approximate}Consider $A,B$
-with the same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, $\nu\in\left(0,\varphi/2\right)$,
-$\varphi\leq1/2$, and $\left(x_{u}\right)_{u}$ an $\nu-$approximate
+with the same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, and
+the additional hypothesis $\nu\in\left(0,\frac{1}{2\kappa}\right)$
+and $\kappa\ge2$, and $\left(x_{u}\right)_{u}$ an $\nu-$approximate
 power sequence for the operator $R$ with start vector $x_{0}$. Then:
 \[
-\left|\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}-\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}\right|\leq4\nu\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
+\left|\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}-\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}\right|\leq4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}\left\Vert x_{0}\right\Vert ^{2}
 \]
  where $\kappa\left(B\right)$ is the condition number of $B$.
 
@@ -303,23 +317,40 @@ power sequence for the operator $R$ with start vector $x_{0}$. Then:
 
 Call $\hat{z}$ the truncated sequence: 
 \[
-\hat{z}=\sum_{i=1}^{l}\frac{1}{i}\left(x_{0}\right)^{T}x_{i}
+\hat{z}=\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}
 \]
 This sequence is an approximation of the exact sequence $z$: 
 \[
 z=\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}
 \]
 We now bound the error between the two sequences: 
-\[
-\left|\hat{z}-z\right|\leq\sum_{i=1}^{l}\frac{1}{i}\left|x_{0}^{T}\left(R^{i}x_{0}-x_{i}\right)\right|\leq\sum_{i=1}^{l}\left|x_{0}^{T}\left(R^{i}x_{0}-x_{i}\right)\right|\leq\sum_{i=1}^{l}\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|
-\]
+\begin{equation}
+\left|\hat{z}-z\right|\leq\sum_{i=1}^{l}\frac{1}{i}\left|x_{0}^{T}\left(R^{i}x_{0}-x_{i}\right)\right|\leq\sum_{i=1}^{l}\left|x_{0}^{T}\left(R^{i}x_{0}-x_{i}\right)\right|\leq\sum_{i=1}^{l}\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|\label{eq:anon}
+\end{equation}
 Using the Cauchy-Schwartz inequality, we obtain: 
+\begin{equation}
+\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|=\left|\left\langle B^{-1}x_{0},R^{i}x_{0}-x_{i}\right\rangle _{B}\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\label{eq:anon-1}
+\end{equation}
+ From Lemma (\ref{lem:S-R-contractions}), we have $\left\Vert R\right\Vert _{B}\leq\left(1-\varphi\right)^{2}$,
+and from the hypothesis, we have $\nu\in\left(0,\varphi/2\right)$
+and $\varphi\le1/2$, so we can bound the deviation using the bound
+from Lemma \ref{lem:nu-sequence-bound}:
+\begin{equation}
+\sum_{i=1}^{l}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq\sum_{i=1}^{\infty}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq4\varphi^{-2}\nu\left\Vert x_{0}\right\Vert _{B}=4\kappa^{2}\nu\left\Vert x_{0}\right\Vert _{B}\label{eq:anon-2}
+\end{equation}
+Combining Equations (\ref{eq:anon}), (\ref{eq:anon-1}) and (\ref{eq:anon-2}),
+we get: 
 \[
-\left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|=\left|\left\langle B^{-1}x_{0},R^{i}x_{0}-x_{i}\right\rangle _{B}\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}
+\left|\hat{z}-z\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\sum_{i=1}^{l}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq4\nu\kappa^{2}\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert x_{0}\right\Vert _{B}
 \]
-so that we can bound the deviation using the bound from Lemma \ref{lem:nu-sequence-bound}.
+Finally, it is more convenient to consider the Euclidian norm for
+the norm of $x_{0}$. Call $\lambda_{\text{max }}$ and $\lambda_{\text{min }}$
+the extremal eigenvalues of the positive semidefinite matrix $B$.
+By definition of the matrix norm: $\left\Vert x_{0}\right\Vert _{B}=\sqrt{x_{0}^{T}Bx_{0}}\leq\sqrt{\lambda_{\text{max}}}\left\Vert x_{0}\right\Vert $
+and $\left\Vert B^{-1}x_{0}\right\Vert _{B}=\sqrt{x_{0}^{T}B^{-1}x_{0}}\leq\sqrt{\lambda_{\text{min}}^{-1}}\left\Vert x_{0}\right\Vert $
+so we get:
 \[
-\left|\hat{z}-z\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\sum_{i=1}^{l}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq4\nu\kappa^{3}\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert x_{0}\right\Vert _{B}\leq4\nu\kappa^{3}\kappa\left(B\right)\left\Vert x_{0}\right\Vert ^{2}
+\left|\hat{z}-z\right|\leq4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}\left\Vert x_{0}\right\Vert ^{2}
 \]
 where $\kappa\left(B\right)$ is the condition number of $B$. \end{proof}
 
@@ -343,22 +374,26 @@ z_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{i=1}^{l}\frac{1}{i}\left(x_{0,j}\right)^{
 
 
 By construction, $\left(x_{i,j}\right)_{i}$ is an $\nu-$approximate
-chain for the operator $R$. Applying Lemma \ref{lem:partial-sequence-approximate},
-we get:
+chain for the operator $R$. Applying Lemma \ref{lem:partial-sequence-approximate}
+to the operator $R$ under the norm $B$, we get:
 \begin{eqnarray*}
-\left|z_{p,l}-\hat{y}_{p,l}\right| & \leq & 4\nu\kappa^{3}\kappa\left(B\right)\left[\frac{1}{p}\sum_{j=1}^{p}\left\Vert x_{0,j}\right\Vert ^{2}\right]=4\nu\kappa^{3}\kappa\left(B\right)
+\left|z_{p,l}-\hat{y}_{p,l}\right| & \leq & 4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}\left[\frac{1}{p}\sum_{j=1}^{p}\left\Vert x_{0,j}\right\Vert ^{2}\right]=4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}
 \end{eqnarray*}
 
 
 since $\left\Vert x_{0,j}\right\Vert ^{2}=1$, which gives us a deterministic
-bound. Consider $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$.
+bound. Consider $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{2}\sqrt{\kappa\left(B\right)}},\frac{1}{2\kappa}\right)$.
 Then $\left|z_{p,l}-\hat{y}_{p,l}\right|\leq\epsilon/2$. Furthermore:
 \[
 \left|z_{p,l}-y\right|\leq\left|z_{p,l}-\hat{y}_{p,l}\right|+\left|y-\hat{y}_{p,l}\right|
 \]
 and $\mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon/2\right]\leq\eta$
-for a choice of $p\geq16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)$
+for a choice of $p\geq16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\delta^{-1}\right)$
 and $l\geq4\kappa\log\left(\frac{n}{\delta\epsilon}\right)$. Hence,
-we get our bound result of $O\left(pl\right)=O\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\eta^{-1}\right)\log^{2}\left(\delta^{-1}\right)\log\left(\frac{n}{\delta\epsilon}\right)\right)$.
+we get our bound result of 
+\[
+pl=64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\delta^{-1}\right)\log\left(\frac{n}{\delta\epsilon}\right)
+\]
+
 
 \end{proof}

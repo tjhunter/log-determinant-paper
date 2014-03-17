@@ -116,7 +116,7 @@ A\preceq B\preceq\kappa A\label{eq:A-B-bounds}
 Given $\epsilon>0$ and $\eta\in\left(0,1\right)$, the algorithm
 \texttt{PreconditionedLogDetMonteCarlo} computes $\frac{1}{n}\log\left|B^{-1}A\right|$
 up to precision $\epsilon$ with probability greater than $1-\eta$,
-by performing $\mathcal{O}\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}\left(\kappa\right)\log\left(\frac{n\kappa}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$
+by performing $16\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
 vector inversions from $B$ and vector multiplies from $A$.
 
 \end{corollary}
@@ -142,14 +142,14 @@ a scalar $z$ so that:
 \[
 \mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\epsilon\right]\leq\eta
 \]
-by performing $64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}\left(\kappa\right)\log\left(\frac{n\kappa}{\epsilon}\right)\log\left(\eta^{-1}\right)$
+by performing $64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
 vector calls to the operator $C$ and vector multiplies from $A$.
 
 \end{theorem}
 
 The proof of this result is detailed in Appendix A. While the overall
 bound looks the same, the constant (taken away by the $O\left(\cdot\right)$
-notation) is twice as large as in Corollary \ref{cor:preconditioning}.
+notation) is four times as large as in Corollary \ref{cor:preconditioning}.
 
 This last theorem shows that we can compute a good approximation of
 the log-determinant if the preconditioner $B$: (a) is close to $A$
