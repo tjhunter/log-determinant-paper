@@ -16,7 +16,7 @@ We generalize the definition of the determinant to handle this technicality.
 be a non-null positive semi-definite matrix. The pseudo-log-determinant
 is defined by the sum of the logarithms of all the positive eigenvalues:
 \[
-\text{ld}\left(A\right)=\sum_{\lambda_{i}>0}\log\left(\lambda_{i}\right)
+\ld\left(A\right)=\sum_{\lambda_{i}>0}\log\left(\lambda_{i}\right)
 \]
 where $\lambda_{i}$ are the eigenvalues of $A$. \end{definition}
 
@@ -113,7 +113,7 @@ Laplacian matrix of a connected graph, then:
 \item The eigenvalues of $F_{Z}$ are the positive eigenvalues of $Z$,
 and the corresponding eigenvectors for $F_{Z}$ are the same eigenvectors,
 truncated by the last coefficient. 
-\item $\text{ld}\left(Z\right)=\log\left|F_{Z}\right|$ 
+\item $\ld\left(Z\right)=\log\left|F_{Z}\right|$ 
 \item Given $Z_{1},Z_{2}$ Laplacian matrices, we have $Z_{1}\preceq Z_{2}\Rightarrow F_{Z_{1}}\preceq F_{Z_{2}}$ 
 \end{enumerate}
 \end{lemma}
@@ -127,10 +127,10 @@ The following proposition establishes this equivalence.
 \begin{lemma} \label{pro:pld-properties}Let $A\in SDD_{n}$, and
 $L_{A}$ its augmented Laplacian. 
 \begin{itemize}
-\item $\text{ld}\left(L_{A}\right)=\log\left|A\right|$ 
-\item Let $A,B\in SDD_{n}$. $\text{ld}\left(L_{A}L_{B}\right)=\text{ld}\left(L_{A}\right)+\text{ld}\left(L_{B}\right)$
-and $\text{ld}\left(L_{B}^{+}L_{A}\right)=\log\left|B^{-1}A\right|$
-with $L_{A}^{+}$the pseudo inverse of $L_{A}$. 
+\item $\ld\left(L_{A}\right)=\log\left|A\right|$ 
+\item Let $A,B\in SDD_{n}$. $\ld\left(L_{A}L_{B}\right)=\ld\left(L_{A}\right)+\ld\left(L_{B}\right)$
+and $\ld\left(L_{B}^{+}L_{A}\right)=\log\left|B^{-1}A\right|$ with
+$L_{A}^{+}$the pseudo inverse of $L_{A}$. 
 \end{itemize}
 \end{lemma}
 
@@ -161,19 +161,18 @@ and that is a good approximation of $G$ in the spectral sense. We
 can float the subgraph $H$ and apply results of section \ref{sec:Preconditioned-log-determinants}
 to approximate the remainder with high probability. More precisely:
 \begin{align*}
-\log\left|G\right| & =\text{ld}\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|L_{G}\right|\\
- & =\text{ld}\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}L_{G}\right|
+\log\left|G\right| & =\ld\left(L_{H}\right)-\log\left|F_{L_{H}}\right|+\log\left|L_{G}\right|\\
+ & =\ld\left(L_{H}\right)+\log\left|F_{L_{H}}^{-1}L_{G}\right|
 \end{align*}
 
 
-The first term $\text{ld}\left(L_{H}\right)$ is usually easier to
-compute by considering the graphical properties of $L_{H}$, while
-the remainder $\log\left|F_{L_{H}}^{-1}G\right|$ is approximated
-by sampling. Preconditioner graphs $L_{H}$ are typically efficient
-to factorize using Cholesky factorization, and close enough to $G$
-so that the sampling procedure from the previous section can be applied
-to compute $\log\left|F_{L_{H}}^{-1}G\right|$. We will see how to
-adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
+The first term $\ld\left(L_{H}\right)$ is usually easier to compute
+by considering the graphical properties of $L_{H}$, while the remainder
+$\log\left|F_{L_{H}}^{-1}G\right|$ is approximated by sampling. Preconditioner
+graphs $L_{H}$ are typically efficient to factorize using Cholesky
+factorization, and close enough to $G$ so that the sampling procedure
+from the previous section can be applied to compute $\log\left|F_{L_{H}}^{-1}G\right|$.
+We will see how to adapt Spielman and Teng's remarkable work on \emph{ultra-sparsifiers}
 to produce good preconditioners $H$ for the determinant.
 
 %\[
