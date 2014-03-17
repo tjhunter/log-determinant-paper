@@ -112,16 +112,21 @@ compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization.
 \end{algorithm}
 
 
-\begin{definition} Definition 7.1 from \cite{Koutis2010}. $\kappa\left(n\right)$-good
-chain. $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
-a chain of graphs with $n_{i}$ and $m_{i}$ the number of vertices
-and edges of $A_{i}$. $\mathcal{C}$ is $\kappa\left(n\right)$-good
-for $A$ if: 
+\begin{definition} Definition 4.2 from \cite{Koutis2011}. Good preconditioning
+chain. Let $d\in\mathbb{N}^{*}$, $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},B_{2},A_{3}\dots B_{d-1},A_{d}\right\} $
+be a chain of graphs and $\mathcal{K}=\left(\kappa_{1}\cdots\kappa_{d-1}\right)\in\mathbb{R}_{+}^{d-1}$.
+We say that $\left\{ \mathcal{C},\mathcal{K}\right\} $ is a good
+preconditioning chain for $A$ if there exists $\mathcal{U}=\left(\mu_{1}\cdots\mu_{d}\right)\in\mathbb{N}_{+}^{d}$
+so that:
 \begin{enumerate}
-\item $A_{i}\preceq B_{i}\preceq\kappa\left(n_{i}\right)A_{i}$ 
-\item $A_{i+1}$= \texttt{GreedyElimination}$\left(B_{i}\right)$ 
-\item $m_{i}/m_{i+1}\geq c_{r}\sqrt{\kappa\left(n_{i}\right)}$ for some
-constant $c_{r}$. 
+\item $A_{i}\preceq B_{i}\preceq\kappa_{i}A_{i}$ .
+\item $A_{i+1}$= \texttt{GreedyElimination}$\left(B_{i}\right)$ .
+\item The number of edges of $A_{i}$ is less than $\mu_{i}$.
+\item $\mu_{1}=\mu_{2}=m$ where $m$ is the number of edges of $A$.
+\item $\mu_{i}/\mu_{i+1}\geq c_{r}\left\lceil \sqrt{\kappa_{i}}\right\rceil $
+for some constant $c_{r}$. 
+\item $\kappa_{i+1}\leq\kappa_{i}$.
+\item $\mu_{d}$ is smaller than some fixed arbitrary constant.
 \end{enumerate}
 \end{definition}
 
