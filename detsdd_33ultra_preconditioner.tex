@@ -134,8 +134,6 @@ for some constant $c_{r}$.
 
 Good chains exist, as found by Koutis, Miller and Peng:
 
-% TODO: the newer version from Koutis2011 has a  good chain, but then it produces  I think. See the proof of their lemma 4.5
-
 \begin{lemma} \label{lem:good-chain} (Lemma 4.5 from \cite{Koutis2011})
 Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2011}
 produces a $\tilde{O}\left(\log^{2}n\right)$-good chain for $A$
@@ -233,13 +231,14 @@ b^{T} & S
 \end{array}\right)$ (see Corollary 2.3 in \cite{Zhang2005}) and thus its condition number
 is upper bounded.
 \end{itemize}
-As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{j}\kappa_{i}\kappa\left(A_{1}\right)\leq\tilde{O}\left(\kappa_{C}^{i-1}\log^{2}n\kappa\left(A_{1}\right)\right)$.
+As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{j}\kappa_{i}\kappa\left(A_{1}\right)\leq\tilde{O}\left(\kappa_{C}^{i-1}\log^{2}n\kappa\left(A_{1}\right)\right)$
+with $\kappa_{C}$ the constant introduced in Lemma 4.5 in \cite{Koutis2011}.
 This coarse analysis gives us the bound:
 \[
-\kappa\left(B_{i}\right)\leq\tilde{O}\left(\kappa_{D}^{\log n}\log^{2}n\kappa\left(A_{1}\right)\right)=\tilde{O}\left(n^{\log\kappa_{D}}\log^{2}n\kappa\left(A_{1}\right)\right)
+\kappa\left(B_{i}\right)\leq\tilde{O}\left(\kappa_{r}^{\log n}\log^{2}n\kappa\left(A_{1}\right)\right)=\tilde{O}\left(n^{\log\kappa_{r}}\log^{2}n\kappa\left(A_{1}\right)\right)
 \]
- for some absolute constant $\kappa_{D}$. Consider the relative precision
-$\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{D}}\log^{-8}n\frac{\epsilon}{\kappa\left(A_{1}\right)}\right)$
+ for some absolute constant $\kappa_{r}$. Consider the relative precision
+$\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{r}}\log^{-8}n\frac{\epsilon}{\kappa\left(A_{1}\right)}\right)$
 so that $\tilde{\nu}\leq\nu_{i}$for all $i$. Constructing the operator
 $C_{i}$ is a byproduct of forming the chain \emph{$\mathcal{C}$.
 }By Theorem \ref{thm:det-sampling-theorem}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
