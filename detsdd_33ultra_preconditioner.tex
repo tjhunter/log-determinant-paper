@@ -136,12 +136,12 @@ Good chains exist, as found by Koutis, Miller and Peng:
 
 % TODO: the newer version from Koutis2011 has a  good chain, but then it produces  I think. See the proof of their lemma 4.5
 
-\begin{lemma} \label{lem:good-chain} (Lemma 7.3 from \cite{Koutis2010})
-Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2010}
-produces a $\tilde{O}\left(\log^{4}n\right)$-good chain for $A$
-with probability $1-p$. The algorithm runs in time 
+\begin{lemma} \label{lem:good-chain} (Lemma 4.5 from \cite{Koutis2011})
+Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2011}
+produces a $\tilde{O}\left(\log^{2}n\right)$-good chain for $A$
+with probability $1-p$. The algorithm runs in expected time: 
 \[
-\tilde{O}\left(\left(m\log n+n\log^{2}n\right)\log\left(1/p\right)\right)
+\tilde{O}\left(m\log n+n\log n\log\log n\right)
 \]
 
 
@@ -158,10 +158,8 @@ can be considered to be solved in (expected) linear time.
 $b\in\mathbb{R}^{n}$ and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
 can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$.\end{lemma}
 
-% TODO: use the imbricated preconditioners, no need to recompute everything every time :-)
-
 It should now become clear how we can combine a $\kappa\left(n\right)$-good
-chain with the Algorithm \texttt{Precondit- ionedLogDetMonteCarlo}.
+chain with the Algorithm \texttt{PreconditionedLogDetMonteCarlo}.
 We start by building a chain. The partial Cholesky factorizations
 at each step of the chain provide an upper bound to $\mbox{ld}\left(A\right)$.
 We then refine this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
@@ -170,21 +168,88 @@ with high probability. The complete algorithm is presented in Algorithm
 \ref{alg:The-main-algorithm}. We now have all the tools required
 to prove Theorem \ref{thm:ultra_main}.
 
-\textbf{Proof of Theorem \ref{thm:ultra_main}.} Using Lemma \ref{lem:good-chain},
-consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
-a $\tilde{O}\left(\log^{4}n\right)$-good chain for $L_{A}$, with
-$d=\mathcal{O}\left(\log\log n\right)=\tilde{O}\left(1\right)$. We
-use Equation \ref{eq:chain-recursion} to compute the Cholesky terms
-for each stage of the chain, and we are left with estimating $\tilde{\mathcal{O}}\left(1\right)$
-remainders $\text{ld}\left(B_{i}^{+}A_{i}\right)$. By construction,
-$A_{i}\preceq B_{i}\preceq\kappa\left(n_{i}\right)A_{i}$ and by Lemma
-\ref{lem:linear-precond-existence}, there exists an operator $C$
-so that $\left\Vert C\left(b\right)-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
-for all $b$ with a choice of relative precision $\nu=\frac{\epsilon}{16\kappa^{3}\kappa\left(B\right)}$.
-By Theorem \ref{thm:det-sampling-theorem}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
+\textbf{Proof of Theorem \ref{thm:ultra_main}.} First, recall that
+we can consider either an SDD or its grounded Laplacian thanks to
+the relation $\log A=\ld L_{A}$. Call $A_{1}=L_{A}$ the first element
+of the chain. In this proof, all the matrices will be Laplacian from
+now on. Using Lemma \ref{lem:good-chain}, consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
+a $\tilde{O}\left(\log^{2}n\right)$-good chain for $L_{A}$, with
+$d=\mathcal{O}\left(\log n\right)$. More precisely, since $A_{i+1}$=
+\texttt{GreedyElimination}$\left(B_{i}\right)$, the Laplacian $B_{i}$
+can be factored as:
+\[
+B_{i}=P_{i}L_{i}\left(\begin{array}{cc}
+D^{\left(i\right)}\\
+ & A_{i+1}
+\end{array}\right)L_{i}^{T}B_{i}^{T}
+\]
+with $P_{i}$ a permutation matrix, $L_{i}$ a lower triangular matrix
+with $1$ one the diagonal and $D^{\left(i\right)}$a positive definite
+diagonal matrix. The matrix $D^{\left(i\right)}$ is an immediate
+by-product of running the algorithm \texttt{GreedyElimination} and
+can be obtained when forming the chain $\mathcal{C}$ at no additional
+cost.
+
+From the discussion at the start of the section, it is clear that
+$\ld B_{i}=\sum_{k}\log D_{k}^{\left(i\right)}+\ld A_{i+1}$. From
+the discussion in Section \ref{sec:Preconditioned-log-determinants},
+the log-determinant of $A$ is:
+\begin{eqnarray*}
+\log A & = & \ld A_{1}\\
+ & = & \ld B_{1}+\ld\left(B_{1}^{+}A_{1}\right)\\
+ & = & \sum_{k}\log D_{k}^{\left(1\right)}+\ld A_{i+1}+\ld\left(B_{1}^{+}A_{1}\right)\\
+ & = & \ld A_{d}+\sum_{i=1}^{d}\left(\sum_{k}\log D_{k}^{\left(i\right)}\right)+\sum_{i=1}^{d}\ld\left(B_{i}^{+}A_{i}\right)
+\end{eqnarray*}
+The term $\ld A_{d}$ can be estimated by dense Cholesky factorization
+at cost $\mathcal{O}\left(1\right)$, and the diagonal Cholesky terms
+$\sum_{k}\log D_{k}^{\left(i\right)}$ are already computed from the
+chain. We are left with estimating the $d$ remainders $\text{ld}\left(B_{i}^{+}A_{i}\right)$.
+By construction, $A_{i}\preceq B_{i}\preceq\kappa_{i}A_{i}$ and by
+Lemma \ref{lem:linear-precond-existence}, there exists an operator
+$C_{i}$ so that $\left\Vert C_{i}\left(b\right)-B_{i}^{+}b\right\Vert _{B_{i}}<\nu\left\Vert B_{i}^{+}b\right\Vert _{B_{i}}$
+for all $b$ with a choice of relative precision $\nu=\frac{\epsilon}{16\kappa_{i}^{3}\kappa\left(B_{i}\right)}$. 
+
+This relative precision depends on the condition number $\kappa\left(B_{i}\right)$
+of $B_{i}$. We can coarsely relate this condition number to the condition
+number of $A_{1}$by noting the following:
+\begin{itemize}
+\item Since $A_{i}\preceq B_{i}\preceq\kappa_{i}A_{i}$ by construction,
+$\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)$
+\item For diagonally dominant matrices or Laplacian matrices, the condition
+number of the partial Cholesky factor is bounded by the condition
+number of the original matrix. This can be seen by analyzing one update
+in the Cholesky factorization. Given a partially factorized matrix
+$\tilde{A}=\left(\begin{array}{ccc}
+I_{p}\\
+ & a & b\\
+ & b^{T} & S
+\end{array}\right)$, after factorization, the next matrix is $\left(\begin{array}{cc}
+I_{p+1}\\
+ & S-a^{-1}bb^{T}
+\end{array}\right)$. The spectrum of the Schur complement $S-a^{-1}bb^{T}$is bounded
+by the spectrum of $\left(\begin{array}{cc}
+a & b\\
+b^{T} & S
+\end{array}\right)$ (see Corollary 2.3 in \cite{Zhang2005}) and thus its condition number
+is upper bounded.
+\end{itemize}
+As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{j}\kappa_{i}\kappa\left(A_{1}\right)\leq\tilde{O}\left(\kappa_{C}^{i-1}\log^{2}n\kappa\left(A_{1}\right)\right)$.
+This coarse analysis gives us the bound:
+\[
+\kappa\left(B_{i}\right)\leq\tilde{O}\left(\kappa_{D}^{\log n}\log^{2}n\kappa\left(A_{1}\right)\right)=\tilde{O}\left(n^{\log\kappa_{D}}\log^{2}n\kappa\left(A_{1}\right)\right)
+\]
+ for some absolute constant $\kappa_{D}$. Consider the relative precision
+$\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{D}}\log^{-8}n\frac{\epsilon}{\kappa\left(A_{1}\right)}\right)$
+so that $\tilde{\nu}\leq\nu_{i}$for all $i$. Constructing the operator
+$C_{i}$ is a byproduct of forming the chain \emph{$\mathcal{C}$.
+}By Theorem \ref{thm:det-sampling-theorem}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
 can be approximated to precision $\epsilon$ with probability at least
 $1-\eta$ using Algorithm \ref{alg:SampleLogDet}. Furthermore, this
-algorithm works in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa}{\nu}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)=\tilde{O}\left(m\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$.
-By a union bound, the result also holds on the sum of all the approximations
-of the remainders. We can simplify this bound a little by assuming
-that $\epsilon\geq n^{-1}$, which then becomes $\tilde{O}\left(m\epsilon^{-1}\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$. 
+algorithm works in expected time 
+\begin{eqnarray*}
+ &  & \tilde{O}\left(m\log n\log\left(1/\tilde{\nu}\right)\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa}{\tilde{\nu}}\right)\log^{2}\left(\kappa\right)\log\left(\eta^{-1}\right)\right)\\
+ &  & =\tilde{O}\left(m\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{3}n\log^{2}\left(\frac{\kappa\left(A\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)
+\end{eqnarray*}
+By a union bound, the result also holds on the sum of all the $\log n$
+approximations of the remainders. We can simplify this bound a little
+by assuming that $\epsilon\geq n^{-1}$, which then becomes $\tilde{O}\left(m\epsilon^{-1}\log^{2}n\log^{2}\left(\frac{\kappa\left(B\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$. 

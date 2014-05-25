@@ -25,9 +25,10 @@ with $\kappa=\tilde{\mathcal{O}}\left(m\log n\right)$. %$\kappa=Cm\log n\log\log
 
 \begin{proof} 
 
-% TODO: this proof uses stretch, and still referes to the old bound.This
-follows directly from \cite{Spielman2009a}. $T$ is a subgraph of
-$G$ (with the same weights on the edges), so $L_{T}\preceq L_{G}$
+% TODO: this proof uses stretch, and still referes to the old bound.
+
+This follows directly from \cite{Spielman2009a}. $T$ is a subgraph
+of $G$ (with the same weights on the edges), so $L_{T}\preceq L_{G}$
 (see \cite{Spielman2009a} for example for a proof of this fact).
 Furthermore, we have $L_{G}\preceq\text{st}_{T}\left(G\right)L_{T}$.
 This latter inequality is a result of Spielman et al. in \cite{Spielman2010}
@@ -65,10 +66,14 @@ $\epsilon$ and with high probability in time $\tilde{O}\left(m^{2}\log n\log^{2}
 tree $L_{T}$ so that $L_{T}\preceq L_{G}\preceq\kappa L_{T}$ with
 $\kappa=\tilde{\mathcal{O}}\left(m\log n\right)$. Using Corollary
 \eqref{cor:preconditioning}, approximating the PLD with high precision
-requires $\tilde{O}\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)\right)=\tilde{O}\left(m\log n\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(m\right)\right)$
-inversions by the tree $T$ (done in $O\left(n\right)$) and vector
+requires 
+\begin{eqnarray*}
+\tilde{O}\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)\right)\\
+=\tilde{O}\left(m\log n\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(m\right)\right)
+\end{eqnarray*}
+ inversions by the tree $T$ (done in $O\left(n\right)$) and vector
 products by the floated Laplacian $F_{L_{G}}$(done in $O\left(m\right)$).
-The overall cost is $\tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)$
+The overall cost is $\tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)$.
 \end{proof}
 
 This result may be of independent interest since it requires relatively
