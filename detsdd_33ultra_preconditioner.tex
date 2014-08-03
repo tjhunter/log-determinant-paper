@@ -136,8 +136,7 @@ Good chains exist, as found by Koutis, Miller and Peng:
 
 \begin{lemma} \label{lem:good-chain} (Lemma 4.5 from \cite{Koutis2011})
 Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2011}
-produces a $\tilde{O}\left(\log^{2}n\right)$-good chain for $A$
-with probability $1-p$. The algorithm runs in expected time: 
+produces with probability $1-p$ a good preconditioning chain $\left\{ \mathcal{C},\mathcal{K}\right\}$ such that $\kappa_1 = \tilde{O}\left(\log^{2}n\right)$ and $\kappa_i = \kappa_{c}$ for all $i \geq 2$ for some constant $\kappa_{c}$. The length of the chain is $d = \mathcal{O}\left(\log n\right)$ and the algorithm runs in expected time: 
 \[
 \tilde{O}\left(m\log n+n\log n\log\log n\right)
 \]
@@ -231,15 +230,12 @@ b^{T} & S
 \end{array}\right)$ (see Corollary 2.3 in \cite{Zhang2005}) and thus its condition number
 is upper bounded by that of $\tilde{A}$.
 \end{itemize}
-As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{i}\kappa_{j}\kappa\left(A_{1}\right)\leq\tilde{O}\left(\kappa_{C}^{i-1}\log^{2}n\kappa\left(A_{1}\right)\right)$
-with $\kappa_{C}$ the constant introduced in Lemma 4.5 in \cite{Koutis2011}.
-This coarse analysis gives us the bound:
+As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{i}\kappa_{j}\kappa\left(A_{1}\right) =\tilde{O} \left(\kappa_1\kappa_{c}^{i-1}\kappa\left(A\right)\right)$ with $\kappa_c$ the constant introduced in Lemma \ref{lem:good-chain}. This coarse analysis gives us the bound:
 \[
-\kappa\left(B_{i}\right)\leq\tilde{O}\left(\kappa_{r}^{\log n}\log^{2}n\kappa\left(A_{1}\right)\right)=\tilde{O}\left(n^{\log\kappa_{r}}\log^{2}n\kappa\left(A_{1}\right)\right)
-\]
- for some absolute constant $\kappa_{r}$. Consider the relative precision
-$\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{r}}\log^{-8}n\frac{\epsilon}{\kappa\left(A_{1}\right)}\right)$
-so that $\tilde{\nu}\leq\nu_{i}$for all $i$. Constructing the operator
+\kappa\left(B_{i}\right)\leq\tilde{O}\left(\kappa_{c}^{\log n}\log^{2}n ~ \kappa\left(A\right)\right)=\tilde{O}\left(n^{\log\kappa_{c}}\log^{2}n \ \kappa\left(A\right)\right).
+\] Consider the relative precision
+$\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{c}}\log^{-8}n\frac{\epsilon}{\kappa\left(A\right)}\right)$
+so that $\tilde{\nu}\leq\nu_{i}$ for all $i$. Constructing the operator
 $C_{i}$ is a byproduct of forming the chain \emph{$\mathcal{C}$.
 }By Theorem \ref{thm:det-sampling-theorem}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
 can be approximated to precision $\epsilon$ with probability at least
