@@ -231,7 +231,7 @@ The bound presented in Equation \ref{eq:encadrement-1} has some interesting
 consequences if one is interested only in a rough estimate of the
 log-determinant: if $\epsilon=O\left(1\right)$, it is possible to
 approximate the log-determinant in expected time $\tilde{O}\left(m+n\log^{3}n\right)$.
-We will make use of this sparsification result from Spielman and Srivastava:
+We will make use of this sparsification result from Spielman and Srivastava \cite{Spielman2009}:
 
 \begin{lemma}\label{lem:sriva-sparsification}(Theorem 12 in \cite{Spielman2009}).
 Given a Laplacian $L_{G}$ with $m$ edges, there is an expected $\tilde{O}\left(m/\epsilon^{2}\right)$
@@ -274,8 +274,8 @@ Here is the main result of this section:
 
 \begin{proposition}There exists an algorithm that on input $A\in SDD_{n}$,
 returns an approximation $n^{-1}\log\left|A\right|$ with precision
-$1/2$ in expected time $\tilde{O}\left(m+n\log^{3}n\log^{2}\kappa_{A}\right)$
-with $\kappa_{A}$ the condition number of $A$.
+$1/2$ in expected time $\tilde{O}\left(m+n\log^{3}n\log^{2}\kappa (A)\right)$
+with $\kappa (A)$ the condition number of $A$.
 
 \end{proposition}
 
@@ -288,8 +288,8 @@ bound:
 \]
 since $H$ has $O\left(n\log n\right)$ edges by construction, we
 can use Theorem \ref{thm:ultra_main} to compute a $1/4$- approximation
-of $\text{ld}\left(H\right)$ in expected time $\tilde{O}\left(n\log^{3}n\log^{2}\left(\kappa_{H}\right)\right)$.
-By construction $\kappa_{H}\leq\frac{1+1/16}{1-1/16}\kappa_{A}$,
+of $\text{ld}\left(H\right)$ in expected time $\tilde{O}\left(n\log^{3}n\log^{2}\left(\kappa (H)\right)\right)$.
+By construction $\kappa (H)\leq\frac{1+1/16}{1-1/16}\kappa (A)$,
 hence the result.
 
 \end{proof}

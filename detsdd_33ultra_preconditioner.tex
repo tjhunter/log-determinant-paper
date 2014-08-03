@@ -135,11 +135,8 @@ for some constant $c_{r}$.
 Good chains exist, as found by Koutis, Miller and Peng:
 
 \begin{lemma} \label{lem:good-chain} (Lemma 4.5 from \cite{Koutis2011})
-Given a graph $A$, \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2011}
-produces with probability $1-p$ a good preconditioning chain $\left\{ \mathcal{C},\mathcal{K}\right\}$ such that $\kappa_1 = \tilde{O}\left(\log^{2}n\right)$ and $\kappa_i = \kappa_{c}$ for all $i \geq 2$ for some constant $\kappa_{c}$. The length of the chain is $d = \mathcal{O}\left(\log n\right)$ and the algorithm runs in expected time: 
-\[
-\tilde{O}\left(m\log n+n\log n\log\log n\right)
-\]
+Given a graph $A$, the algorithm \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2011}
+produces with probability $1-p$ a good preconditioning chain $\left\{ \mathcal{C},\mathcal{K}\right\}$ such that $\kappa_1 = \tilde{O}\left(\log^{2}n\right)$ and $\kappa_i = \kappa_{c}$ for all $i \geq 2$ for some constant $\kappa_{c}$. The length of the chain is $d = \mathcal{O}\left(\log n\right)$ and the algorithm runs in expected time $\tilde{O}\left(m\log n\right).$%+n\log n\log\log n\right)$
 
 
 \end{lemma}
@@ -155,7 +152,7 @@ can be considered to be solved in (expected) linear time.
 $b\in\mathbb{R}^{n}$ and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
 can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$.\end{lemma}
 
-It should now become clear how we can combine a $\kappa\left(n\right)$-good
+It should now become clear how we can combine a good
 chain with the Algorithm \texttt{PreconditionedLogDetMonteCarlo}.
 We start by building a chain. The partial Cholesky factorizations
 at each step of the chain provide an upper bound to $\mbox{ld}\left(A\right)$.
@@ -169,15 +166,14 @@ to prove Theorem \ref{thm:ultra_main}.
 we can consider either an SDD or its grounded Laplacian thanks to
 the relation $\log A=\ld L_{A}$. Call $A_{1}=L_{A}$ the first element
 of the chain. In this proof, all the matrices will be Laplacian from
-now on. Using Lemma \ref{lem:good-chain}, consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
-a $\tilde{O}\left(\log^{2}n\right)$-good chain for $L_{A}$, with
+now on. Using Lemma \ref{lem:good-chain}, consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $ a good chain for $A$, with
 $d=\mathcal{O}\left(\log n\right)$. More precisely, since $A_{i+1}$=
 \texttt{GreedyElimination}$\left(B_{i}\right)$, the Laplacian $B_{i}$
 can be factored as:
 \[
 B_{i}=P_{i}L_{i}\left(\begin{array}{cc}
-D^{\left(i\right)}\\
- & A_{i+1}
+D^{\left(i\right)}& 0\\
+0 & A_{i+1}
 \end{array}\right)L_{i}^{T}P_{i}^{T}
 \]
 with $P_{i}$ a permutation matrix, $L_{i}$ a lower triangular matrix
@@ -217,12 +213,12 @@ number of the partial Cholesky factor is bounded by the condition
 number of the original matrix. This can be seen by analyzing one update
 in the Cholesky factorization. Given a partially factorized matrix
 $\tilde{A}=\left(\begin{array}{ccc}
-I_{p}\\
- & a & b\\
- & b^{T} & S
+I_{p} & 0 &0\\
+0 & a & b\\
+0 & b^{T} & S
 \end{array}\right)$, after factorization, the next matrix is $\left(\begin{array}{cc}
-I_{p+1}\\
- & S-a^{-1}bb^{T}
+I_{p+1} & 0\\
+0 & S-a^{-1}bb^{T}
 \end{array}\right)$. The spectrum of the Schur complement $S-a^{-1}bb^{T}$is bounded
 by the spectrum of $\left(\begin{array}{cc}
 a & b\\
@@ -243,8 +239,8 @@ $1-\eta$ using Algorithm \ref{alg:SampleLogDet}. Furthermore, this
 algorithm works in expected time 
 \begin{eqnarray*}
  &  & \tilde{O}\left(m\log n\log\left(1/\tilde{\nu}\right)\kappa_1\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa_1}{\tilde{\nu}}\right)\log^{2}\left(\kappa_1\right)\log\left(\eta^{-1}\right)\right)\\
- &  & =\tilde{O}\left(m\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{3}n\log^{2}\left(\frac{\kappa\left(A\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)
+ &  & =\tilde{O}\left(m\log^{3}n\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}\left(\frac{n\kappa\left(A\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)
 \end{eqnarray*}
 By a union bound, the result also holds on the sum of all the $\log n$
 approximations of the remainders. We can simplify this bound a little
-by assuming that $\epsilon\geq n^{-1}$, which then becomes $\tilde{O}\left(m\epsilon^{-1}\log^{2}n\log^{2}\left(\frac{\kappa\left(A\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$. 
+by assuming that $\epsilon\geq n^{-1}$, which then becomes $\tilde{O}\left(m\epsilon^{-1}\log^{3}n\log^{2}\left(\frac{n\kappa\left(A\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)$. 
