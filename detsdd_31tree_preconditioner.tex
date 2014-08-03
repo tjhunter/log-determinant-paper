@@ -76,11 +76,13 @@ products by the floated Laplacian $F_{L_{G}}$(done in $O\left(m\right)$).
 The overall cost is $\tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)$.
 \end{proof}
 
-This result may be of independent interest since it requires relatively
-little machinery to compute, and it is a theoretical improvement already
-for graphs with small vertex degree ($m=\mathcal{O}\left(n^{1+o\left(1\right)}\right)$)
-over the Cholesky factorization of $G$. Also, note that the PLD of
-the tree constructed above provides an upper bound to the log-determinant
-of $G$ since $L_{G}\preceq\kappa L_{T}$. We will see in Subsection
-\ref{sub:Stretch-bounds} that we can compute a non-trivial lower
-bound as well. 
+The previous result shows that the log-determinant can be compute
+in roughly $\mathcal{O}\left(m^{2}\right)$ ($m$ being the number
+of non-zero entries). This result may be of independent interest since
+it requires relatively little machinery to compute, and it is a theoretical
+improvement already for graphs with small vertex degree ($m=\mathcal{O}\left(n^{1+o\left(1\right)}\right)$)
+over the Cholesky factorization of $G$ (which has complexity $\mathcal{O}\left(n^{3}\right)$
+in all generality). Also, note that the PLD of the tree constructed
+above provides an upper bound to the log-determinant of $G$ since
+$L_{G}\preceq\kappa L_{T}$. We will see in Subsection \ref{sub:Stretch-bounds}
+that we can compute a non-trivial lower bound as well. 
