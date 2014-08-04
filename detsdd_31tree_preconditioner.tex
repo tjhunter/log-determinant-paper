@@ -1,6 +1,7 @@
 %%stopskip  : marker for tim's thesis, please do not remove it :-)
 
 
+
 \subsection{A first preconditioner\label{sec:A-first-preconditioner}}
 
 While the results in this section are not the main claims of this
@@ -13,19 +14,18 @@ the graph $G$. Every graph has a low-stretch spanning tree, as discovered
 by Alon et al. \cite{Alon1995}. The bound of Alon et al. was then
 improved by Abraham et al. \cite{Abraham2008}. We restate their main
 result.
-
-\begin{lemma}(Lemma 9.2 from \cite{Spielman2009a}). Consider a weighted
-graph $G$. There exists a spanning tree $T$ that is a subgraph of
-$G$ so that: 
+\begin{lemma}
+(Lemma 9.2 from \cite{Spielman2009a}). Consider a weighted graph
+$G$. There exists a spanning tree $T$ that is a subgraph of $G$
+so that: 
 \[
 L_{T}\preceq L_{G}\preceq\kappa L_{T}
 \]
 with $\kappa=\tilde{\mathcal{O}}\left(m\log n\right)$. %$\kappa=Cm\log n\log\log n\left(\log\log\log n\right)^{3}$ for some constant $C>0$.
 \label{lem:tree-st} \end{lemma}
-
-\begin{proof} 
-
+\begin{proof}
 % TODO: this proof uses stretch, and still referes to the old bound.
+
 
 This follows directly from \cite{Spielman2009a}. $T$ is a subgraph
 of $G$ (with the same weights on the edges), so $L_{T}\preceq L_{G}$
@@ -34,8 +34,8 @@ Furthermore, we have $L_{G}\preceq\text{st}_{T}\left(G\right)L_{T}$.
 This latter inequality is a result of Spielman et al. in \cite{Spielman2010}
 that we generalize in Lemma \ref{lem:stretch-inequality}. Finally,
 a result by \cite{Abraham2008} shows that $T$ can be chosen such
-that $\text{st}_{T}\left(G\right)\leq\mathcal{O}(m\log n(\log\log n)^{3})$.\end{proof}
-
+that $\text{st}_{T}\left(G\right)\leq\mathcal{O}(m\log n(\log\log n)^{3})$.
+\end{proof}
 Trees enjoy a lot of convenient properties for Gaussian elimination.
 The Cholesky factorization of a tree can be computed in linear time,
 and furthermore this factorization has a linear number of non-zero
@@ -53,33 +53,31 @@ of the original graph is an immediate by-product:
 \[
 \log\left|L_{T}\right|=\sum_{i=1}^{n-1}\log D_{ii}
 \]
-Furthermore, computing $L_{T}^{+}x$ also takes $O\left(n\right)$
+Furthermore, computing $L_{T}^{+}x$ also takes $\mathcal{O}\left(n\right)$
 computations by forward-backward substitution (see \cite{duff1986direct}).
 Combining Corollary \ref{cor:preconditioning} and Lemma \eqref{lem:tree-st}
 gives immediately the following result.
-
-\begin{theorem} \label{thm:PLD-tree}Let $G$ be a graph with $n$
-vertices and $m$ edges. Its PLD can be computed up to a precision
-$\epsilon$ and with high probability in time:
+\begin{theorem}
+\label{thm:PLD-tree}Let $G$ be a graph with $n$ vertices and $m$
+edges. Its PLD can be computed up to a precision $\epsilon$ and with
+high probability in time: 
 \[
 \tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)
 \]
 \end{theorem}
-
-\begin{proof} Using Lemma \eqref{lem:tree-st}, we compute a low-stretch
-tree $L_{T}$ so that $L_{T}\preceq L_{G}\preceq\kappa L_{T}$ with
-$\kappa=\tilde{\mathcal{O}}\left(m\log n\right)$. Using Corollary
-\eqref{cor:preconditioning}, approximating the PLD with high precision
-requires 
+\begin{proof}
+Using Lemma \eqref{lem:tree-st}, we compute a low-stretch tree $L_{T}$
+so that $L_{T}\preceq L_{G}\preceq\kappa L_{T}$ with $\kappa=\tilde{\mathcal{O}}\left(m\log n\right)$.
+Using Corollary \eqref{cor:preconditioning}, approximating the PLD
+with high precision requires 
 \begin{eqnarray*}
 \tilde{O}\left(\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)\right)\\
 =\tilde{O}\left(m\log n\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(m\right)\right)
 \end{eqnarray*}
- inversions by the tree $T$ (done in $O\left(n\right)$) and vector
-products by the floated Laplacian $F_{L_{G}}$(done in $O\left(m\right)$).
-The overall cost is $\tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)$.
+inversions by the tree $T$ (done in $\mathcal{O}\left(n\right)$)
+and vector products by the floated Laplacian $F_{L_{G}}$(done in
+$\mathcal{O}\left(m\right)$). The overall cost is $\tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)$. 
 \end{proof}
-
 The previous result shows that the log-determinant can be compute
 in roughly $\mathcal{O}\left(m^{2}\right)$ ($m$ being the number
 of non-zero entries). This result may be of independent interest since

@@ -1,6 +1,7 @@
 %%stopskip  : marker for tim's thesis, please do not remove it :-)
 
 
+
 \subsection{Incremental sparsifiers\label{sec:Incremental-sparsifiers}}
 
 We can do better and achieve near-linear time by using ultra-sparsifiers.
@@ -15,14 +16,14 @@ facts about Spielman-Teng preconditioners and have been presented
 in \cite{Koutis2010,Spielman2009a}.
 
 The central idea to the Spielman-Teng preconditioner is to sample
-$O\left(n\right)$ edges from the graph $A$, to form a subgraph $B$
-that is close to a tree (hence it is easy to compute some partial
-Cholesky factorization), yet it is close to the original $A$ is the
-spectral sense ($A\preceq B\preceq\kappa A$), thanks to the additional
-edges. The partial Cholesky factorization is computed using the \texttt{GreedyElimination}
-algorithm presented in \cite{Koutis2010}. In order for this section
-to be self-contained, we include here the main results of Section
-4 in \cite{Spielman2009a}.
+$\mathcal{O}\left(n\right)$ edges from the graph $A$, to form a
+subgraph $B$ that is close to a tree (hence it is easy to compute
+some partial Cholesky factorization), yet it is close to the original
+$A$ is the spectral sense ($A\preceq B\preceq\kappa A$), thanks
+to the additional edges. The partial Cholesky factorization is computed
+using the \texttt{GreedyElimination} algorithm presented in \cite{Koutis2010}.
+In order for this section to be self-contained, we include here the
+main results of Section 4 in \cite{Spielman2009a}.
 
 Consider the Laplacian matrix $L_{B}$ of the subgraph $B$. There
 exists an algorithm that computes the partial Cholesky factorization:
@@ -65,7 +66,7 @@ Thus, we are left with solving a smaller problem $A_{1}$, and we
 approximate the value of $\text{ld}\left(B^{+}A\right)$ using the
 algorithm \texttt{SampleLogDet}. ST preconditioners are appealing
 for this task: they guarantee that $A_{1}$ is substantially smaller
-than $A$, so the recursion completes in $O\left(\log\log n\right)$
+than $A$, so the recursion completes in $\mathcal{O}\left(\log\log n\right)$
 steps. Furthermore, computing the vector product $B^{+}Ax$ is itself
 efficient (in can be done approximated in near-linear time), so we
 can apply Theorem \ref{thm:preconditioning-approx}. We formalize
@@ -90,6 +91,7 @@ compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization.
 
 \end{raggedright}% TODO: change the bounds to reflect the theorem
 
+
 \begin{raggedright} $\eta\leftarrow\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$
 
 \end{raggedright}
@@ -113,50 +115,52 @@ compute $\text{ld}\left(A\right)$ with a dense Cholesky factorization.
 \caption{Sketch of the main algorithm\label{alg:The-main-algorithm}}
 \end{algorithm}
 
-
-\begin{definition} Definition 4.2 from \cite{Koutis2011}. Good preconditioning
-chain. Let $d\in\mathbb{N}^{*}$, $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},B_{2},A_{3}\dots B_{d-1},A_{d}\right\} $
+\begin{definition}
+Definition 4.2 from \cite{Koutis2011}. Good preconditioning chain.
+Let $d\in\mathbb{N}^{*}$, $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},B_{2},A_{3}\dots B_{d-1},A_{d}\right\} $
 be a chain of graphs and $\mathcal{K}=\left(\kappa_{1}\cdots\kappa_{d-1}\right)\in\mathbb{R}_{+}^{d-1}$.
 We say that $\left\{ \mathcal{C},\mathcal{K}\right\} $ is a good
 preconditioning chain for $A$ if there exists $\mathcal{U}=\left(\mu_{1}\cdots\mu_{d}\right)\in\mathbb{N}_{+}^{d}$
-so that:
+so that: 
 \begin{enumerate}
-\item $A_{i}\preceq B_{i}\preceq\kappa_{i}A_{i}$ .
+\item $A_{i}\preceq B_{i}\preceq\kappa_{i}A_{i}$ . 
 \item $A_{i+1}$= \texttt{GreedyElimination}$\left(B_{i}\right)$ . % TODO: We need to explain greedy elimination somewhere
-\item The number of edges of $A_{i}$ is less than $\mu_{i}$.
-\item $\mu_{1}=\mu_{2}=m$ where $m$ is the number of edges of $A$.
+
+\item The number of edges of $A_{i}$ is less than $\mu_{i}$. 
+\item $\mu_{1}=\mu_{2}=m$ where $m$ is the number of edges of $A$. 
 \item $\mu_{i}/\mu_{i+1}\geq c_{r}\left\lceil \sqrt{\kappa_{i}}\right\rceil $
 for some constant $c_{r}$. 
-\item $\kappa_{i+1}\leq\kappa_{i}$.
-\item $\mu_{d}$ is smaller than some fixed arbitrary constant.
+\item $\kappa_{i+1}\leq\kappa_{i}$. 
+\item $\mu_{d}$ is smaller than some fixed arbitrary constant. 
 \end{enumerate}
 \end{definition}
-
 Good chains exist, as found by Koutis, Miller and Peng:
-
-\begin{lemma} \label{lem:good-chain} (Lemma 4.5 from \cite{Koutis2011})
-Given a graph $A$, the algorithm \texttt{BuildChain}$\left(A,p\right)$ from \cite{Koutis2011}
-produces with probability $1-p$ a good preconditioning chain $\left\{ \mathcal{C},\mathcal{K}\right\}$ such that $\kappa_1 = \tilde{O}\left(\log^{2}n\right)$ and $\kappa_i = \kappa_{c}$ for all $i \geq 2$ for some constant $\kappa_{c}$. The length of the chain is $d = \mathcal{O}\left(\log n\right)$ and the algorithm runs in expected time $\tilde{O}\left(m\log n\right).$%+n\log n\log\log n\right)$
-
+\begin{lemma}
+\label{lem:good-chain} (Lemma 4.5 from \cite{Koutis2011}) Given
+a graph $A$, the algorithm \texttt{BuildChain}$\left(A,p\right)$
+from \cite{Koutis2011} produces with probability $1-p$ a good preconditioning
+chain $\left\{ \mathcal{C},\mathcal{K}\right\} $ such that $\kappa_{1}=\tilde{O}\left(\log^{2}n\right)$
+and $\kappa_{i}=\kappa_{c}$ for all $i\geq2$ for some constant $\kappa_{c}$.
+The length of the chain is $d=\mathcal{O}\left(\log n\right)$ and
+the algorithm runs in expected time $\tilde{O}\left(m\log n\right).$%+n\log n\log\log n\right)$
 
 \end{lemma}
-
 These chains furthermore can be used as good preconditioners for conjugate
 gradient and lead to near-linear algorithms for approximate inversion
 (Lemma 7.2 from \cite{Koutis2010}). This remarkable result has been
 significantly strenghtened in the previous years, so that SDD systems
 can be considered to be solved in (expected) linear time.
-
-\begin{lemma} \label{lem:linear-precond-existence}(Theorem 4.6 from
-\cite{Koutis2011}). Given $A\in SDD_{n}$ with $m$ non-zero entries,
-$b\in\mathbb{R}^{n}$ and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
-can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$.\end{lemma}
-
-It should now become clear how we can combine a good
-chain with the Algorithm \texttt{PreconditionedLogDetMonteCarlo}.
-We start by building a chain. The partial Cholesky factorizations
-at each step of the chain provide an upper bound to $\mbox{ld}\left(A\right)$.
-We then refine this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
+\begin{lemma}
+\label{lem:linear-precond-existence}(Theorem 4.6 from \cite{Koutis2011}).
+Given $A\in SDD_{n}$ with $m$ non-zero entries, $b\in\mathbb{R}^{n}$
+and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
+can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$.
+\end{lemma}
+It should now become clear how we can combine a good chain with the
+Algorithm \texttt{PreconditionedLogDetMonteCarlo}. We start by building
+a chain. The partial Cholesky factorizations at each step of the chain
+provide an upper bound to $\mbox{ld}\left(A\right)$. We then refine
+this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
 at each state of the chain to approximate $\mbox{ld}\left(B_{i}^{+}A_{i}\right)$
 with high probability. The complete algorithm is presented in Algorithm
 \ref{alg:The-main-algorithm}. We now have all the tools required
@@ -166,13 +170,13 @@ to prove Theorem \ref{thm:ultra_main}.
 we can consider either an SDD or its grounded Laplacian thanks to
 the relation $\log A=\ld L_{A}$. Call $A_{1}=L_{A}$ the first element
 of the chain. In this proof, all the matrices will be Laplacian from
-now on. Using Lemma \ref{lem:good-chain}, consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $ a good chain for $A$, with
-$d=\mathcal{O}\left(\log n\right)$. More precisely, since $A_{i+1}$=
-\texttt{GreedyElimination}$\left(B_{i}\right)$, the Laplacian $B_{i}$
-can be factored as:
+now on. Using Lemma \ref{lem:good-chain}, consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
+a good chain for $A$, with $d=\mathcal{O}\left(\log n\right)$. More
+precisely, since $A_{i+1}$= \texttt{GreedyElimination}$\left(B_{i}\right)$,
+the Laplacian $B_{i}$ can be factored as: 
 \[
 B_{i}=P_{i}L_{i}\left(\begin{array}{cc}
-D^{\left(i\right)}& 0\\
+D^{\left(i\right)} & 0\\
 0 & A_{i+1}
 \end{array}\right)L_{i}^{T}P_{i}^{T}
 \]
@@ -186,7 +190,7 @@ cost.
 From the discussion at the start of the section, it is clear that
 $\ld B_{i}=\sum_{k}\log D_{k}^{\left(i\right)}+\ld A_{i+1}$. From
 the discussion in Section \ref{sec:Preconditioned-log-determinants},
-the log-determinant of $A$ is:
+the log-determinant of $A$ is: 
 \begin{eqnarray*}
 \log A & = & \ld A_{1}\\
  & = & \ld B_{1}+\ld\left(B_{1}^{+}A_{1}\right)\\
@@ -200,20 +204,20 @@ chain. We are left with estimating the $d$ remainders $\text{ld}\left(B_{i}^{+}A
 By construction, $A_{i}\preceq B_{i}\preceq\kappa_{i}A_{i}$ and by
 Lemma \ref{lem:linear-precond-existence}, there exists an operator
 $C_{i}$ so that $\left\Vert C_{i}\left(b\right)-B_{i}^{+}b\right\Vert _{B_{i}}<\nu\left\Vert B_{i}^{+}b\right\Vert _{B_{i}}$
-for all $b$ with a choice of relative precision $\nu=\frac{\epsilon}{16\kappa_{i}^{3}\kappa\left(B_{i}\right)}$. 
+for all $b$ with a choice of relative precision $\nu=\frac{\epsilon}{16\kappa_{i}^{3}\kappa\left(B_{i}\right)}$.
 
 This relative precision depends on the condition number $\kappa\left(B_{i}\right)$
 of $B_{i}$. We can coarsely relate this condition number to the condition
-number of $A_{1}$by noting the following:
+number of $A_{1}$by noting the following: 
 \begin{itemize}
 \item Since $A_{i}\preceq B_{i}\preceq\kappa_{i}A_{i}$ by construction,
-$\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)$
+$\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)$ 
 \item For diagonally dominant matrices or Laplacian matrices, the condition
 number of the partial Cholesky factor is bounded by the condition
 number of the original matrix. This can be seen by analyzing one update
 in the Cholesky factorization. Given a partially factorized matrix
 $\tilde{A}=\left(\begin{array}{ccc}
-I_{p} & 0 &0\\
+I_{p} & 0 & 0\\
 0 & a & b\\
 0 & b^{T} & S
 \end{array}\right)$, after factorization, the next matrix is $\left(\begin{array}{cc}
@@ -224,13 +228,15 @@ by the spectrum of $\left(\begin{array}{cc}
 a & b\\
 b^{T} & S
 \end{array}\right)$ (see Corollary 2.3 in \cite{Zhang2005}) and thus its condition number
-is upper bounded by that of $\tilde{A}$.
+is upper bounded by that of $\tilde{A}$. 
 \end{itemize}
-As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{i}\kappa_{j}\kappa\left(A_{1}\right) =\tilde{O} \left(\kappa_1\kappa_{c}^{i-1}\kappa\left(A\right)\right)$ with $\kappa_c$ the constant introduced in Lemma \ref{lem:good-chain}. This coarse analysis gives us the bound:
+As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{i}\kappa_{j}\kappa\left(A_{1}\right)=\tilde{O}\left(\kappa_{1}\kappa_{c}^{i-1}\kappa\left(A\right)\right)$
+with $\kappa_{c}$ the constant introduced in Lemma \ref{lem:good-chain}.
+This coarse analysis gives us the bound: 
 \[
-\kappa\left(B_{i}\right)\leq\tilde{O}\left(\kappa_{c}^{\log n}\log^{2}n ~ \kappa\left(A\right)\right)=\tilde{O}\left(n^{\log\kappa_{c}}\log^{2}n \ \kappa\left(A\right)\right).
-\] Consider the relative precision
-$\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{c}}\log^{-8}n\frac{\epsilon}{\kappa\left(A\right)}\right)$
+\kappa\left(B_{i}\right)\leq\tilde{O}\left(\kappa_{c}^{\log n}\log^{2}n~\kappa\left(A\right)\right)=\tilde{O}\left(n^{\log\kappa_{c}}\log^{2}n\ \kappa\left(A\right)\right).
+\]
+Consider the relative precision $\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{c}}\log^{-8}n\frac{\epsilon}{\kappa\left(A\right)}\right)$
 so that $\tilde{\nu}\leq\nu_{i}$ for all $i$. Constructing the operator
 $C_{i}$ is a byproduct of forming the chain \emph{$\mathcal{C}$.
 }By Theorem \ref{thm:det-sampling-theorem}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
@@ -238,7 +244,7 @@ can be approximated to precision $\epsilon$ with probability at least
 $1-\eta$ using Algorithm \ref{alg:SampleLogDet}. Furthermore, this
 algorithm works in expected time 
 \begin{eqnarray*}
- &  & \tilde{O}\left(m\log n\log\left(1/\tilde{\nu}\right)\kappa_1\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa_1}{\tilde{\nu}}\right)\log^{2}\left(\kappa_1\right)\log\left(\eta^{-1}\right)\right)\\
+ &  & \tilde{O}\left(m\log n\log\left(1/\tilde{\nu}\right)\kappa_{1}\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{n\kappa_{1}}{\tilde{\nu}}\right)\log^{2}\left(\kappa_{1}\right)\log\left(\eta^{-1}\right)\right)\\
  &  & =\tilde{O}\left(m\log^{3}n\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log^{2}\left(\frac{n\kappa\left(A\right)}{\epsilon}\right)\log\left(\eta^{-1}\right)\right)
 \end{eqnarray*}
 By a union bound, the result also holds on the sum of all the $\log n$

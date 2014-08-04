@@ -24,21 +24,21 @@ series and by replacing the exact trace evaluation by $x^{T}S^{k}x$
 for some suitably chosen random variables $x$. In order to bound
 the errors, we will bound the large deviation errors using the following
 Bernstein inequality:
-
-\begin{lemma}{[}Bernstein's inequality{]} \label{lem:bernstein}
-Let $X_{1}\cdots X_{n}$ be independent random variables with $\mathbb{E}\left[X_{i}\right]=0$,
+\begin{lemma}
+{[}Bernstein's inequality{]} \label{lem:bernstein} Let $X_{1}\cdots X_{n}$
+be independent random variables with $\mathbb{E}\left[X_{i}\right]=0$,
 $\left|X_{i}\right|<c$ almost surely. Call $\sigma^{2}=\frac{1}{n}\sum_{i}\text{\textnormal{Var}}\left(X_{i}\right)$,
 then for all $\epsilon>0$: 
 \[
 \mathbb{P}\left[\frac{1}{n}\Big|\sum_{i}X_{i}\Big|\geq\epsilon\right]\leq2\exp\left(-\frac{n\epsilon^{2}}{2\sigma^{2}+2c\epsilon/3}\right)
 \]
-\end{lemma}
 
+\end{lemma}
 We can adapt some results from \cite{Barry1999} to prove this bound
 on the deviation from the trace.
-
-\begin{lemma} \label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$
-with the assumption $\lambda_{\text{\textnormal{min}}}I_{n}\preceq H\preceq\lambda_{\text{\textnormal{max}}}I$.
+\begin{lemma}
+\label{lem:bernstein-trace}Consider $H\in\mathcal{S}_{n}$ with the
+assumption $\lambda_{\text{\textnormal{min}}}I_{n}\preceq H\preceq\lambda_{\text{\textnormal{max}}}I$.
 Consider $p$ vectors sampled from the standard Normal distribution:
 $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$ for
 $i=1\cdots p$. Then for all $\epsilon>0$: 
@@ -46,10 +46,10 @@ $i=1\cdots p$. Then for all $\epsilon>0$:
 \mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\Tr\left(H\right)\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{4n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
 \end{lemma}
-
-\begin{proof} The distribution of $\mathbf{u}_{i}$ is invariant
-through a rotation, so we can consider $H$ diagonal. We assume without
-loss of generality that $H=\text{diag}\left(\lambda_{1},\cdots,\lambda_{n}\right)$.
+\begin{proof}
+The distribution of $\mathbf{u}_{i}$ is invariant through a rotation,
+so we can consider $H$ diagonal. We assume without loss of generality
+that $H=\text{diag}\left(\lambda_{1},\cdots,\lambda_{n}\right)$.
 Again without loss of generality, we assume that $\lambda'_{\max}=\lambda_{\max}-\lambda_{\min}$
 and $\lambda'_{\min}=0$ (by considering $H'=H-\lambda_{\min}I$).
 Call $V_{i}=\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-n^{-1}\text{Tr}\left(H\right)$.
@@ -65,14 +65,14 @@ so invoking Lemma \ref{lem:bernstein} gives:
 \[
 \mathbb{P}\left[\frac{1}{p}\left|\sum_{i=1}^{p}V_{i}\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
-with
+with 
 \begin{align*}
 \sigma^{2} & =\frac{2}{n(n+2)}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}\\
  & \leq\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}=\frac{2}{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}
 \end{align*}
 %Dropping the factor $2/3$, we get our result. 
-\end{proof}
 
+\end{proof}
 The previous lemma shows that if the eigenspectrum of a matrix is
 bounded, we can obtain a Bernstein bound on the error incurred by
 sampling the trace. Furthermore, the convergence of the series \eqref{eq:martin}
@@ -83,8 +83,8 @@ theorem, which is adapted from the main theorem in \cite{Barry1999}.
 While that main theorem in \cite{Barry1999} only considered a confidence
 interval based on the covariance properties of Gaussian distribution,
 we generalize this result to a more general Bernstein bound.
-
-\begin{theorem} \label{thm:det-sampling-theorem}Consider $S\in\mathcal{S}_{n}^{+}$
+\begin{theorem}
+\label{thm:det-sampling-theorem}Consider $S\in\mathcal{S}_{n}^{+}$
 with $0\preceq S\preceq\left(1-\delta\right)I$ for some $\delta\in\left(0,1\right)$.
 Call $y=n^{-1}\log\left|I-S\right|$ the quantity to estimate, and
 consider $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$
@@ -101,8 +101,8 @@ and $l\geq2\delta^{-1}\log\left(\frac{n}{\delta\epsilon}\right)$:
 \[
 \mathbb{P}\left[\left|y-\hat{y}_{p,l}\right|\geq\epsilon\right]\leq\eta
 \]
-\end{theorem}
 
+\end{theorem}
 The proof of this result is detailed in Appendix A.
 
 From this theorem we derive two results that justify the notion of
@@ -110,10 +110,10 @@ preconditioners for determinants: one for exact preconditioners and
 one for approximate preconditioners. The corresponding algorithm,
 which we call \texttt{PreconditionedLogDetMonteCarlo}, is presented
 in Algorithm \ref{alg:SampleLogDet}.
-
-\begin{corollary} \label{cor:preconditioning}Let $A\in\mathcal{S}_{n}^{+}$
-and $B\in\mathcal{S}_{n}^{+}$ be positive definite matrices so that
-$B$ is a $\kappa-$approximation of $A$: 
+\begin{corollary}
+\label{cor:preconditioning}Let $A\in\mathcal{S}_{n}^{+}$ and $B\in\mathcal{S}_{n}^{+}$
+be positive definite matrices so that $B$ is a $\kappa-$approximation
+of $A$: 
 \begin{equation}
 A\preceq B\preceq\kappa A\label{eq:A-B-bounds}
 \end{equation}
@@ -122,17 +122,15 @@ Given $\epsilon>0$ and $\eta\in\left(0,1\right)$, the algorithm
 up to precision $\epsilon$ with probability greater than $1-\eta$,
 by performing $16\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
 vector inversions from $B$ and vector multiplies from $A$.
-
 \end{corollary}
-
 The proof of this corollary is presented in Appendix A. Usually, computing
 the exact inverse by an SDD matrix is too expensive. We can instead
 extend the previous result to consider a black box procedure that
 approximatively computes $B^{-1}x$. If the error introduced by the
 approximate inversion is small enough, the result from the previous
 corollary still holds. This is what the following theorem establishes:
-
-\begin{theorem}\label{thm:preconditioning-approx}Consider $A,B\in\mathcal{S}_{n}^{+}$
+\begin{theorem}
+\label{thm:preconditioning-approx}Consider $A,B\in\mathcal{S}_{n}^{+}$
 positive definite with $B$ a $\kappa-$approximation of $A$ with
 $\kappa\geq2$. Furthermore, assume there exists a linear operator
 $C$ so that for all $y\in\mathbb{R}^{n}$, $C$ returns a $\nu-$approximation
@@ -142,18 +140,16 @@ of $B^{-1}y$:
 \]
 Given $\eta\in\left(0,1\right)$ and $\epsilon>0$, if $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$,
 then the algorithm \\
-\texttt{PreconditionedLogDet-MonteCarlo} returns
-a scalar $z$ so that: 
+ \texttt{PreconditionedLogDet-MonteCarlo} returns a scalar $z$ so
+that: 
 \[
 \mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\epsilon\right]\leq\eta
 \]
 by performing $64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
 vector calls to the operator $C$ and vector multiplies from $A$.
-
 \end{theorem}
-
 The proof of this result is detailed in Appendix A. While the overall
-bound looks the same, the constant (taken away by the $O\left(\cdot\right)$
+bound looks the same, the constant (taken away by the $\mathcal{O}\left(\cdot\right)$
 notation) is four times as large as in Corollary \ref{cor:preconditioning}.
 
 This last theorem shows that we can compute a good approximation of

@@ -1,15 +1,15 @@
 
 \section*{Appendix B: Proofs of Section \ref{sec:Making-the-problem}}
 
-We put here the proofs that pertain to Section \ref{sec:Making-the-problem}. 
+We put here the proofs that pertain to Section \ref{sec:Making-the-problem}.
 
 
 \subsection{Properties of the generalized Laplacian}
 
 Proof of Lemma \ref{lem:floating-properties}.
-
-\begin{proof}The first statement is obvious from the construction
-of the grounded Laplacian.
+\begin{proof}
+The first statement is obvious from the construction of the grounded
+Laplacian.
 
 Statment (2) is a direct consequence of the fact that $F_{Z}=PZP^{T}$
 with $P=\left(I_{n}\,0\right)$.
@@ -21,48 +21,40 @@ the $n-1$ positive eigenvalues of $Z$.
 Statement (4) is straightforward after observing that the floating
 procedure is a linear transform from $\mathcal{S}_{n}$ to $\mathcal{S}_{n-1}$,
 so it preserves the matrix inequalities.
-
 \end{proof}
-
 
 \subsection{Technical lemmas for Theorem \ref{thm:ultra_main}}
 
 This lemma generalizes Lemma 8.1 in \cite{Spielman2009a}.
-
-\begin{lemma}\label{lem:simple-inequality}Consider $A\in\mathcal{S}_{n}$
-positive semi-definite, and $x\in\mathbb{R}^{n}$. Then $xx^{T}\preceq\left(x^{T}A^{+}x\right)A$
-
-\end{lemma}
-
-\begin{proof}Without loss of generality, consider $x^{T}x=1$. Consider
-the eigenvalue decomposition of $A$: $A=\sum_{i}\lambda_{i}u_{i}u_{i}^{T}$.
-Since $\left(u_{i}\right)_{i}$ is an orthonormal basis of $\mathbb{R}^{n}$,
+\begin{lemma}
+\label{lem:simple-inequality}Consider $A\in\mathcal{S}_{n}$ positive
+semi-definite, and $x\in\mathbb{R}^{n}$. Then $xx^{T}\preceq\left(x^{T}A^{+}x\right)A$\end{lemma}
+\begin{proof}
+Without loss of generality, consider $x^{T}x=1$. Consider the eigenvalue
+decomposition of $A$: $A=\sum_{i}\lambda_{i}u_{i}u_{i}^{T}$. Since
+$\left(u_{i}\right)_{i}$ is an orthonormal basis of $\mathbb{R}^{n}$,
 we only need to establish that $\left(u_{i}^{T}x\right)^{2}\leq\left(x^{T}A^{+}x\right)u_{i}^{T}Au_{i}$
-for all $i$. The latter term can be simplified:
+for all $i$. The latter term can be simplified: 
 \begin{eqnarray*}
 \left(x^{T}A^{+}x\right)u_{i}^{T}Au_{i} & = & \left(x^{T}\left[\sum_{j}\lambda_{j}^{-1}u_{j}u_{j}^{T}\right]x\right)\lambda_{i}\\
  & = & \lambda_{i}\sum_{j}\lambda_{j}^{-1}\left(u_{j}^{T}x\right)^{2}\\
  & \geq & \left(u_{i}^{T}x\right)^{2}
 \end{eqnarray*}
-which is the inequality we wanted.
-
-\end{proof}
-
-\begin{lemma} \label{lem:Jensen-inequality-matrix-logarithm-1}Jensen
-inequality for the matrix logarithm. Let $A\in\mathcal{S}_{n}$ be
-a positive semi-definite matrix with $p$ positive eigenvalues. Then
+which is the inequality we wanted.\end{proof}
+\begin{lemma}
+\label{lem:Jensen-inequality-matrix-logarithm-1}Jensen inequality
+for the matrix logarithm. Let $A\in\mathcal{S}_{n}$ be a positive
+semi-definite matrix with $p$ positive eigenvalues. Then 
 \[
 \text{ld}\left(A\right)\leq p\log\left(\frac{\text{Tr}\left(A\right)}{p}\right)
 \]
 \end{lemma}
-
-\begin{proof}This is a direct application of Jensen's inequality.
-Call $\left(\lambda_{i}\right)_{i}$ the positive eigenvalues of $A$.
-Then $\text{ld}\left(A\right)=\sum_{i}\log\lambda_{i}$. By concavity
-of the logarithm:
+\begin{proof}
+This is a direct application of Jensen's inequality. Call $\left(\lambda_{i}\right)_{i}$
+the positive eigenvalues of $A$. Then $\text{ld}\left(A\right)=\sum_{i}\log\lambda_{i}$.
+By concavity of the logarithm: 
 \[
 \sum_{i}\log\lambda_{i}\leq p\log\left(\frac{\sum\lambda_{i}}{p}\right)=p\log\left(\frac{\text{Tr}\left(A\right)}{p}\right)
 \]
-
-
 \end{proof}
+

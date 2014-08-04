@@ -5,10 +5,10 @@
 \subsection{Proof of Theorem \ref{thm:det-sampling-theorem}}
 
 \label{sub:det-sampling-proof}
-
-\begin{proof} The proof of this theorem follows the proof of the
-Main Theorem in \cite{Barry1999} with some slight modifications.
-Using triangular inequality: 
+\begin{proof}
+The proof of this theorem follows the proof of the Main Theorem in
+\cite{Barry1999} with some slight modifications. Using triangular
+inequality: 
 \[
 \left|y-\hat{y}_{p,l}\right|\leq\left|\mathbb{E}\left[\hat{y}_{p,l}\right]-\hat{y}_{p,l}\right|+\left|y-\mathbb{E}\left[\hat{y}_{p,l}\right]\right|
 \]
@@ -54,14 +54,12 @@ Thus, any choice of
 p\geq16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\delta^{-1}\right)\geq\log\left(2/\eta\right)\epsilon^{-2}\left(16n^{-1}\log^{2}\left(\delta^{-1}\right)+\frac{4}{3}\epsilon\log\left(\delta^{-1}\right)\right)
 \]
 satisfies the inequality:$2\exp\left(-\frac{p\epsilon^{2}}{16n^{-1}\left(\log\left(1/\delta\right)\right)^{2}+4\log\left(1/\delta\right)\epsilon/3}\right)\leq\eta$.
-
 \end{proof}
 
-
 \subsection{Proof of Corollary \ref{cor:preconditioning}}
-
-\begin{proof} We introduce some notations that will prove useful
-for the rest of the article: 
+\begin{proof}
+We introduce some notations that will prove useful for the rest of
+the article: 
 \[
 H=I-B^{-1}A
 \]
@@ -125,8 +123,8 @@ Hence, the practical computation of the latter sum can be done on
 $A^{-1}B$. To conclude, if we compute $p=16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
 truncated chains of length $l=\kappa\log\left(\frac{2\kappa}{\epsilon}\right)$,
 we get our result. This requires $lp$ multiplications by $A$ and
-inversions by $B$. \end{proof} 
-
+inversions by $B$. 
+\end{proof}
 
 \subsection{Proof of Theorem \ref{thm:preconditioning-approx}}
 
@@ -153,17 +151,17 @@ R=I-B^{-1}A\label{eq:R-def}
 
 Recall the definition of the matrix norm. Given $M\in\mathcal{S}_{n}^{+}$,
 $\left\Vert M\right\Vert _{B}=\max_{x\neq0}\sqrt{\frac{x^{T}Mx}{x^{T}Bx}}$
-
-\begin{lemma}\label{lem:S-R-contractions} $S$ and $R$ are contractions
-for the Euclidian and $B-$norms: 
+\begin{lemma}
+\label{lem:S-R-contractions} $S$ and $R$ are contractions for the
+Euclidian and $B-$norms: 
 \begin{eqnarray*}
 \left\Vert S\right\Vert  & \leq & 1-\varphi\\
 \left\Vert R\right\Vert  & \leq & 1-\varphi\\
 \left\Vert R\right\Vert _{B} & \leq & \left(1-\varphi\right)^{2}
 \end{eqnarray*}
-\end{lemma} 
-
-\begin{proof} Recall the definition of the matrix norm: $\left\Vert S\right\Vert =\max_{x^{T}x\leq1}\sqrt{x^{T}Sx}$.
+\end{lemma}
+\begin{proof}
+Recall the definition of the matrix norm: $\left\Vert S\right\Vert =\max_{x^{T}x\leq1}\sqrt{x^{T}Sx}$.
 Since we know from Equation (\ref{eq:s-encadrement}) that $S\preceq\left(1-\varphi\right)I$,
 we get the first inequality.
 
@@ -192,34 +190,29 @@ so we get:
 \left\Vert R\right\Vert _{B}=\left\Vert S^{2}\right\Vert \leq\left\Vert S\right\Vert ^{2}\leq\left(1-\varphi\right)^{2}
 \]
 
-
-\end{proof} 
-
+\end{proof}
 The approximation of the log-determinant is performed by computing
 sequences of power series $\left(R^{k}x\right)_{k}$. These chains
 are computed approximately by repeated applications of the $R$ operator
 on the previous element of the chain, starting from a random variable
-$x_{0}$. We formalize the notion of an approximate chain. 
-
-\begin{definition} \emph{Approximate power sequence. }Given a linear
-operator $H$, a start point $x^{\left(0\right)}\in\mathbb{R}^{n}$,
-and a positive-definite matrix $D$, we define an $\epsilon-$approximate
-power sequence as a sequence that does not deviate too much from the
-power sequence: 
+$x_{0}$. We formalize the notion of an approximate chain.
+\begin{definition}
+\emph{Approximate power sequence. }Given a linear operator $H$, a
+start point $x^{\left(0\right)}\in\mathbb{R}^{n}$, and a positive-definite
+matrix $D$, we define an $\epsilon-$approximate power sequence as
+a sequence that does not deviate too much from the power sequence:
 \[
 \left\Vert x^{\left(k+1\right)}-Hx^{\left(k\right)}\right\Vert _{D}\leq\epsilon\left\Vert Hx^{\left(k\right)}\right\Vert _{D}
 \]
 
-
 \end{definition}
-
 We now prove the following result that is quite intuitive: if the
 operator $H$ is a contraction and if the relative error $\epsilon$
-is not too great, the sum of all the errors on the chain is bounded. 
-
-\begin{lemma}\label{lem:nu-sequence-bound}Let $H$ be a linear operator
-and $D$ a norm over the space of that linear operator. Assume that
-the operator $H$ is a contraction under this norm ($\left\Vert H\right\Vert _{D}<1$)
+is not too great, the sum of all the errors on the chain is bounded.
+\begin{lemma}
+\label{lem:nu-sequence-bound}Let $H$ be a linear operator and $D$
+a norm over the space of that linear operator. Assume that the operator
+$H$ is a contraction under this norm ($\left\Vert H\right\Vert _{D}<1$)
 and consider $\rho\in\left(0,1\right)$ so that $\left\Vert H\right\Vert _{D}\leq\left(1-\rho\right)^{2}$.
 Consider $\left(x^{\left(k\right)}\right)_{k}$ a $\nu-$approximate
 power sequence for the operator $H$ and the norm $D$. If $\rho\leq1/2$
@@ -228,8 +221,8 @@ and $\nu\leq\rho/2$, the total error is bounded:
 \sum_{k=0}^{\infty}\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}\leq4\rho^{-2}\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
 \end{lemma}
-
-\begin{proof} Call $\omega_{k}=\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}$
+\begin{proof}
+Call $\omega_{k}=\left\Vert x^{\left(k\right)}-H^{k}x^{\left(0\right)}\right\Vert _{D}$
 and $\theta_{k}=\left\Vert Hx^{\left(k\right)}\right\Vert _{D}$.
 We are going to bound the rate of convergence of these two series.
 We have first using triangular inequality on the $D$ norm and then
@@ -250,7 +243,7 @@ We now bound the error on the $\omega_{k}$ sequence:
 \end{eqnarray*}
 The assumption $\rho\leq1-\sqrt{\left\Vert H\right\Vert _{D}}$ is
 equivalent to $\left\Vert H\right\Vert _{D}\leq\left(1-\rho\right)^{2}$,
-so the last inequality implies:
+so the last inequality implies: 
 \[
 \omega_{k+1}\leq\left[\left(1-\rho\right)^{2}+\nu\right]\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \]
@@ -264,7 +257,7 @@ implies:
 \end{equation}
 
 
-We show by induction that:
+We show by induction that: 
 \[
 \forall k,\omega_{k}\leq\frac{\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}}{1-\sqrt{1-\rho}}\left(\sqrt{1-\rho}\right)^{k-1}
 \]
@@ -279,7 +272,7 @@ Note first that
  & \leq\nu\left\Vert x^{\left(0\right)}\right\Vert _{D}
 \end{align*}
 So this relation is verified for $k=1$. Now, assuming it is true
-for $k$, we use Equation (\ref{eq:anon1}) to see that:
+for $k$, we use Equation (\ref{eq:anon1}) to see that: 
 \begin{eqnarray*}
 \omega_{k} & \leq & \left(1-\rho\right)\omega_{k}+\nu\left(1-\rho\right)^{2k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\\
  & \leq & \left(1-\rho\right)\omega_{k}+\nu\left(\sqrt{1-\rho}\right)^{k}\left\Vert x^{\left(0\right)}\right\Vert _{D}\\
@@ -299,26 +292,20 @@ $\nu\leq\rho/2$ implies $\nu\leq\rho-\rho^{2}$. Furthermore, by
 concavity of the square root function, we have $\sqrt{1-\rho}\leq1-\rho/2$
 for $\rho\leq1$. Thus, $\left(1-\sqrt{1-\rho}\right)^{2}\geq\rho^{2}/4$
 and we get our result.
-
 \end{proof}
-
 We can use the bound on the norm of $A$ to compute bound the error
 with a preconditioner:
-
-\begin{lemma}\label{lem:partial-sequence-approximate}Consider $A,B$
-with the same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, and
-the additional hypothesis $\nu\in\left(0,\frac{1}{2\kappa}\right)$
-and $\kappa\ge2$, and $\left(x_{u}\right)_{u}$ an $\nu-$approximate
-power sequence for the operator $R$ with start vector $x_{0}$. Then:
+\begin{lemma}
+\label{lem:partial-sequence-approximate}Consider $A,B$ with the
+same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, and the additional
+hypothesis $\nu\in\left(0,\frac{1}{2\kappa}\right)$ and $\kappa\ge2$,
+and $\left(x_{u}\right)_{u}$ an $\nu-$approximate power sequence
+for the operator $R$ with start vector $x_{0}$. Then: 
 \[
 \left|\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}R^{i}x_{0}-\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}\right|\leq4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}\left\Vert x_{0}\right\Vert ^{2}
 \]
- where $\kappa\left(B\right)$ is the condition number of $B$.
-
-\end{lemma}
-
+where $\kappa\left(B\right)$ is the condition number of $B$.\end{lemma}
 \begin{proof}
-
 Call $\hat{z}$ the truncated sequence: 
 \[
 \hat{z}=\sum_{i=1}^{l}\frac{1}{i}x_{0}^{T}x_{i}
@@ -335,10 +322,10 @@ Using the Cauchy-Schwartz inequality, we obtain:
 \begin{equation}
 \left|\left(B^{-1}x_{0}\right)^{T}B\left(R^{i}x_{0}-x_{i}\right)\right|=\left|\left\langle B^{-1}x_{0},R^{i}x_{0}-x_{i}\right\rangle _{B}\right|\leq\left\Vert B^{-1}x_{0}\right\Vert _{B}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\label{eq:anon-1}
 \end{equation}
- From Lemma (\ref{lem:S-R-contractions}), we have $\left\Vert R\right\Vert _{B}\leq\left(1-\varphi\right)^{2}$,
+From Lemma (\ref{lem:S-R-contractions}), we have $\left\Vert R\right\Vert _{B}\leq\left(1-\varphi\right)^{2}$,
 and from the hypothesis, we have $\nu\in\left(0,\varphi/2\right)$
 and $\varphi\le1/2$, so we can bound the deviation using the bound
-from Lemma \ref{lem:nu-sequence-bound}:
+from Lemma \ref{lem:nu-sequence-bound}: 
 \begin{equation}
 \sum_{i=1}^{l}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq\sum_{i=1}^{\infty}\left\Vert R^{i}x_{0}-x_{i}\right\Vert _{B}\leq4\varphi^{-2}\nu\left\Vert x_{0}\right\Vert _{B}=4\kappa^{2}\nu\left\Vert x_{0}\right\Vert _{B}\label{eq:anon-2}
 \end{equation}
@@ -352,16 +339,14 @@ the norm of $x_{0}$. Call $\lambda_{\text{max }}$ and $\lambda_{\text{min }}$
 the extremal eigenvalues of the positive semidefinite matrix $B$.
 By definition of the matrix norm: $\left\Vert x_{0}\right\Vert _{B}=\sqrt{x_{0}^{T}Bx_{0}}\leq\sqrt{\lambda_{\text{max}}}\left\Vert x_{0}\right\Vert $
 and $\left\Vert B^{-1}x_{0}\right\Vert _{B}=\sqrt{x_{0}^{T}B^{-1}x_{0}}\leq\sqrt{\lambda_{\text{min}}^{-1}}\left\Vert x_{0}\right\Vert $
-so we get:
+so we get: 
 \[
 \left|\hat{z}-z\right|\leq4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}\left\Vert x_{0}\right\Vert ^{2}
 \]
-where $\kappa\left(B\right)$ is the condition number of $B$. \end{proof}
-
+where $\kappa\left(B\right)$ is the condition number of $B$. 
+\end{proof}
 We now have all the elements required for the proof of Theorem \ref{thm:preconditioning-approx}.
-
 \begin{proof}
-
 Consider $\mathbf{u}_{j}\sim\mathcal{N}\left(0,I_{n}\right)$ for
 $j=1\cdots p$, and $x_{i,j}=\begin{cases}
 \mathbf{u}_{j}/\left\Vert \mathbf{u}_{j}\right\Vert  & \,\, i=0\\
@@ -379,7 +364,7 @@ z_{p,l}=\frac{1}{p}\sum_{j=1}^{p}\sum_{i=1}^{l}\frac{1}{i}\left(x_{0,j}\right)^{
 
 By construction, $\left(x_{i,j}\right)_{i}$ is an $\nu-$approximate
 chain for the operator $R$. Applying Lemma \ref{lem:partial-sequence-approximate}
-to the operator $R$ under the norm $B$, we get:
+to the operator $R$ under the norm $B$, we get: 
 \begin{eqnarray*}
 \left|z_{p,l}-\hat{y}_{p,l}\right| & \leq & 4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}\left[\frac{1}{p}\sum_{j=1}^{p}\left\Vert x_{0,j}\right\Vert ^{2}\right]=4\nu\kappa^{2}\sqrt{\kappa\left(B\right)}
 \end{eqnarray*}
@@ -398,6 +383,5 @@ we get our bound result of
 \[
 pl=64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\delta^{-1}\right)\log\left(\frac{n}{\delta\epsilon}\right)
 \]
-
-
 \end{proof}
+
