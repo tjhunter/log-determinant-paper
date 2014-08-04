@@ -1,4 +1,4 @@
-\documentclass[onefignum,onetabnum]{siamltex}
+\documentclass[11pt,onefignum,onetabnum]{siamltex}
 % \documentclass[final,leqno,onefignum,onetabnum]{siamltex1213}
 % \usepackage[T1]{fontenc}
 % \usepackage[latin9]{inputenc}
@@ -19,7 +19,10 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{lineno}
+\usepackage{array}
+
 \linenumbers
+\hfuzz=150pt
 % \makeatletter
 
 \input{preamble}
@@ -28,15 +31,19 @@
 in near-linear time\\
 WORKING DRAFT}
 
-% \author{\name Timothy Hunter \email tjhunter@eecs.berkeley.edu \\
-%        \name Ahmed {El Alaoui} \email elalaoui@eecs.berkeley.edu \\
-%        \name Alexandre M. Bayen \email bayen@berkeley.edu \\
-%        \addr Department of Electrical Engineering and Computer Sciences\\
-%        University of California\\
-%        Berkeley, CA 94720-1776, USA}
-\author{Timothy Hunter \email tjhunter@eecs.berkeley.edu \\
-Ahmed {El Alaoui} \email elalaoui@eecs.berkeley.edu\\
-Alexandre M. Bayen \email bayen@berkeley.edu}
+% \author{Timothy Hunter \email tjhunter@eecs.berkeley.edu \\
+%        Ahmed {El Alaoui} \email elalaoui@eecs.berkeley.edu \\
+%        Alexandre M. Bayen \email bayen@berkeley.edu}
+% \author{
+%   LastName1, FirstName1\\
+%   \texttt{first1.last1@xxxxx.com}
+%   \and
+%   LastName2, FirstName2\\
+%   \texttt{first2.last2@xxxxx.com}
+% }
+
+
+\author{Timothy Hunter \and Ahmed {El Alaoui} \and Alexandre M. Bayen}
 
 % \usepackage{babel}
 %   \providecommand{\corollaryname}{Corollary}
