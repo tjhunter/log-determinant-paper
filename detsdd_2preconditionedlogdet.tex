@@ -65,7 +65,11 @@ so invoking Lemma \ref{lem:bernstein} gives:
 \[
 \mathbb{P}\left[\frac{1}{p}\left|\sum_{i=1}^{p}V_{i}\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{2\sigma^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
 \]
-with $\sigma^{2}=\frac{2}{n(n+2)}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}\leq\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}=\frac{2}{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}$.
+with
+\begin{align*}
+\sigma^{2} & =\frac{2}{n(n+2)}\sum_{i=1}^{n}\left(\lambda_{i}-n^{-1}\text{Tr}\left(H\right)\right)^{2}\\
+ & \leq\frac{2}{n^{2}}\sum_{i=1}^{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}=\frac{2}{n}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}
+\end{align*}
 %Dropping the factor $2/3$, we get our result. 
 \end{proof}
 
@@ -137,7 +141,8 @@ of $B^{-1}y$:
 \left\Vert C\left(y\right)-B^{-1}y\right\Vert _{B}\leq\nu\left\Vert B^{-1}y\right\Vert _{B}
 \]
 Given $\eta\in\left(0,1\right)$ and $\epsilon>0$, if $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$,
-then the algorithm \texttt{PreconditionedLogDet- MonteCarlo} returns
+then the algorithm \\
+\texttt{PreconditionedLogDet-MonteCarlo} returns
 a scalar $z$ so that: 
 \[
 \mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\epsilon\right]\leq\eta
