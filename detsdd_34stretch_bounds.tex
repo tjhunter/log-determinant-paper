@@ -16,20 +16,20 @@ estimation of the residual.
 The stretch of a graph is usually defined with respect to a (spanning)
 tree. In our analysis, it is convenient and straightforward to generalize
 this definition to arbitrary graphs. To our knowledge, this straightforward
-extension is not considered in the litterature, so we feel compelled
-to properly introduce it.
+extension is not considered in the literature, so we feel compelled
+to properly introduce it. 
 \begin{definition}
 \emph{Generalized stretch}.\label{Generalized-stretch} Consider $\mathcal{V}$
 a set of vertices, $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
 their respective Laplacians. The stretch of $G$ with respect to $H$
 is the sum of the effective resistances of each edge of graph $G$
-with repect to graph $H$, 
+with respect to graph $H$, 
 \[
 \text{st}_{H}\left(G\right)=\sum_{\left(u,v\right)\in\mathcal{E}_{G}}L_{G}\left(u,v\right)\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)
 \]
 with $\mathcal{X}_{u}\in\mathbb{R}^{n}$ the unit vector that is $1$
-at position $u$, and zero otherwise.
+at position $u$, and zero otherwise. 
 \end{definition}
 If the graph $H$ is a tree, this is a standard definition of stretch,
 because the effective resistance $\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)$
@@ -37,7 +37,7 @@ between vertices $u$ and $v$ is the sum of all resistances over
 the unique path between $u$ and $v$ (see Lemma 2.4 in \cite{Spielman2009b}).
 Furthermore, the arguments to prove Theorem 2.1 in \cite{Spielman2009b}
 carry over to our definition of stretch. For the sake of completeness,
-we include this result:
+we include this result: 
 \begin{lemma}
 \label{lem:stretch-trace}(Straightforward generalization of Theorem
 2.1 in \cite{Spielman2009b}) Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
@@ -84,7 +84,7 @@ Then
 A number of properties of the stretch extend to general graphs using
 the generalized stretch. In particular, the stretch inequality (Lemma
 8.2 in \cite{Spielman2009a}) can be generalized to arbitrary graphs
-(instead of spanning trees).
+(instead of spanning trees). 
 \begin{lemma}
 \label{lem:stretch-inequality}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
@@ -114,10 +114,10 @@ L_{G} & \preceq & \sum_{\left(u,v\right)\in\mathcal{E}_{G}}\omega_{\left(u,v\rig
 \end{proof}
 This bound is remarkable as it relates any pair of (connected) graphs,
 as opposed to spanning trees or subgraphs. An approximation of the
-generalized stretch can be quickly computed using a construct detailled
+generalized stretch can be quickly computed using a construct detailed
 in \cite{Spielman2009}, as we will see below. We now introduce the
 main result of this section: a bound on the PLD of $L_{G}$ using
-the PLD of $L_{H}$ and the stretch.
+the PLD of $L_{H}$ and the stretch. 
 \begin{theorem}
 \label{thm:stretch-pld-bounds}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
@@ -146,7 +146,7 @@ The latter equality is an application of Lemma \ref{lem:stretch-trace}.
 The lower bound is slightly more involved. Call $\lambda_{i}$ the
 positive eigenvalues of $\sqrt{L_{H}}^{+}L_{G}\sqrt{L_{H}}^{+}$ and
 $\sigma=\text{st}_{H}\left(G\right)$. We have $1\leq\lambda_{i}$
-from the asumption $L_{H}\preceq L_{G}$. By definition: $\text{ld}\left(L_{H}^{+}L_{G}\right)=\sum_{i}\log\lambda_{i}$.
+from the assumption $L_{H}\preceq L_{G}$. By definition: $\text{ld}\left(L_{H}^{+}L_{G}\right)=\sum_{i}\log\lambda_{i}$.
 Furthermore, we know from Lemma \ref{lem:stretch-trace} that $\sum_{i}\lambda_{i}=\sigma$.
 The upper and lower bounds on $\lambda_{i}$ give: 
 \begin{align*}
@@ -172,7 +172,7 @@ value of any feasible vector $\lambda$ is higher or equal. Thus,
 this is the solution (unique up to a permutation). Hence we have $\text{ld}\left(L_{H}^{+}L_{G}\right)\geq\sum_{i}\log\lambda_{i}^{*}=\log\left(\sigma-n+2\right)$.
 
 Finally, note that if $H=G$, then $\text{st}_{H}\left(G\right)=n-1$,
-which gives an equality.
+which gives an equality. 
 \end{proof}
 Note that Lemma \ref{lem:stretch-inequality} gives us $L_{H}\preceq L_{G}\preceq\text{st}_{H}\left(G\right)L_{H}$
 which implies $\text{ld}\left(L_{H}\right)\leq\text{ld}\left(L_{G}\right)\leq\text{ld}\left(L_{H}\right)+n\log\text{st}_{H}\left(G\right)$.
@@ -182,11 +182,11 @@ graphs (such as $L_{H}$ being a subset of $L_{G}$). Research on
 conditioners has focused so far on low-stretch approximations that
 are subgraphs of the original graph. It remains to be seen if some
 better preconditioners can be found with stretches in $\mathcal{O}\left(n\right)$
-by considering more general graphs. In this case, the machinery developped
+by considering more general graphs. In this case, the machinery developed
 in Section 3 would not be necessary.
 
 From a practical perspective, the stretch can be calculated also with
-respect to the number of non-zero entries.
+respect to the number of non-zero entries. 
 \begin{lemma}
 \label{lem:stretch-approx}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
 be connected graphs over the same set of vertices, and $L_{G}$, $L_{H}$
@@ -201,7 +201,7 @@ with high probability and in expected time $\tilde{\mathcal{O}}\left(m\epsilon^{
 This is a straightforward consequence of Theorem $2$ in \cite{Spielman2009}.
 Once the effective resistance of an edge can be approximated in time
 $\mathcal{O}\left(\log n/\epsilon^{2}\right)$, we can sum it and
-weight it by the conductance in $G$ for each edge.
+weight it by the conductance in $G$ for each edge. 
 \end{proof}
 
 \subsection{Fast inexact estimates}
@@ -211,16 +211,16 @@ consequences if one is interested only in a rough estimate of the
 log-determinant: if $\epsilon=\mathcal{O}\left(1\right)$, it is possible
 to approximate the log-determinant in expected time $\tilde{O}\left(m+n\log^{3}n\right)$.
 We will make use of this sparsification result from Spielman and Srivastava
-\cite{Spielman2009}:
+\cite{Spielman2009}: 
 \begin{lemma}
 \label{lem:sriva-sparsification}(Theorem 12 in \cite{Spielman2009}).
 Given a Laplacian $L_{G}$ with $m$ edges, there is an expected $\tilde{O}\left(m/\epsilon^{2}\right)$
 algorithm that produces a graph $L_{H}$ with $\mathcal{O}\left(n\log n/\epsilon^{2}\right)$
-edges that satisfies $\left(1-\epsilon\right)L_{G}\preceq L_{H}\preceq\left(1+\epsilon\right)L_{G}$.
+edges that satisfies $\left(1-\epsilon\right)L_{G}\preceq L_{H}\preceq\left(1+\epsilon\right)L_{G}$. 
 \end{lemma}
 An immediate consequence is that given any graph, we can find a graph
 with a near-optimal stretch (up to an $\epsilon$ factor) and $\mathcal{O}\left(n\log n/\epsilon^{2}\right)$
-edges.
+edges. 
 \begin{lemma}
 \label{lem:low-stretch-bounding}Given a Laplacian $L_{G}$ with $m$
 edges, there is an expected $\tilde{O}\left(m/\epsilon^{2}\right)$
@@ -244,7 +244,7 @@ n-1\leq\text{st}_{H}\left(G\right)\leq\frac{1+\epsilon}{1-\epsilon}\left(n-1\rig
 \]
 
 \end{proof}
-Here is the main result of this section:
+Here is the main result of this section: 
 \begin{proposition}
 There exists an algorithm that on input $A\in SDD_{n}$, returns an
 approximation $n^{-1}\log\left|A\right|$ with precision $1/2$ in
@@ -262,7 +262,7 @@ since $H$ has $\mathcal{O}\left(n\log n\right)$ edges by construction,
 we can use Theorem \ref{thm:ultra_main} to compute a $1/4$- approximation
 of $\text{ld}\left(H\right)$ in expected time $\tilde{O}\left(n\log^{3}n\log^{2}\left(\kappa(H)\right)\right)$.
 By construction $\kappa(H)\leq\frac{1+1/16}{1-1/16}\kappa(A)$, hence
-the result.
+the result. 
 \end{proof}
 It would be interesting to see if this technique could be developed
 to handle arbitrary precision as well. 

@@ -13,7 +13,7 @@ motivate our results for stronger preconditioners: a tree that spans
 the graph $G$. Every graph has a low-stretch spanning tree, as discovered
 by Alon et al. \cite{Alon1995}. The bound of Alon et al. was then
 improved by Abraham et al. \cite{Abraham2008}. We restate their main
-result.
+result. 
 \begin{lemma}
 (Lemma 9.2 from \cite{Spielman2009a}). Consider a weighted graph
 $G$. There exists a spanning tree $T$ that is a subgraph of $G$
@@ -29,9 +29,9 @@ of $G$ (with the same weights on the edges), so $L_{T}\preceq L_{G}$
 (see \cite{Spielman2009a} for example for a proof of this fact).
 Furthermore, we have $L_{G}\preceq\text{st}_{T}\left(G\right)L_{T}$.
 This latter inequality is a result of Spielman et al. in \cite{Spielman2010}
-that we will generalize further in Lemma \ref{lem:stretch-inequality}. Finally,
-a result by \cite{Abraham2008} shows that $T$ can be chosen such
-that $\text{st}_{T}\left(G\right)\leq\mathcal{O}(m\log n(\log\log n)^{3})$.
+that we will generalize further in Lemma \ref{lem:stretch-inequality}.
+Finally, a result by \cite{Abraham2008} shows that $T$ can be chosen
+such that $\text{st}_{T}\left(G\right)\leq\mathcal{O}(m\log n(\log\log n)^{3})$. 
 \end{proof}
 Trees enjoy a lot of convenient properties for Gaussian elimination.
 The Cholesky factorization of a tree can be computed in linear time,
@@ -53,7 +53,7 @@ of the original graph is an immediate by-product:
 Furthermore, computing $L_{T}^{+}x$ also takes $\mathcal{O}\left(n\right)$
 computations by forward-backward substitution (see \cite{duff1986direct}).
 Combining Corollary \ref{cor:preconditioning} and Lemma \eqref{lem:tree-st}
-gives immediately the following result.
+gives immediately the following result. 
 \begin{theorem}
 \label{thm:PLD-tree}Let $G$ be a graph with $n$ vertices and $m$
 edges. Its PLD can be computed up to a precision $\epsilon$ and with

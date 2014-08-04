@@ -4,7 +4,7 @@
 
 \subsection{Proof of Theorem \ref{thm:det-sampling-theorem}}
 
-\label{sub:det-sampling-proof}
+\label{sub:det-sampling-proof} 
 \begin{proof}
 The proof of this theorem follows the proof of the Main Theorem in
 \cite{Barry1999} with some slight modifications. Using triangular
@@ -53,7 +53,7 @@ Thus, any choice of
 \[
 p\geq16\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(2/\eta\right)\log^{2}\left(\delta^{-1}\right)\geq\log\left(2/\eta\right)\epsilon^{-2}\left(16n^{-1}\log^{2}\left(\delta^{-1}\right)+\frac{4}{3}\epsilon\log\left(\delta^{-1}\right)\right)
 \]
-satisfies the inequality:$2\exp\left(-\frac{p\epsilon^{2}}{16n^{-1}\left(\log\left(1/\delta\right)\right)^{2}+4\log\left(1/\delta\right)\epsilon/3}\right)\leq\eta$.
+satisfies the inequality:$2\exp\left(-\frac{p\epsilon^{2}}{16n^{-1}\left(\log\left(1/\delta\right)\right)^{2}+4\log\left(1/\delta\right)\epsilon/3}\right)\leq\eta$. 
 \end{proof}
 
 \subsection{Proof of Corollary \ref{cor:preconditioning}}
@@ -150,7 +150,7 @@ R=I-B^{-1}A\label{eq:R-def}
 
 
 Recall the definition of the matrix norm. Given $M\in\mathcal{S}_{n}^{+}$,
-$\left\Vert M\right\Vert _{B}=\max_{x\neq0}\sqrt{\frac{x^{T}Mx}{x^{T}Bx}}$
+$\left\Vert M\right\Vert _{B}=\max_{x\neq0}\sqrt{\frac{x^{T}Mx}{x^{T}Bx}}$ 
 \begin{lemma}
 \label{lem:S-R-contractions} $S$ and $R$ are contractions for the
 Euclidian and $B-$norms: 
@@ -195,7 +195,7 @@ The approximation of the log-determinant is performed by computing
 sequences of power series $\left(R^{k}x\right)_{k}$. These chains
 are computed approximately by repeated applications of the $R$ operator
 on the previous element of the chain, starting from a random variable
-$x_{0}$. We formalize the notion of an approximate chain.
+$x_{0}$. We formalize the notion of an approximate chain. 
 \begin{definition}
 \emph{Approximate power sequence. }Given a linear operator $H$, a
 start point $x^{\left(0\right)}\in\mathbb{R}^{n}$, and a positive-definite
@@ -208,7 +208,7 @@ a sequence that does not deviate too much from the power sequence:
 \end{definition}
 We now prove the following result that is quite intuitive: if the
 operator $H$ is a contraction and if the relative error $\epsilon$
-is not too great, the sum of all the errors on the chain is bounded.
+is not too great, the sum of all the errors on the chain is bounded. 
 \begin{lemma}
 \label{lem:nu-sequence-bound}Let $H$ be a linear operator and $D$
 a norm over the space of that linear operator. Assume that the operator
@@ -291,10 +291,10 @@ Finally, note that for $\rho\in\left(0,1/2\right)$, the inequality
 $\nu\leq\rho/2$ implies $\nu\leq\rho-\rho^{2}$. Furthermore, by
 concavity of the square root function, we have $\sqrt{1-\rho}\leq1-\rho/2$
 for $\rho\leq1$. Thus, $\left(1-\sqrt{1-\rho}\right)^{2}\geq\rho^{2}/4$
-and we get our result.
+and we get our result. 
 \end{proof}
 We can use the bound on the norm of $A$ to compute bound the error
-with a preconditioner:
+with a preconditioner: 
 \begin{lemma}
 \label{lem:partial-sequence-approximate}Consider $A,B$ with the
 same hypothesis as above, $x_{0}\in\mathbb{R}^{n}$, and the additional
@@ -345,7 +345,7 @@ so we get:
 \]
 where $\kappa\left(B\right)$ is the condition number of $B$. 
 \end{proof}
-We now have all the elements required for the proof of Theorem \ref{thm:preconditioning-approx}.
+We now have all the elements required for the proof of Theorem \ref{thm:preconditioning-approx}. 
 \begin{proof}
 Consider $\mathbf{u}_{j}\sim\mathcal{N}\left(0,I_{n}\right)$ for
 $j=1\cdots p$, and $x_{i,j}=\begin{cases}

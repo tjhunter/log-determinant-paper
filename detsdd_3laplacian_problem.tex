@@ -10,7 +10,7 @@ From now on, we consider the computation of $\log A$, where $A\in SDD_{n}$.
 The techniques we will develop work on Laplacian matrices instead
 of SDD matrices. An SDD matrix is positive semi-definite while a Laplacian
 matrix is always singular, since its nullspace is spanned by $\mathbf{1}$.
-We generalize the definition of the determinant to handle this technicality.
+We generalize the definition of the determinant to handle this technicality. 
 \begin{definition}
 \emph{Pseudo-log-determinant (PLD):} Let $A\in\mathcal{S}^{n+}$ be
 a non-null positive semi-definite matrix. The pseudo-log-determinant
@@ -29,7 +29,7 @@ terms non-positive, the sum of each row and each column being zero.
 The reduction has been simplified by Kelner et al. in \cite{kelner2013simple},
 Appendix A. Using the Kelner et al.\ reduction, we can turn the computation
 of a the log-determinant of a SDD system into the computation of two
-PLDs of Laplacians, as shown in the next lemma.
+PLDs of Laplacians, as shown in the next lemma. 
 \begin{lemma}
 \emph{Kelner et al.\ reduction for log-determinants. }Given an invertible
 SDD matrix $A$, consider the Kelner decomposition $A=D_{1}+A_{p}+A_{n}+D_{2}$
@@ -68,21 +68,21 @@ y
 of $\tilde{A}$ is exactly the concatenation of the eigenvalues of
 $\hat{A}$ and $A$. By definition of the PLD: $\ld\left(\tilde{A}\right)=\sum_{i:\lambda_{i}>0}\log\lambda_{i}+\sum_{\mu_{i}>0}\log\mu_{i}$.
 Since $A$ is invertible, $\lambda_{i}>0$ for all $i$ and $\sum_{i:\lambda_{i}>0}\log\lambda_{i}=\sum_{i}\log\lambda_{i}=\log\left|A\right|$.
-Finally, by definition of the PLD, we get $\sum_{\mu_{i}>0}\log\mu_{i}=\ld\left(\hat{A}\right)$.
+Finally, by definition of the PLD, we get $\sum_{\mu_{i}>0}\log\mu_{i}=\ld\left(\hat{A}\right)$. 
 \end{proof}
 To any Laplacian $L$ we can associate a unique positive definite
 matrix $F_{L}$ (up to a permutation), and this transform preserves
 eigenvalues and matrix inequalities. We call this process ``floating''
 of the Laplacian, by analogy to the ``grounding'' in the electrical
 sense of the SDD matrix as a Laplacian introduced by Gremban (see
-\cite{Gremban1996}, Chapter 4).
+\cite{Gremban1996}, Chapter 4). 
 \begin{definition}
 \emph{Floating a Laplacian}. Consider $L$ a Laplacian matrix. Call
 $F_{L}$ the matrix formed by removing the last row and the last column
-from $L$.
+from $L$. 
 \end{definition}
 The following lemma shows that the Laplacian matrix overdetermines
-a system, and that no information is lost by floating it.
+a system, and that no information is lost by floating it. 
 \begin{lemma}
 \label{lem:floating-properties}Consider $Z$ a (weighted) Laplacian
 matrix of a connected graph, then: 
