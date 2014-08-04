@@ -1,4 +1,4 @@
-\documentclass[onefignum,onetabnum]{siamltex}
+\documentclass[11pt,onefignum,onetabnum]{siamltex}
 % \documentclass[final,leqno,onefignum,onetabnum]{siamltex1213}
 % \usepackage[T1]{fontenc}
 % \usepackage[latin9]{inputenc}
@@ -19,13 +19,17 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{lineno}
+\usepackage{array}
+
 \linenumbers
+\hfuzz=150pt
 % \makeatletter
 
 \input{preamble}
 
 \title{Computing the log-determinant of symmetric, diagonally dominant matrices
 in near-linear time}
+
 
 % \author{\name Timothy Hunter \email tjhunter@eecs.berkeley.edu \\
 %        \name Ahmed {El Alaoui} \email elalaoui@eecs.berkeley.edu \\
@@ -38,9 +42,6 @@ Ahmed {El Alaoui}\footnotemark[2] \and
 Alexandre M. Bayen\footnotemark[2]}
 
 \footnotetext[2]{Department of Electrical Engineering and Computer Sciences, University of California, Berkeley.}
-%\footnotetext[3]{\email{tjhunter@eecs.berkeley.edu}}
-%\footnotetext[4]{\emai{lelalaoui@eecs.berkeley.edu}}
-%\footnotetext[5]{\email{bayen@berkeley.edu}}
 
 % \usepackage{babel}
 %   \providecommand{\corollaryname}{Corollary}
