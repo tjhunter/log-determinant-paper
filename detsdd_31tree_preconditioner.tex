@@ -60,7 +60,11 @@ gives immediately the following result.
 
 \begin{theorem} \label{thm:PLD-tree}Let $G$ be a graph with $n$
 vertices and $m$ edges. Its PLD can be computed up to a precision
-$\epsilon$ and with high probability in time $\tilde{O}\left(m^{2}\log n\log^{2} \left(m\right) \left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right) \log\left(\frac{2m}{\epsilon}\right) \log\left(2/\eta\right)\right)$.\end{theorem}
+$\epsilon$ and with high probability in time:
+\[
+\tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)
+\]
+\end{theorem}
 
 \begin{proof} Using Lemma \eqref{lem:tree-st}, we compute a low-stretch
 tree $L_{T}$ so that $L_{T}\preceq L_{G}\preceq\kappa L_{T}$ with
