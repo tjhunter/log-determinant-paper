@@ -24,15 +24,12 @@ L_{T}\preceq L_{G}\preceq\kappa L_{T}
 with $\kappa=\tilde{\mathcal{O}}\left(m\log n\right)$. %$\kappa=Cm\log n\log\log n\left(\log\log\log n\right)^{3}$ for some constant $C>0$.
 \label{lem:tree-st} \end{lemma}
 \begin{proof}
-% TODO: this proof uses stretch, and still referes to the old bound.
-
-
 This follows directly from \cite{Spielman2009a}. $T$ is a subgraph
 of $G$ (with the same weights on the edges), so $L_{T}\preceq L_{G}$
 (see \cite{Spielman2009a} for example for a proof of this fact).
 Furthermore, we have $L_{G}\preceq\text{st}_{T}\left(G\right)L_{T}$.
 This latter inequality is a result of Spielman et al. in \cite{Spielman2010}
-that we generalize in Lemma \ref{lem:stretch-inequality}. Finally,
+that we will generalize further in Lemma \ref{lem:stretch-inequality}. Finally,
 a result by \cite{Abraham2008} shows that $T$ can be chosen such
 that $\text{st}_{T}\left(G\right)\leq\mathcal{O}(m\log n(\log\log n)^{3})$.
 \end{proof}
@@ -78,7 +75,7 @@ inversions by the tree $T$ (done in $\mathcal{O}\left(n\right)$)
 and vector products by the floated Laplacian $F_{L_{G}}$(done in
 $\mathcal{O}\left(m\right)$). The overall cost is $\tilde{O}\left(m^{2}\log n\log^{2}\left(m\right)\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2m}{\epsilon}\right)\log\left(2/\eta\right)\right)$. 
 \end{proof}
-The previous result shows that the log-determinant can be compute
+The previous result shows that the log-determinant can be computed
 in roughly $\mathcal{O}\left(m^{2}\right)$ ($m$ being the number
 of non-zero entries). This result may be of independent interest since
 it requires relatively little machinery to compute, and it is a theoretical
