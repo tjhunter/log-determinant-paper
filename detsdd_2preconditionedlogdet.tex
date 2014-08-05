@@ -43,7 +43,7 @@ Consider $p$ vectors sampled from the standard Normal distribution:
 $\mathbf{u}_{i}\sim\mathcal{N}\left(\mathbf{0},I_{n}\right)$ for
 $i=1\cdots p$. Then for all $\epsilon>0$: 
 \[
-\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\Tr\left(H\right)\right|\geq\epsilon\right]\leq2\exp\left(-\frac{p\epsilon^{2}}{4n^{-1}\left(\lambda_{\max}-\lambda_{\min}\right)^{2}+2\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon/3}\right)
+\mathbb{P}\left[\left|\frac{1}{p}\sum_{i=1}^{p}\frac{\mathbf{u}_{i}^{T}H\mathbf{u}_{i}}{\mathbf{u}_{i}^{T}\mathbf{u}_{i}}-\frac{1}{n}\Tr\left(H\right)\right|\geq\epsilon\right] \leq 2\exp\left(-\frac{p\epsilon^{2}}{4\frac{\left(\lambda_{\max}-\lambda_{\min}\right)^{2}}{n}+2\frac{\left(\lambda_{\max}-\lambda_{\min}\right)\epsilon}{3}}\right)
 \]
 \end{lemma}
 \begin{proof}
@@ -108,7 +108,7 @@ The proof of this result is detailed in Appendix A.
 From this theorem we derive two results that justify the notion of
 preconditioners for determinants: one for exact preconditioners and
 one for approximate preconditioners. The corresponding algorithm,
-which we call \texttt{PreconditionedLogDetMonteCarlo}, is presented
+which we call \texttt{Precond\-itioned\-LogDetMonteCarlo}, is presented
 in Algorithm \ref{alg:SampleLogDet}. 
 \begin{corollary}
 \label{cor:preconditioning}Let $A\in\mathcal{S}_{n}^{+}$ and $B\in\mathcal{S}_{n}^{+}$
@@ -140,7 +140,7 @@ of $B^{-1}y$:
 \]
 Given $\eta\in\left(0,1\right)$ and $\epsilon>0$, if $\nu\leq\min\left(\frac{\epsilon}{8\kappa^{3}\kappa\left(B\right)},\frac{1}{2\kappa}\right)$,
 then the algorithm \\
- \texttt{PreconditionedLogDet-MonteCarlo} returns a scalar $z$ so
+ \texttt{PreconditionedLogDetMonteCarlo} returns a scalar $z$ so
 that: 
 \[
 \mathbb{P}\left[\left|z-n^{-1}\log\left|B^{-1}A\right|\right|\geq\epsilon\right]\leq\eta

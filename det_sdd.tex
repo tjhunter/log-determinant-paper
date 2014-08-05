@@ -28,7 +28,7 @@
 \input{preamble}
 
 \title{Computing the log-determinant of symmetric, diagonally dominant matrices
-in near-linear time}
+in near-linear time \thanks{Department of Electrical Engineering and Computer Sciences, University of California, Berkeley.}}
 
 
 % \author{\name Timothy Hunter \email tjhunter@eecs.berkeley.edu \\
@@ -37,11 +37,11 @@ in near-linear time}
 %        \addr Department of Electrical Engineering and Computer Sciences\\
 %        University of California\\
 %        Berkeley, CA 94720-1776, USA}
-\author{Timothy Hunter\footnotemark[2] \and 
-Ahmed {El Alaoui}\footnotemark[2] \and
-Alexandre M. Bayen\footnotemark[2]}
+\author{Timothy Hunter \thanks{\email{tjhunter@eecs.berkeley.edu}}\and 
+Ahmed {El Alaoui} \thanks{\email{elalaoui@eecs.berkeley.edu}}\and
+Alexandre M. Bayen \thanks{\email{bayen@berkeley.edu}}}
 
-\footnotetext[2]{Department of Electrical Engineering and Computer Sciences, University of California, Berkeley.}
+%\footnotetext[2]{Department of Electrical Engineering and Computer Sciences, University of California, Berkeley.}
 
 % \usepackage{babel}
 %   \providecommand{\corollaryname}{Corollary}
@@ -52,7 +52,7 @@ Alexandre M. Bayen\footnotemark[2]}
 
 \begin{document}
 \maketitle
-% \slugger{sicomp}{xxxx}{xx}{x}{x--x}%slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
+\slugger{sicomp}{xxxx}{xx}{x}{x--x}%slugger should be set to mms, siap, sicomp, sicon, sidma, sima, simax, sinum, siopt, sisc, or sirev
 
 \begin{abstract}
 We present new algorithms for computing the log-determinant of symmetric,
@@ -61,7 +61,7 @@ with respect to the size of the matrix in the worst case. Our algorithm
 computes an approximation of the log-determinant in time near-linear with 
 respect to the number of non-zero entries and with high probability. This 
 algorithm builds upon the utra-sparsifiers introduced by Spielman and Teng for
-Laplacian matrices and ultimately uses their refined versions introduced by Koutis, Miller and Peng. We also present simpler algorithms that compute upper and 
+Laplacian matrices and ultimately uses their refined versions introduced by Koutis, Miller and Peng in the context of solving linear systems. We also present simpler algorithms that compute upper and 
 lower bounds and that may be of more immediate practical interest.
 \end{abstract}
 

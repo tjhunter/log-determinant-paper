@@ -156,11 +156,12 @@ Given $A\in SDD_{n}$ with $m$ non-zero entries, $b\in\mathbb{R}^{n}$
 and $\nu>0$, a vector $x$ such that $\left\Vert x-A^{+}b\right\Vert _{A}<\nu\left\Vert A^{+}b\right\Vert _{A}$
 can be computed in expected time $\tilde{O}\left(m\log n\log\left(1/\nu\right)\right)$. 
 \end{lemma}
+
 It should now become clear how we can combine a good chain with the
 Algorithm \texttt{PreconditionedLogDetMonteCarlo}. We start by building
 a chain. The partial Cholesky factorizations at each step of the chain
-provide an upper bound to $\mbox{ld}\left(A\right)$. We then refine
-this upper bound by running \texttt{PreconditionedLogDetMonteCarlo}
+provide an upper bound on $\mbox{ld}\left(A\right)$. We then refine
+this upper bound by running \texttt{Preconditioned\-LogDetMonteCarlo}
 at each state of the chain to approximate $\mbox{ld}\left(B_{i}^{+}A_{i}\right)$
 with high probability. The complete algorithm is presented in Algorithm
 \ref{alg:The-main-algorithm}. We now have all the tools required
@@ -172,7 +173,7 @@ the relation $\log A=\ld L_{A}$. Call $A_{1}=L_{A}$ the first element
 of the chain. In this proof, all the matrices will be Laplacian from
 now on. Using Lemma \ref{lem:good-chain}, consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
 a good chain for $A$, with $d=\mathcal{O}\left(\log n\right)$. More
-precisely, since $A_{i+1}$= \texttt{GreedyElimination}$\left(B_{i}\right)$,
+precisely, since $A_{i+1}$= \texttt{Greedy\-Elimination}$\left(B_{i}\right)$,
 the Laplacian $B_{i}$ can be factored as: 
 \[
 B_{i}=P_{i}L_{i}\left(\begin{array}{cc}
@@ -230,7 +231,7 @@ b^{T} & S
 \end{array}\right)$ (see Corollary 2.3 in \cite{Zhang2005}) and thus its condition number
 is upper bounded by that of $\tilde{A}$. 
 \end{itemize}
-As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{i}\kappa_{j}\kappa\left(A_{1}\right)=\tilde{O}\left(\kappa_{1}\kappa_{c}^{i-1}\kappa\left(A\right)\right)$
+As a consequence, we have for all $i$: $\kappa\left(A_{i+1}\right)\leq\kappa\left(B_{i}\right)\leq\kappa_{i}\kappa\left(A_{i}\right)\leq\prod_{j=1}^{i}\kappa_{j}\kappa\left(A_{1}\right) \\*=\tilde{O}\left(\kappa_{1}\kappa_{c}^{i-1}\kappa\left(A\right)\right)$
 with $\kappa_{c}$ the constant introduced in Lemma \ref{lem:good-chain}.
 This coarse analysis gives us the bound: 
 \[
