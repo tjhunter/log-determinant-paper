@@ -2,7 +2,7 @@
 all: det_sdd.pdf
 
 clean:
-	rm -f *.aux *.log *.bbl *.blg det_sdd.pdf
+	rm -f *.aux *.log *.bbl *.blg det_sdd.pdf *.zip
 
 det_sdd.pdf: det_sdd.tex detsdd_1introduction.tex detsdd_2preconditionedlogdet.tex \
 detsdd_3laplacian_problem.tex \
@@ -14,3 +14,6 @@ preamble.tex
 	bibtex det_sdd
 	pdflatex det_sdd.tex
 	pdflatex det_sdd.tex
+
+arxiv: det_sdd.pdf
+	zip arxiv.zip *.tex *.bbl Makefile
