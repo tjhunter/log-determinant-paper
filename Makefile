@@ -16,4 +16,4 @@ preamble.tex
 	pdflatex det_sdd.tex
 
 arxiv: det_sdd.pdf
-	zip arxiv.zip *.tex *.bbl Makefile
+	zip arxiv.zip preamble.tex det_sdd.tex detsdd*.tex *.bbl *clo *cls
