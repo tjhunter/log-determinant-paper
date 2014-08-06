@@ -31,6 +31,7 @@ with respect to graph $H$,
 with $\mathcal{X}_{u}\in\mathbb{R}^{n}$ the unit vector that is $1$
 at position $u$, and zero otherwise. 
 \end{definition}
+
 If the graph $H$ is a tree, this is a standard definition of stretch,
 because the effective resistance $\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)^{T}L_{H}^{+}\left(\mathcal{X}_{u}-\mathcal{X}_{v}\right)$
 between vertices $u$ and $v$ is the sum of all resistances over
@@ -185,7 +186,7 @@ better preconditioners can be found with stretches in $\mathcal{O}\left(n\right)
 by considering more general graphs. In this case, the machinery developed
 in Section 3 would not be necessary.
 
-From a practical perspective, the stretch can be calculated also with
+From a practical perspective, the stretch can be calculated also in near-linear time with
 respect to the number of non-zero entries. 
 \begin{lemma}
 \label{lem:stretch-approx}Let $G=\left(\mathcal{V},\,\mathcal{E}_{G}\right),\, H=\left(\mathcal{V},\,\mathcal{E}_{H}\right)$
@@ -218,6 +219,7 @@ Given a Laplacian $L_{G}$ with $m$ edges, there is an expected $\tilde{O}\left(m
 algorithm that produces a graph $L_{H}$ with $\mathcal{O}\left(n\log n/\epsilon^{2}\right)$
 edges that satisfies $\left(1-\epsilon\right)L_{G}\preceq L_{H}\preceq\left(1+\epsilon\right)L_{G}$. 
 \end{lemma}
+
 An immediate consequence is that given any graph, we can find a graph
 with a near-optimal stretch (up to an $\epsilon$ factor) and $\mathcal{O}\left(n\log n/\epsilon^{2}\right)$
 edges. 
@@ -244,6 +246,7 @@ n-1\leq\text{st}_{H}\left(G\right)\leq\frac{1+\epsilon}{1-\epsilon}\left(n-1\rig
 \]
 
 \end{proof}
+
 Here is the main result of this section: 
 \begin{proposition}
 There exists an algorithm that on input $A\in SDD_{n}$, returns an
@@ -264,5 +267,6 @@ of $\text{ld}\left(H\right)$ in expected time $\tilde{O}\left(n\log^{3}n\log^{2}
 By construction $\kappa(H)\leq\frac{1+1/16}{1-1/16}\kappa(A)$, hence
 the result. 
 \end{proof}
+
 It would be interesting to see if this technique could be developed
 to handle arbitrary precision as well. 

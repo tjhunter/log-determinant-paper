@@ -123,6 +123,7 @@ up to precision $\epsilon$ with probability greater than $1-\eta$,
 by performing $16\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
 vector inversions from $B$ and vector multiplies from $A$. 
 \end{corollary}
+
 The proof of this corollary is presented in Appendix A. Usually, computing
 the exact inverse by an SDD matrix is too expensive. We can instead
 extend the previous result to consider a black box procedure that
@@ -148,6 +149,7 @@ that:
 by performing $64\kappa\left(\frac{1}{\epsilon}+\frac{1}{n\epsilon^{2}}\right)\log\left(\frac{2\kappa}{\epsilon}\right)\log\left(2/\eta\right)\log^{2}\left(\kappa\right)$
 vector calls to the operator $C$ and vector multiplies from $A$. 
 \end{theorem}
+
 The proof of this result is detailed in Appendix A. While the overall
 bound looks the same, the constant (taken away by the $\mathcal{O}\left(\cdot\right)$
 notation) is four times as large as in Corollary \ref{cor:preconditioning}.

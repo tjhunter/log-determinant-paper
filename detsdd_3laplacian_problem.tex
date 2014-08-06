@@ -20,6 +20,7 @@ is defined by the sum of the logarithms of all the positive eigenvalues:
 \]
 where $\lambda_{i}$ are the eigenvalues of $A$. 
 \end{definition}
+
 The interest of the PLD lies in the connection between SDD matrices
 and some associated Laplacian. It is well-known that solving an SDD
 system in $SDD_{n}$ can be reduced to solving a Laplacian system
@@ -70,6 +71,7 @@ $\hat{A}$ and $A$. By definition of the PLD: $\ld\left(\tilde{A}\right)=\sum_{i:
 Since $A$ is invertible, $\lambda_{i}>0$ for all $i$ and $\sum_{i:\lambda_{i}>0}\log\lambda_{i}=\sum_{i}\log\lambda_{i}=\log\left|A\right|$.
 Finally, by definition of the PLD, we get $\sum_{\mu_{i}>0}\log\mu_{i}=\ld\left(\hat{A}\right)$. 
 \end{proof}
+
 To any Laplacian $L$ we can associate a unique positive definite
 matrix $F_{L}$ (up to a permutation), and this transform preserves
 eigenvalues and matrix inequalities. We call this process ``floating''
@@ -81,6 +83,7 @@ sense of the SDD matrix as a Laplacian introduced by Gremban (see
 $F_{L}$ the matrix formed by removing the last row and the last column
 from $L$. 
 \end{definition}
+
 The following lemma shows that the Laplacian matrix overdetermines
 a system, and that no information is lost by floating it. 
 \begin{lemma}
@@ -95,6 +98,7 @@ truncated by the last coefficient.
 . 
 \end{enumerate}
 \end{lemma}
+
 The proof of this lemma is straightforward, and is contained in Appendix
 B.
 
