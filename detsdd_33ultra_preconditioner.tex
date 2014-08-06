@@ -169,7 +169,7 @@ to prove Theorem \ref{thm:ultra_main}.
 
 \textbf{Proof of Theorem \ref{thm:ultra_main}.} First, recall that
 we can consider either an SDD or its grounded Laplacian thanks to
-the relation $\log A=\ld L_{A}$. Call $A_{1}=L_{A}$ the first element
+the relation $\log |A|=\ld L_{A}$. Call $A_{1}=L_{A}$ the first element
 of the chain. In this proof, all the matrices will be Laplacian from
 now on. Using Lemma \ref{lem:good-chain}, consider $\mathcal{C}=\left\{ A_{1}=A,B_{1},A_{2},\dots A_{d}\right\} $
 a good chain for $A$, with $d=\mathcal{O}\left(\log n\right)$. More
@@ -193,9 +193,10 @@ $\ld B_{i}=\sum_{k}\log D_{k}^{\left(i\right)}+\ld A_{i+1}$. From
 the discussion in Section \ref{sec:Preconditioned-log-determinants},
 the log-determinant of $A$ is: 
 \begin{eqnarray*}
-\log A & = & \ld A_{1}\\
+\log |A| & = & \ld A_{1}\\
  & = & \ld B_{1}+\ld\left(B_{1}^{+}A_{1}\right)\\
- & = & \sum_{k}\log D_{k}^{\left(1\right)}+\ld A_{i+1}+\ld\left(B_{1}^{+}A_{1}\right)\\
+ & = & \sum_{k}\log D_{k}^{\left(1\right)}+\ld A_{2}+\ld\left(B_{1}^{+}A_{1}\right)\\
+ & ... & \\
  & = & \ld A_{d}+\sum_{i=1}^{d}\left(\sum_{k}\log D_{k}^{\left(i\right)}\right)+\sum_{i=1}^{d}\ld\left(B_{i}^{+}A_{i}\right)
 \end{eqnarray*}
 The term $\ld A_{d}$ can be estimated by dense Cholesky factorization
@@ -240,7 +241,7 @@ This coarse analysis gives us the bound:
 Consider the relative precision $\tilde{\nu}=\tilde{\mathcal{O}}\left(n^{-\log\kappa_{c}}\log^{-8}n\frac{\epsilon}{\kappa\left(A\right)}\right)$
 so that $\tilde{\nu}\leq\nu_{i}$ for all $i$. Constructing the operator
 $C_{i}$ is a byproduct of forming the chain \emph{$\mathcal{C}$.
-}By Theorem \ref{thm:det-sampling-theorem}, each reminder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
+}By Theorem \ref{thm:det-sampling-theorem}, each remainder $\text{ld}\left(B_{i}^{+}A_{i}\right)$
 can be approximated to precision $\epsilon$ with probability at least
 $1-\eta$ using Algorithm \ref{alg:SampleLogDet}. Furthermore, this
 algorithm works in expected time 
