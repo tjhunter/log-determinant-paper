@@ -1,0 +1,48 @@
+\documentclass[english]{article}
+
+\usepackage{algorithm2e}
+\usepackage{amsthm}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{array}
+
+% \hfuzz=150pt
+
+\input{preamble}
+
+\title{Computing the log-determinant of symmetric, diagonally dominant matrices
+in near-linear time}
+
+\author{Timothy Hunter\thanks{Department of Electrical Engineering and Computer Sciences, University of California, Berkeley.} \and 
+Ahmed {El Alaoui}$^{*}$ \and
+Alexandre M. Bayen$^{*}$}
+%  \thanks{Department of Electrical Engineering and Computer Sciences, University of California, Berkeley.}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\begin{document}
+\maketitle
+
+\input{abstract}
+\footnotetext{Under submission to the SIAM Journal on Computing}
+
+\input{detsdd_1introduction}
+\input{detsdd_2preconditionedlogdet}
+\input{detsdd_3laplacian_problem}
+\input{detsdd_31tree_preconditioner}
+\input{detsdd_33ultra_preconditioner}
+\input{detsdd_34stretch_bounds}
+\input{detsdd_7conclusion}
+\input{detsdd_8appendixa}
+\input{detsdd_9appendixb}
+
+
+\bibliographystyle{plain}
+\bibliography{2012_sparse_info}
+
+\end{document}
