@@ -96,8 +96,8 @@ The determinant can then be computed by a sum of traces of the power
 of $M$, and the rate of convergence of this series is driven by the
 spectral radius $M$. This line of reasoning has led researchers to
 look for decompositions of $A$ of the form $A=U+V$ with the determinant
-of $U$ being easier to compute and $U^{-1}V+I$ having a small spectral
-radius. Then $\log\left|A\right|=\log\left|U\right|+\log\left|U^{-1}V+I\right|$.
+of $U$ being easier to compute and $U^{-1}V$ having a small spectral
+radius (less than $1$). Then $\log\left|A\right|=\log\left|U\right|+\log\left|U^{-1}V+I\right|$.
 The most common decomposition $U,V$ is in terms of block diagonal
 and off-diagonal terms, which can then use Hadamard inequalities on
 the determinant to bound the error \cite{Ipsen2006}. Diagonal blocks
@@ -129,7 +129,7 @@ of measure (which is verified in some contexts, see \cite{KelleyPace1997291}).
 Determinants also play a crucial role in quantum physics and in theoretical
 physics. The wave function of a system of multiple fermion particles
 is an antisymmetric function which can be described as a determinant
-(Slatter determinant, \cite{atkins2011molecular,lowdin1955quantum}).
+(Slater determinant, \cite{atkins2011molecular,lowdin1955quantum}).
 In the theory of quantum chromodynamics (QCD), the interaction between
 particles can be discretized on a lattice, and the energy level of
 particles is the determinant of some functional operators over this
